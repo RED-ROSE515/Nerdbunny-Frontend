@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { useTheme } from 'next-themes';
 import { GiArchiveResearch } from 'react-icons/gi';
 import { MdPlagiarism } from 'react-icons/md';
 
 import { useAnalyze } from '@/contexts/AnalyzeContext';
 import { useSearch } from '@/contexts/SearchContext';
 
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent, CardHeader } from '../ui/card';
 import PaperInputWrapper from './paper-input-wrapper';
 
 const CheckSection = () => {
   const { setProcessType, processType } = useAnalyze();
-  const { theme } = useTheme();
   const { getTotalResults } = useSearch();
   const tabs = [
     {
@@ -49,13 +47,13 @@ const CheckSection = () => {
   ];
 
   return (
-    <Card className='bg-wrapper z-10 mx-auto w-full overflow-hidden rounded-xl shadow-2xl'>
+    <Card className='z-10 mx-auto w-full overflow-hidden rounded-xl bg-wrapper shadow-2xl'>
       <CardHeader>
         <div className='border-b-2 p-6'>
-          <h2 className={`text-center text-2xl font-medium text-muted-foreground`}>
+          <h2 className={`text-center text-2xl font-bold text-muted-foreground`}>
             Analyze a Research Paper
           </h2>
-          <p className='my-2 text-sm'>
+          <p className='my-2 text-sm font-semibold'>
             Submit research papers that matter to you—whether they’re trending in your field,
             influencing public conversations, or raising important questions.NerdBunny helps uncover
             inconsistencies, flawed reasoning, or methodological issues and publishes the results

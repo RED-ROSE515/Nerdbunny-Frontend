@@ -409,3 +409,66 @@ export const FlowerSVG = ({ className, color }: any) => {
     </svg>
   );
 };
+
+export const ResearchAuditSVG = ({ className, color }: any) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      className={className}
+      width='18'
+      height='19'
+      viewBox='0 0 18 19'
+      fill='none'
+    >
+      <g clipPath='url(#clip0_2600_46157)'>
+        <path
+          fillRule='evenodd'
+          clipRule='evenodd'
+          d='M2.25 2H15V10.1016C13.2791 9.10689 11.0403 9.3457 9.56802 10.818C7.8701 12.5159 7.81267 15.2331 9.39573 17H2.25V2ZM5.25 5H12V6.5H5.25V5ZM5.25 8H9V9.5H5.25V8ZM5.25 11H7.5V12.5H5.25V11Z'
+          fill={color}
+        />
+        <path
+          fillRule='evenodd'
+          clipRule='evenodd'
+          d='M14.8713 11.8787C13.6997 10.7071 11.8003 10.7071 10.6287 11.8787C9.45711 13.0502 9.45711 14.9497 10.6287 16.1213C11.6171 17.1098 13.1237 17.2643 14.2742 16.5848L15.75 18.0607L16.8107 17L15.3348 15.5242C16.0143 14.3737 15.8598 12.8671 14.8713 11.8787ZM11.6893 12.9393C12.2751 12.3535 13.2249 12.3535 13.8107 12.9393C14.3964 13.5251 14.3964 14.4749 13.8107 15.0607C13.2249 15.6464 12.2751 15.6464 11.6893 15.0607C11.1036 14.4749 11.1036 13.5251 11.6893 12.9393Z'
+          fill={color}
+        />
+      </g>
+      <defs>
+        <clipPath id='clip0_2600_46157'>
+          <rect width='18' height='18' fill='white' transform='translate(0 0.5)' />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+export const SpeechBookSVG = ({ className, color }: any) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      viewBox='0 0 24 24'
+      className={className}
+      width='20'
+      height='20'
+      fill='none'
+    >
+      <rect x='2' y='2' width='16' height='20' rx='2' stroke={color} strokeWidth='2' />
+      <path d='M7 8L14 12L7 16L7 8Z' fill={color} />
+      <path
+        d='M20 4L20 20'
+        stroke={color}
+        strokeWidth='2'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M22 4L22 20'
+        stroke={color}
+        strokeWidth='2'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+    </svg>
+  );
+};

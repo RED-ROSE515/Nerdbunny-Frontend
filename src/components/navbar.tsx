@@ -1,21 +1,22 @@
 'use client';
 
-import type React from 'react'; // Added import for React
+import React from 'react'; // Added import for React
 
 import { motion } from 'framer-motion';
-import { Bot, Menu } from 'lucide-react';
-import { useTheme } from 'next-themes';
+import { Menu } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import DarkLogo from 'public/LogoLime.png';
 import LightLogo from 'public/LogoPurple.png';
 
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 
+import UserMenu from './auth/user-menu';
 import ThemeToggle from './theme-toggle';
 
 export default function Navbar() {
-  const { resolvedTheme } = useTheme();
+  const { isAuthenticated } = useAuth();
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -52,16 +53,23 @@ export default function Navbar() {
 
       <div className='hidden items-center space-x-4 md:flex'>
         <ThemeToggle />
-        <Link href='/auth/signin' prefetch={true}>
-          <Button variant='ghost' className='text-foreground hover:text-primary'>
-            Sign In
-          </Button>
-        </Link>
-        <Link href='/auth/signup' prefetch={true}>
-          <Button className='bg-primary text-primary-foreground hover:bg-primary/90'>
-            Get Started
-          </Button>
-        </Link>
+
+        {isAuthenticated ? (
+          <UserMenu />
+        ) : (
+          <React.Fragment>
+            <Link href='/auth/signin' prefetch={true}>
+              <Button variant='ghost' className='text-foreground hover:text-primary'>
+                Sign In
+              </Button>
+            </Link>
+            <Link href='/auth/signup' prefetch={true}>
+              <Button className='bg-primary text-primary-foreground hover:bg-primary/90'>
+                Get Started
+              </Button>
+            </Link>
+          </React.Fragment>
+        )}
       </div>
 
       <Button variant='ghost' size='icon' className='text-foreground md:hidden'>

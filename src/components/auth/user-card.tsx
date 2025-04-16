@@ -20,6 +20,7 @@ import { useTheme } from 'next-themes';
 import { MdOutlineContentCopy, MdReport } from 'react-icons/md';
 import { PiDotsThreeOutlineVerticalFill } from 'react-icons/pi';
 
+import { AnimatedSubscribeButton } from '@/components/magicui/animated-subscribe-button';
 import { useAuth } from '@/contexts/AuthContext';
 import useGetData from '@/lib/service/get-data';
 import { formatTimestamp } from '@/lib/utils/date';
@@ -28,7 +29,13 @@ import { commify } from '@/lib/utils/number';
 import { useToast } from '../hooks/use-toast';
 import { useUserActions } from '../hooks/use-user-actions';
 import useDeviceCheck from '../hooks/user-device-check';
-import { AnimatedSubscribeButton } from './magicui/animated-subscribe-button';
+
+interface UserDetail {
+  id: string;
+  is_following: boolean;
+  count_following: number;
+  count_follower: number;
+}
 
 const UserCard = ({
   userData,
@@ -52,8 +59,8 @@ const UserCard = ({
   const { toast } = useToast();
   const { isAuthenticated, user } = useAuth();
   const NOBLEBLOCKS_DOMAIN = process.env.NEXT_PUBLIC_NOBLEBLOCKS_DOMAIN;
-  const { data: userDetail, isLoading: userDetailLoading } = useGetData(
-    `user/profile?user_id=${userData.user_name}`
+  const { data: userDetail, isLoading: userDetailLoading } = useGetData<UserDetail>(
+    `user/profile?user_id=${userData.username}`
   );
 
   const follow = async () => {
@@ -126,11 +133,11 @@ const UserCard = ({
                       </h4>
                       <Link
                         isExternal
-                        href={`${NOBLEBLOCKS_DOMAIN}/@${userData.user_name}`}
+                        href={`${NOBLEBLOCKS_DOMAIN}/@${userData.username}`}
                         size='sm'
                       >
                         <h5 className='text-small tracking-tight text-blue-700'>
-                          {`@` + userData.user_name}
+                          {`@` + userData.username}
                         </h5>
                       </Link>
                     </div>
@@ -143,7 +150,7 @@ const UserCard = ({
                       size='sm'
                       variant={'bordered'}
                       onPress={() =>
-                        window.open(`${NOBLEBLOCKS_DOMAIN}/@${userData.user_name}`, '_blank')
+                        window.open(`${NOBLEBLOCKS_DOMAIN}/@${userData.username}`, '_blank')
                       }
                     >
                       View Profile
@@ -152,7 +159,7 @@ const UserCard = ({
                 </CardHeader>
                 <CardBody className='px-3 py-0'>
                   <p className='pl-px text-small text-default-500'>
-                    {_.truncate(userData.about_me, {
+                    {_.truncate(userData?.about_me, {
                       length: 100,
                       omission: '...'
                     })}
@@ -170,7 +177,7 @@ const UserCard = ({
                   </div>
                   <div className='flex gap-1'>
                     <p className='text-small font-semibold text-default-600'>
-                      {userDetail?.count_followers}
+                      {userDetail?.count_follower}
                     </p>
                     <p className='text-small text-default-500'>Followers</p>
                   </div>

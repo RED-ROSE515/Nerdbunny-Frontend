@@ -9,20 +9,20 @@ import Loader from '@/components/common/loader';
 import UserAvatar from '@/components/common/user-avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { sleep } from '@/contexts/AnalyzeContext';
+import { useAuth } from '@/contexts/AuthContext';
 import api from '@/lib/utils/api';
 
 export default function GoogleCallback() {
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(true);
+  const { social_login } = useAuth();
   const router = useRouter();
   useEffect(() => {
     if (!session) return;
 
     const fetchToken = async () => {
       setLoading(true);
-      const response = await api.post('/auth/social_token/', {
-        ...session?.user
-      });
+      await social_login({ ...session?.user });
       setLoading(false);
       sleep(1500);
       router.push('/');

@@ -9,8 +9,8 @@ import api from '@/lib/utils/api';
 type AuthContextType = {
   user: any;
   login: (email: string, password: string) => Promise<void>;
-  loginWithNobleblocks: (status_code: string) => Promise<void>;
   logout: () => void;
+  social_login: (user: any) => Promise<void>;
   setUserData: (userData: any) => void;
   isAuthenticated: boolean;
 };
@@ -56,35 +56,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
         setUser(userData);
         localStorage.setItem('user', JSON.stringify(userData));
-        api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token.token}`;
+        api.defaults.headers.common['Authorization'] = `Token ${response.data.token.token}`;
       }
     } catch (error: any) {
       throw new Error(error.response?.data?.message || 'Login failed');
     }
   };
 
-  const loginWithNobleblocks = async (state_code: string) => {
-    try {
-      //auth/loign_with_nobleblocks
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login_with_nobleblocks2?state=${state_code}`
-      );
-
-      if (response.data.token) {
-        const userData = {
-          email: '',
-          detail: { ...response.data.user },
-          token: response.data.token.token
-        };
-        setUser(userData);
-        localStorage.setItem('user', JSON.stringify(userData));
-        api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token.token}`;
-      }
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Login failed');
+  const social_login = async (user: any) => {
+    const response = await api.post('/auth/social_token/', {
+      ...user
+    });
+    if (response.data.token) {
+      const userData = {
+        detail: { ...response.data.user },
+        token: response.data.token
+      };
+      setUser(userData);
+      localStorage.setItem('user', JSON.stringify(userData));
+      api.defaults.headers.common['Authorization'] = `Token ${response.data.token.token}`;
     }
   };
-
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
@@ -96,8 +88,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         user,
         login,
-        loginWithNobleblocks,
         logout,
+        social_login,
         setUserData,
         isAuthenticated: !!user
       }}

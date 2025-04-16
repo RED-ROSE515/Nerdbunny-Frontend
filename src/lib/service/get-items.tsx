@@ -8,8 +8,8 @@ const fetcher = (url: string) => {
     'Content-Type': 'application/json'
   };
   if (user) {
-    const userData = JSON.parse(user);
-    headers['Authorization'] = `Bearer ${userData.token}`;
+    const userData = JSON.parse(user) as { token: string };
+    headers['Authorization'] = `Token ${userData.token}`;
   }
 
   return fetch(url, { headers }).then((res) => {

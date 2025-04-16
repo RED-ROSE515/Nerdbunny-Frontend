@@ -1,14 +1,11 @@
 import React from 'react';
 
 import { Button } from '@heroui/react';
-import { Sen } from 'next/font/google';
 import { useRouter } from 'next/navigation';
 
 import useDeviceCheck from '@/components/hooks/user-device-check';
 
 import { FlowerSVG, LineSVG } from '../common/svgs';
-
-export const sen = Sen({ subsets: ['latin'] });
 
 const LastSection = () => {
   const { isMobile } = useDeviceCheck();
@@ -34,7 +31,7 @@ const LastSection = () => {
           <FlowerSVG className='absolute bottom-0 right-0 z-0 block dark:hidden' color={'white'} />
         </React.Fragment>
       )}
-      <div className={`flex w-full flex-col items-center ${sen.className} text-[#BCBDFA]`}>
+      <div className={`flex w-full flex-col items-center text-[#BCBDFA]`}>
         <span className='text-center'>Try NerdBunny AI Discrepancies Detection for Free</span>
         <span className='text-center'>
           Enhance your research credibility and avoid costly mistakes.

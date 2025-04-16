@@ -1,13 +1,18 @@
 'use client';
 
+import { useTransition } from 'react';
+
 import { motion } from 'framer-motion';
-import { FileText, Sparkles } from 'lucide-react';
+import { FileText, Loader2, Sparkles } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import { FloatingPaper } from '@/components/home/floating-paper';
 import { RoboAnimation } from '@/components/home/robo-animation';
 import { Button } from '@/components/ui/button';
 
 export default function Hero() {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   return (
     <div className='relative flex min-h-[calc(100vh-76px)] items-center'>
       {/* Floating papers background */}
@@ -58,9 +63,23 @@ export default function Hero() {
               size='lg'
               variant='outline'
               className='border-primary bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary'
+              onClick={() =>
+                startTransition(() => {
+                  router.push('/samples');
+                })
+              }
             >
-              <Sparkles className='mr-2 h-5 w-5' />
-              See Examples
+              {isPending ? (
+                <>
+                  <Loader2 className='mr-2 h-5 w-5 animate-spin' />
+                  Please wait
+                </>
+              ) : (
+                <>
+                  <Sparkles className='mr-2 h-5 w-5' />
+                  See Examples
+                </>
+              )}
             </Button>
           </motion.div>
         </div>
