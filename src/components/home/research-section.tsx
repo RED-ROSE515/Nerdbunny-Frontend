@@ -5,7 +5,7 @@ import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import { FaArrowRight, FaPlus } from 'react-icons/fa';
 
-import useDeviceCheck from '@/components/hooks/user-device-check';
+import useDeviceCheck from '@/lib/hooks/user-device-check';
 
 import { DataBaseSVG, DataStreamSVG, TrelloSVG } from '../common/svgs';
 
@@ -31,7 +31,7 @@ const ResearchSection = () => {
       <div
         className={`flex ${isMobile ? 'flex-wrap' : 'flex-row'} w-full items-center justify-center gap-10`}
       >
-        <Card className='bg-wrapper flex flex-col justify-between p-4 md:flex-row'>
+        <Card className='flex flex-col justify-between bg-wrapper p-4 md:flex-row'>
           <CardBody>
             <div className='flex flex-row justify-start'>
               <DataStreamSVG />

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { userApis } from '@/lib/utils/apis';
 
-import { useToast } from './use-toast';
+import { useToast } from '../../components/hooks/use-toast';
 
 interface UseUserActionsProps {
   showSignInModal?: (message: string) => void;

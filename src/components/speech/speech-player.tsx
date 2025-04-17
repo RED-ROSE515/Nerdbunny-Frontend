@@ -9,8 +9,8 @@ import { ImCross } from 'react-icons/im';
 
 import { useSpeech } from '@/contexts/SpeechContext';
 
+import useDeviceCheck from '../../lib/hooks/user-device-check';
 import ShareButtons from '../common/share-button';
-import useDeviceCheck from '../hooks/user-device-check';
 
 const SpeechPlayer = ({ audio_url, height = 50, isSpeech = true }: any) => {
   // Corrected the type of useRef to match the expected type for the container

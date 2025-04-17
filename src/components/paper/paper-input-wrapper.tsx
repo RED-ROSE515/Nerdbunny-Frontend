@@ -359,7 +359,7 @@ const PaperInputWrapper = ({ getPdfList, onTriggerRef }: ImageUploadProps) => {
             <label
               {...getRootProps()}
               htmlFor='dropzone-file'
-              className={`relative flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed ${theme === 'dark' ? 'border-[#293847] bg-[#090C0F] py-6 hover:border-[#3C6B99] hover:bg-[#081524]' : 'bg-gray-50 py-6 hover:bg-gray-100'}`}
+              className={`relative flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed bg-gray-50 py-6 hover:bg-gray-100 dark:border-[#293847] dark:bg-[#090C0F] dark:hover:border-[#3C6B99] dark:hover:bg-[#081524]`}
             >
               {uploadedFile && (
                 <div className='mx-2 w-full px-2'>

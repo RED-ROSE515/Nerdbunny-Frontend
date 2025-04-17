@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 
-import useDeviceCheck from '@/components/hooks/user-device-check';
+import useDeviceCheck from '@/lib/hooks/user-device-check';
 
 import { FlowerSVG, LineSVG } from '../common/svgs';
 

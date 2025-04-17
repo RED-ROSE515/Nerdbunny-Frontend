@@ -17,8 +17,8 @@ import { MdLogout } from 'react-icons/md';
 
 import { useAuth } from '@/contexts/AuthContext';
 
+import useDeviceCheck from '../../lib/hooks/user-device-check';
 import { ResearchAuditSVG, SpeechBookSVG } from '../common/svgs';
-import useDeviceCheck from '../hooks/user-device-check';
 
 export default function UserMenu() {
   const { isAuthenticated, user, logout } = useAuth();

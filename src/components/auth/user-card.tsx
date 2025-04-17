@@ -26,9 +26,9 @@ import useGetData from '@/lib/service/get-data';
 import { formatTimestamp } from '@/lib/utils/date';
 import { commify } from '@/lib/utils/number';
 
+import { useUserActions } from '../../lib/hooks/use-user-actions';
+import useDeviceCheck from '../../lib/hooks/user-device-check';
 import { useToast } from '../hooks/use-toast';
-import { useUserActions } from '../hooks/use-user-actions';
-import useDeviceCheck from '../hooks/user-device-check';
 
 interface UserDetail {
   id: string;

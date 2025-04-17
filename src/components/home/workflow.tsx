@@ -4,7 +4,7 @@ import { Button, Card, CardBody, CardHeader } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 import { FaPlus } from 'react-icons/fa';
 
-import useDeviceCheck from '@/components/hooks/user-device-check';
+import useDeviceCheck from '@/lib/hooks/user-device-check';
 
 import { CloudAPISVG, CloudNatSVG, TransferSVG } from '../common/svgs';
 
