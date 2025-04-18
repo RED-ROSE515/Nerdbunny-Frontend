@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 
 import {
   Button,
-  Checkbox,
   Input,
   Link,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
-  ModalHeader,
-  useDisclosure
+  ModalHeader
 } from '@heroui/react';
 
 import { useAuth } from '@/contexts/AuthContext';

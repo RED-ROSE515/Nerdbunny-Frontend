@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+'use client';
+
+import React from 'react';
 
 import {
   Button,
@@ -8,8 +10,7 @@ import {
   DropdownSection,
   DropdownTrigger,
   Image,
-  Link,
-  User
+  Link
 } from '@heroui/react';
 import _ from 'lodash';
 import { IoNewspaper } from 'react-icons/io5';
@@ -39,15 +40,19 @@ export default function UserMenu() {
       }}
     >
       <DropdownTrigger>
-        <User
-          avatarProps={{
-            src: isAuthenticated
+        <Image
+          isBlurred
+          isZoomed
+          alt='User Avatar'
+          className='cursor-pointer rounded-[50%] object-cover'
+          width={36}
+          shadow='lg'
+          style={{ height: '36px', width: '36px' }}
+          src={
+            isAuthenticated
               ? user?.detail.avatar_url
-              : 'https://avatars.githubusercontent.com/u/146516559?s=400&u=8a2fcef9b9079ab60f01db2868d1b1893856a2c3&v=4',
-            className: 'w-[36px] h-[36px]'
-          }}
-          className='cursor-pointer'
-          name=''
+              : 'https://avatars.githubusercontent.com/u/146516559?s=400&u=8a2fcef9b9079ab60f01db2868d1b1893856a2c3&v=4'
+          }
         />
       </DropdownTrigger>
       <DropdownMenu

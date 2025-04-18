@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Accordion, AccordionItem, Button, Tooltip } from '@heroui/react';
+import { Accordion, AccordionItem, Tooltip } from '@heroui/react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { FaPlayCircle } from 'react-icons/fa';
@@ -105,33 +105,31 @@ const SummaryAccordion = ({
                     closeDelay={1000}
                   >
                     {level.speech_url ? (
-                      <Button
-                        isIconOnly
-                        variant='bordered'
-                        onPress={() => {
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
                           onPlayVoice(
                             level.speech_url as string,
                             level.speech_id as string,
                             paperTitle
                           );
                         }}
-                        className={`h-[30px] w-[38px] border-none hover:bg-transparent hover:text-pink-600`}
+                        className='flex h-[30px] w-[38px] items-center justify-center border-none hover:bg-transparent hover:text-pink-600'
                       >
                         <FaPlayCircle className='w-full p-2' style={{ height: 'fit-content' }} />
-                      </Button>
+                      </div>
                     ) : (
-                      <Button
-                        isIconOnly
-                        variant='bordered'
-                        onPress={() => {
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
                           isAuthenticated
                             ? onVoiceGenerate(level)
                             : showSignInModal('You need to sign in to continue.');
                         }}
-                        className={`h-[30px] w-[38px] border-none border-[#DEE5EB] hover:bg-transparent hover:text-pink-600`}
+                        className='flex h-[30px] w-[38px] items-center justify-center border-none hover:bg-transparent hover:text-pink-600'
                       >
                         <RiVoiceAiLine className='w-full p-2' style={{ height: 'fit-content' }} />
-                      </Button>
+                      </div>
                     )}
                   </Tooltip>
                 )}

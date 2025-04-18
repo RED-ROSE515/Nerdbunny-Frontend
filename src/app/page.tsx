@@ -3,6 +3,7 @@
 import React from 'react';
 
 import Hero from '@/components/home/hero';
+import { PaperGlobe } from '@/components/home/hero-globe';
 import LastSection from '@/components/home/last-section';
 import NerdbunnyReason from '@/components/home/nerdbunny-reason';
 import ResearchSection from '@/components/home/research-section';
@@ -20,7 +21,7 @@ export default function Home() {
           'bg-grid-white/[0.02]'
         )}
       >
-        <div className='absolute inset-0 z-0 h-full w-full'>
+        <div className='absolute inset-0 z-0 hidden h-full w-full md:block'>
           <SparklesCore
             id='tsparticlesfullpage'
             background='transparent'
@@ -33,6 +34,9 @@ export default function Home() {
 
         <div className='relative z-10'>
           <Hero />
+          <div className='flex flex-row items-center justify-center'>
+            <PaperGlobe />
+          </div>
         </div>
       </div>
       <div className={`flex w-full flex-row justify-center p-0 md:p-4 md:px-10`}>

@@ -3,6 +3,8 @@
 /.pnp
 .pnp.js
 
+*.lock.yaml
+
 # testing
 /coverage
 /__tests_results__/

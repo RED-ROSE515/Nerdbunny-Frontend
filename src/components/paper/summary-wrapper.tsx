@@ -9,11 +9,8 @@ import phDImage from 'public/NerdBunnyUI/PhD.png';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { useSpeech } from '@/contexts/SpeechContext';
-import useGetData from '@/lib/service/get-data';
-import api from '@/lib/utils/api';
 
 import UserCard from '../auth/user-card';
-import { useToast } from '../hooks/use-toast';
 import AuthorSection from './author-section';
 import KeywordsSection from './keywords-section';
 import PaperLinkSection from './papaer-link-section';
@@ -50,6 +47,7 @@ export const UserSVG = () => {
 };
 
 export interface SummaryType {
+  key: string;
   title: string;
   content: string;
   value: string;
@@ -71,54 +69,50 @@ const SummaryWrapper = ({
   input_tokens,
   output_tokens,
   total_cost,
+  speechData,
   link
 }: any) => {
   const [currentSummary, setCurrentSummary] = useState<SummaryType>();
   const { setSpeechUrl, setShowSpeech, setSpeechId, setSpeechTitle } = useSpeech();
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
-  const [voice, setVoice] = useState('alloy');
-  const [loading, setLoading] = useState(false);
-  const { toast } = useToast();
   const { isAuthenticated } = useAuth();
-  const { data: speechData, isLoading: speechLoading } = useGetData(
-    totalData?.id ? `post/speech?post_id=${totalData?.id}` : ''
-  );
 
   const summaryLevels = [
     {
+      key: 'child',
       title: 'Child Summary',
       content: summary.summary?.child,
       value: 'ChildSummary',
       image: childImage,
-      speech_id: speechData?.find((speech: any) => speech.speech_type === 'ChildSummary')?.id,
-      speech_url: speechData?.find((speech: any) => speech.speech_type === 'ChildSummary')
-        ?.audio_url
+      speech_id: speechData?.find((speech: any) => speech.speech_type === 'child')?.id,
+      speech_url: speechData?.find((speech: any) => speech.speech_type === 'child')?.audio_url
     },
     {
+      key: 'college',
       title: 'College Summary',
       content: summary.summary?.college,
       value: 'CollegeSummary',
       image: collegeImage,
-      speech_id: speechData?.find((speech: any) => speech.speech_type === 'CollegeSummary')?.id,
-      speech_url: speechData?.find((speech: any) => speech.speech_type === 'CollegeSummary')
-        ?.audio_url
+      speech_id: speechData?.find((speech: any) => speech.speech_type === 'college')?.id,
+      speech_url: speechData?.find((speech: any) => speech.speech_type === 'college')?.audio_url
     },
     {
+      key: 'phd',
       title: 'PhD Summary',
       content: summary.summary?.phd,
       value: 'PhDSummary',
       image: phDImage,
-      speech_id: speechData?.find((speech: any) => speech.speech_type === 'PhDSummary')?.id,
-      speech_url: speechData?.find((speech: any) => speech.speech_type === 'PhDSummary')?.audio_url
+      speech_id: speechData?.find((speech: any) => speech.speech_type === 'phd')?.id,
+      speech_url: speechData?.find((speech: any) => speech.speech_type === 'phd')?.audio_url
     },
     {
+      key: 'error',
       title: 'Error Summary',
       content: summary.summary?.error,
       value: 'ErrorSummary',
       image: errorImage,
-      speech_id: speechData?.find((speech: any) => speech.speech_type === 'ErrorSummary')?.id,
-      speech_url: speechData?.find((speech: any) => speech.speech_type === 'ErrorSummary')
-        ?.audio_url
+      speech_id: speechData?.find((speech: any) => speech.speech_type === 'error')?.id,
+      speech_url: speechData?.find((speech: any) => speech.speech_type === 'error')?.audio_url
     }
   ];
 
@@ -135,56 +129,19 @@ const SummaryWrapper = ({
     onOpen();
   };
 
-  const getPaperId = () => {
-    if (!link) return '';
-    return link.split('results/discrepancies/')[1];
-  };
-
-  const generateSpeech = async () => {
-    try {
-      setLoading(true);
-      const paperId = getPaperId();
-      const response = await api.post(`post/generate_voice`, {
-        post_id: paperId,
-        speech_type: currentSummary?.value,
-        voice_type: voice
-      });
-      setLoading(false);
-      onClose();
-      toast({
-        title: 'Speech Generation',
-        description: (
-          <div className='flex flex-col'>
-            <span>Speech generated successfully! </span>
-            <span className='text-md font-bold text-pink-500'>
-              Cost : ${response.data.cost.toFixed(6)}
-            </span>
-          </div>
-        )
-      });
-      setSpeechUrl(response.data.audio_url);
-      setSpeechId(response.data.id);
-      setSpeechTitle(summary.metadata.title);
-      setShowSpeech(true);
-    } catch (error) {
-      toast({
-        title: 'Speech Generation',
-        description: 'Uh! Something went wrong!'
-      });
-    }
-  };
-
   useEffect(() => {}, [speechData]);
   return (
     <div className='relative flex w-full flex-col gap-5 overflow-hidden rounded-lg bg-[#F7F7F7] p-4 dark:bg-[#1E2A36] md:px-4'>
-      <div className='flex w-full flex-col justify-center gap-5 text-center text-2xl font-bold md:pr-14'>
+      <div className='flex w-full flex-col justify-center gap-5 text-center text-2xl font-bold'>
         {isResult ? (
           <span className='text-md flex-1 items-center px-2 font-bold md:text-2xl'>
             {summary.metadata.title}
           </span>
         ) : (
           <Link href={link}>
-            <span className='text-md px-2 font-bold md:text-2xl'>{summary.metadata.title}</span>
+            <span className='text-md px-2 font-bold text-slate-700 dark:text-slate-200 md:text-3xl'>
+              {summary.metadata.title}
+            </span>
           </Link>
         )}
         {userData ? (
@@ -248,7 +205,7 @@ const SummaryWrapper = ({
         setShowSpeech={setShowSpeech}
         isAuthenticated={isAuthenticated}
         showSignInModal={showSignInModal}
-        paperId={getPaperId()}
+        paperId={totalData?.id}
       />
     </div>
   );

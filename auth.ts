@@ -54,7 +54,7 @@ export const {
         // If you're integrating with a Django backend, you might want to
         // send the tokens to your backend here and get a session token back
         try {
-          const response = (await api.post('/auth/social_token/', {
+          const response = (await api.post('/auth/social/token/', {
             provider: account.provider,
             access_token: account.access_token,
             id_token: account.id_token

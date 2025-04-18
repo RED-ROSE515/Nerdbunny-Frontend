@@ -64,7 +64,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const social_login = async (user: any) => {
-    const response = await api.post('/auth/social_token/', {
+    const response = await api.post('/auth/social/token/', {
       ...user
     });
     if (response.data.token) {

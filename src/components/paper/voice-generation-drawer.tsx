@@ -52,9 +52,9 @@ const VoiceGenerationDrawer = ({
   const generateSpeech = async () => {
     try {
       setLoading(true);
-      const response = await api.post(`post/generate_voice`, {
-        post_id: paperId,
-        speech_type: currentSummary?.value,
+      const response = await api.post(`papers/speech/generate_speech/`, {
+        paper_id: paperId,
+        speech_type: currentSummary?.key,
         voice_type: voice
       });
       setLoading(false);

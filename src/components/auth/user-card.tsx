@@ -60,7 +60,7 @@ const UserCard = ({
   const { isAuthenticated, user } = useAuth();
   const NOBLEBLOCKS_DOMAIN = process.env.NEXT_PUBLIC_NOBLEBLOCKS_DOMAIN;
   const { data: userDetail, isLoading: userDetailLoading } = useGetData<UserDetail>(
-    `user/profile?user_id=${userData.username}`
+    `auth/profile?user_id=${userData.id}`
   );
 
   const follow = async () => {

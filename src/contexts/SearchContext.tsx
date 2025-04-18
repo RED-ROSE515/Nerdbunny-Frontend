@@ -63,7 +63,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
   );
 
   useEffect(() => {
-    getTotalResults();
+    // getTotalResults();
   }, [page, keyword, sortBy, toast]);
 
   const value = {

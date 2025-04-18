@@ -9,10 +9,12 @@ import { useRouter } from 'next/navigation';
 import { FloatingPaper } from '@/components/home/floating-paper';
 import { RoboAnimation } from '@/components/home/robo-animation';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Hero() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const { isAuthenticated } = useAuth();
   return (
     <div className='relative flex min-h-[calc(100vh-76px)] items-center'>
       {/* Floating papers background */}
@@ -50,7 +52,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className='flex flex-col items-center justify-center gap-4 sm:flex-row'
+            className='flex w-full flex-col justify-center gap-4 sm:flex-row md:items-center'
           >
             <Button
               size='lg'
@@ -59,34 +61,59 @@ export default function Hero() {
               <FileText className='mr-2 h-5 w-5' />
               Upload Paper
             </Button>
-            <Button
-              size='lg'
-              variant='outline'
-              className='border-primary bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary'
-              onClick={() =>
-                startTransition(() => {
-                  router.push('/samples');
-                })
-              }
-            >
-              {isPending ? (
-                <>
-                  <Loader2 className='mr-2 h-5 w-5 animate-spin' />
-                  Please wait
-                </>
-              ) : (
-                <>
-                  <Sparkles className='mr-2 h-5 w-5' />
-                  See Examples
-                </>
-              )}
-            </Button>
+            {isAuthenticated ? (
+              <Button
+                size='lg'
+                variant='outline'
+                className='border-primary bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary'
+                onClick={() =>
+                  startTransition(() => {
+                    router.push('/results/discrepancies');
+                  })
+                }
+              >
+                {isPending ? (
+                  <>
+                    <Loader2 className='mr-2 h-5 w-5 animate-spin' />
+                    Please wait
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className='mr-2 h-5 w-5' />
+                    My Uploaded Papers
+                  </>
+                )}
+              </Button>
+            ) : (
+              <Button
+                size='lg'
+                variant='outline'
+                className='border-primary bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary'
+                onClick={() =>
+                  startTransition(() => {
+                    router.push('/samples');
+                  })
+                }
+              >
+                {isPending ? (
+                  <>
+                    <Loader2 className='mr-2 h-5 w-5 animate-spin' />
+                    Please wait
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className='mr-2 h-5 w-5' />
+                    See Examples
+                  </>
+                )}
+              </Button>
+            )}
           </motion.div>
         </div>
       </div>
 
       {/* Animated robot */}
-      <div className='absolute bottom-0 right-0 h-96 w-96'>
+      <div className='absolute bottom-0 right-0 hidden h-96 w-96 md:block'>
         <RoboAnimation />
       </div>
     </div>

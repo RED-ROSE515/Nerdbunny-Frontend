@@ -1,11 +1,12 @@
 'use client';
 
-import React from 'react'; // Added import for React
+import React, { useTransition } from 'react'; // Added import for React
 
 import { motion } from 'framer-motion';
-import { Menu } from 'lucide-react';
+import { Loader2, Menu } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import DarkLogo from 'public/LogoLime.png';
 import LightLogo from 'public/LogoPurple.png';
 
@@ -17,6 +18,9 @@ import ThemeToggle from './theme-toggle';
 
 export default function Navbar() {
   const { isAuthenticated } = useAuth();
+  const [signInPending, startSignInTransition] = useTransition();
+  const [signUpPending, startSingUpTransition] = useTransition();
+  const router = useRouter();
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -59,13 +63,42 @@ export default function Navbar() {
         ) : (
           <React.Fragment>
             <Link href='/auth/signin' prefetch={true}>
-              <Button variant='ghost' className='text-foreground hover:text-primary'>
-                Sign In
+              <Button
+                variant='ghost'
+                className='text-foreground hover:text-primary'
+                onClick={() =>
+                  startSignInTransition(() => {
+                    router.push('/auth/signin');
+                  })
+                }
+              >
+                {signInPending ? (
+                  <>
+                    <Loader2 className='mr-2 h-5 w-5 animate-spin' />
+                    Please wait
+                  </>
+                ) : (
+                  <p>Sign In</p>
+                )}
               </Button>
             </Link>
             <Link href='/auth/signup' prefetch={true}>
-              <Button className='bg-primary text-primary-foreground hover:bg-primary/90'>
-                Get Started
+              <Button
+                className='bg-primary text-primary-foreground hover:bg-primary/90'
+                onClick={() =>
+                  startSingUpTransition(() => {
+                    router.push('/auth/signup');
+                  })
+                }
+              >
+                {signUpPending ? (
+                  <>
+                    <Loader2 className='mr-2 h-5 w-5 animate-spin' />
+                    Please wait
+                  </>
+                ) : (
+                  <>Get Started</>
+                )}
               </Button>
             </Link>
           </React.Fragment>
