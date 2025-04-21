@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 
+import { Pagination } from '@heroui/react';
+
 import useGetData from '@/lib/service/get-data';
 
 import SignInDialog from '../auth/signin-dialog';
@@ -11,16 +13,23 @@ import SummaryWrapper from './summary-wrapper';
 
 export default function PaperList({
   api,
-  setTotalPage
+  showPagination
 }: {
   api: string;
-  setTotalPage: (page: number) => void;
+  showPagination: boolean;
 }) {
-  const { data: paperData, isLoading: paperDataLoading } = useGetData<any>(api);
-  const { mutate: mutateGetPapers } = useGetData<any>(api);
+  const [page, setPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState<number>(0);
   const [showSignIn, setShowSignIn] = useState(false);
   const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
   const { toast } = useToast();
+
+  const { data: paperData, isLoading: paperDataLoading } = useGetData<any>(
+    showPagination ? api + `?page=${page}&pageSize=3` : api
+  );
+  const { mutate: mutateGetPapers } = useGetData<any>(
+    showPagination ? api + `?page=${page}&pageSize=3` : api
+  );
 
   function showSignInModal(action: string) {
     toast({
@@ -32,7 +41,7 @@ export default function PaperList({
 
   useEffect(() => {
     if (paperData) {
-      setTotalPage(paperData.pagination.totalPages);
+      setTotalPage(paperData?.pagination?.totalPages);
     }
   }, [paperData]);
 
@@ -51,7 +60,7 @@ export default function PaperList({
         </div>
       ) : (
         <div className='flex w-full flex-col gap-4 md:w-[1100px]'>
-          {paperData.data.map((paperItem: any) => {
+          {paperData?.data.map((paperItem: any) => {
             return (
               <div className='flex w-full flex-col gap-4' key={paperItem.id}>
                 <SummaryWrapper
@@ -64,7 +73,7 @@ export default function PaperList({
                   link={
                     DOMAIN +
                     '/results/' +
-                    (paperItem.post_type === 6 ? 'discrepancies' : 'articles') +
+                    (paperItem.post_type === 6 ? 'articles' : 'discrepancies') +
                     '/' +
                     paperItem.id
                   }
@@ -73,6 +82,19 @@ export default function PaperList({
               </div>
             );
           })}
+          {showPagination && (
+            <div className='flex flex-row items-center justify-center pb-4'>
+              <Pagination
+                isCompact
+                showControls
+                showShadow
+                initialPage={1}
+                page={page}
+                total={totalPage}
+                onChange={(newPage) => setPage(newPage)}
+              />
+            </div>
+          )}
         </div>
       )}
     </>

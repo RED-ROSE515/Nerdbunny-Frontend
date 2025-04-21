@@ -83,6 +83,7 @@ export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve
 
 export interface ImageUploadProps {
   getPdfList: () => void;
+  paperType?: string;
   onTriggerRef?: React.MutableRefObject<(() => void) | null>;
 }
 
@@ -135,13 +136,14 @@ export const AnalyzeForm = ({
   );
 };
 
-const PaperInputWrapper = ({ getPdfList, onTriggerRef }: ImageUploadProps) => {
+const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadProps) => {
   const [currentFile, setCurrentFile] = useState<FileUploadProgress | null>(null);
   const [showSignIn, setShowSignIn] = useState(false);
   const [users, setUsers] = useState<Option[]>([]);
   const [visibility, setVisibility] = useState(['nobody']);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [s3_link, setS3Link] = useState('');
+  const [paper_id, setPaperId] = useState('');
   const [paper_url, setPaperUrl] = useState('');
   const [paper_value, setPaperValue] = useState('');
   const [loading, setLoading] = useState(false);
@@ -154,7 +156,7 @@ const PaperInputWrapper = ({ getPdfList, onTriggerRef }: ImageUploadProps) => {
   const [researchPaperUrl, setResearchPaperUrl] = useState('');
   const [selected, setSelected] = useState('equal');
   const [citation, setCitation] = useState('APA');
-  const [summaryOption, setSummaryOption] = useState('basic');
+  const [summaryOption, setSummaryOption] = useState('Basic');
   const [advancedMethods, setAdvancedMethods] = useState<string[]>(['Method']);
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [showVisibilityModal, setShowVisibilityModal] = useState(false);
@@ -248,7 +250,7 @@ const PaperInputWrapper = ({ getPdfList, onTriggerRef }: ImageUploadProps) => {
             omission: '...'
           })} Please wait.`
         });
-        const response = await api.post('/util/upload/add/pdf', formData, {
+        const response = await api.post('/papers/', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           },
@@ -271,7 +273,7 @@ const PaperInputWrapper = ({ getPdfList, onTriggerRef }: ImageUploadProps) => {
           action: (
             <ToastAction
               altText='View Paper'
-              onClick={() => window.open(response.data.attached_link, '_blank')}
+              onClick={() => window.open(response.data.file_url, '_blank')}
             >
               View
             </ToastAction>
@@ -279,7 +281,8 @@ const PaperInputWrapper = ({ getPdfList, onTriggerRef }: ImageUploadProps) => {
           duration: 5000
         });
         await sleep(3000);
-        setS3Link(response.data.attached_link);
+        setS3Link(response.data.file_url);
+        setPaperId(response.data.id);
         setLoading(false);
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -297,6 +300,7 @@ const PaperInputWrapper = ({ getPdfList, onTriggerRef }: ImageUploadProps) => {
         }
         removeFile();
       }
+      setUploadedFile(file);
     }
   }, []);
 
@@ -558,7 +562,7 @@ const PaperInputWrapper = ({ getPdfList, onTriggerRef }: ImageUploadProps) => {
                           <div className='flex flex-row justify-between'>
                             <Select
                               key={'outside'}
-                              className='max-w-[250px]'
+                              className='max-w-[200px]'
                               defaultSelectedKeys={['APA']}
                               label='Citation Format'
                               labelPlacement={'outside'}
@@ -595,7 +599,7 @@ const PaperInputWrapper = ({ getPdfList, onTriggerRef }: ImageUploadProps) => {
                   color='primary'
                   onPress={() => {
                     if (processType === 'ResearchCheck') {
-                      handleAnalyze(s3_link, visibility[0] || '', users, ['ResearchCheck']);
+                      handleAnalyze(paper_id, visibility[0] || '', users, ['ResearchCheck']);
                     } else {
                       handleAnalyze(
                         researchPaperUrl ?? '',

@@ -4,8 +4,8 @@ import React, { createContext, useContext, useState } from 'react';
 
 export interface Speech {
   id: string;
-  post_id: string;
-  post_title: string;
+  paper_id: string;
+  paper_title: string;
   user_id: string;
   speech_type: string;
   voice_type: string;
@@ -21,8 +21,8 @@ interface SpeechContextType {
   speechId: string;
   speechTitle: string;
   speechType: string;
-  speechPosts: Speech[];
-  currentPostId: string;
+  speechPapers: any[];
+  currentPaperId: string;
   currentSummaryType: string;
   currentVoice: string;
   listenedSpeeches: string[];
@@ -31,12 +31,12 @@ interface SpeechContextType {
   speechList: any;
   showIndex: number;
   setSpeechUrl: (url: string) => void;
-  setSpeechPosts: (value: Speech[]) => void;
+  setSpeechPapers: (value: Speech[]) => void;
   setSpeechType: (type: string) => void;
   setShowSpeech: (show: boolean) => void;
   setSpeechId: (id: string) => void;
   setSpeechTitle: (title: string) => void;
-  setCurrentPostId: (id: string) => void;
+  setCurrentPaperId: (id: string) => void;
   setCurrentSummaryType: (type: string) => void;
   setCurrentVoice: (voice: string) => void;
   setListenedSpeeches: (speeches: string[]) => void;
@@ -52,9 +52,9 @@ const SpeechContext = createContext<SpeechContextType>({
   speechId: '',
   speechTitle: '',
   speechType: '',
-  speechPosts: [],
+  speechPapers: [],
   speechList: [],
-  currentPostId: '',
+  currentPaperId: '',
   currentSummaryType: '',
   currentVoice: '',
   listenedSpeeches: [],
@@ -63,13 +63,13 @@ const SpeechContext = createContext<SpeechContextType>({
   showIndex: 0,
   setSpeechList: () => {},
   setPercentage: () => {},
-  setSpeechPosts: () => {},
+  setSpeechPapers: () => {},
   setSpeechUrl: () => {},
   setSpeechType: () => {},
   setShowSpeech: () => {},
   setSpeechId: () => {},
   setSpeechTitle: () => {},
-  setCurrentPostId: () => {},
+  setCurrentPaperId: () => {},
   setCurrentSummaryType: () => {},
   setCurrentVoice: () => {},
   setListenedSpeeches: () => {},
@@ -78,8 +78,8 @@ const SpeechContext = createContext<SpeechContextType>({
 });
 
 export const SpeechProvider = ({ children }: { children: React.ReactNode }) => {
-  const [speechPosts, setSpeechPosts] = useState<Speech[]>([]);
-  const [currentPostId, setCurrentPostId] = useState('');
+  const [speechPapers, setSpeechPapers] = useState<Speech[]>([]);
+  const [currentPaperId, setCurrentPaperId] = useState('');
   const [currentSummaryType, setCurrentSummaryType] = useState('');
   const [showIndex, setShowIndex] = useState<number>(0);
   const [currentVoice, setCurrentVoice] = useState('');
@@ -100,8 +100,8 @@ export const SpeechProvider = ({ children }: { children: React.ReactNode }) => {
         speechId,
         speechTitle,
         speechType,
-        speechPosts,
-        currentPostId,
+        speechPapers,
+        currentPaperId,
         currentSummaryType,
         currentVoice,
         listenedSpeeches,
@@ -111,12 +111,12 @@ export const SpeechProvider = ({ children }: { children: React.ReactNode }) => {
         showIndex,
         setPercentage,
         setSpeechUrl,
-        setSpeechPosts,
+        setSpeechPapers,
         setShowSpeech,
         setSpeechType,
         setSpeechId,
         setSpeechTitle,
-        setCurrentPostId,
+        setCurrentPaperId,
         setCurrentSummaryType,
         setCurrentVoice,
         setListenedSpeeches,

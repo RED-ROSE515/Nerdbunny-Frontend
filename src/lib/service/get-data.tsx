@@ -9,7 +9,7 @@ const fetcher = async <T,>(url: string): Promise<T> => {
   };
   if (user) {
     const userData = JSON.parse(user) as { token: string };
-    headers['Authorization'] = `Toekn ${userData.token}`;
+    headers['Authorization'] = `Token ${userData.token}`;
   }
 
   const response = await fetch(url, { headers });

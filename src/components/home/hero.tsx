@@ -14,6 +14,7 @@ import { useAuth } from '@/contexts/AuthContext';
 export default function Hero() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [isUploadPending, startUploadTransition] = useTransition();
   const { isAuthenticated } = useAuth();
   return (
     <div className='relative flex min-h-[calc(100vh-76px)] items-center'>
@@ -57,9 +58,23 @@ export default function Hero() {
             <Button
               size='lg'
               className='bg-primary px-8 text-primary-foreground hover:bg-primary/90'
+              onClick={() =>
+                startUploadTransition(() => {
+                  router.push('/check');
+                })
+              }
             >
-              <FileText className='mr-2 h-5 w-5' />
-              Upload Paper
+              {isUploadPending ? (
+                <>
+                  <Loader2 className='mr-2 h-5 w-5 animate-spin' />
+                  Please wait
+                </>
+              ) : (
+                <>
+                  <FileText className='mr-2 h-5 w-5' />
+                  Upload Paper
+                </>
+              )}
             </Button>
             {isAuthenticated ? (
               <Button

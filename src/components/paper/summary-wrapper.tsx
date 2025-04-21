@@ -144,7 +144,7 @@ const SummaryWrapper = ({
             </span>
           </Link>
         )}
-        {userData ? (
+        {userData && (
           <UserCard
             userData={userData}
             postDate={postDate}
@@ -156,10 +156,6 @@ const SummaryWrapper = ({
             totalData={totalData}
             className='max-w-fit'
           />
-        ) : (
-          <div className='flex w-full flex-col items-center justify-center'>
-            <span className='text-md'>No user data found</span>
-          </div>
         )}
         <Divider className={`bg-[#E2E2E2] dark:bg-[#2E3E4E]`} />
       </div>

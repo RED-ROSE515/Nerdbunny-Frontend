@@ -3,5 +3,9 @@
 import PaperList from '@/components/paper/paper-list';
 
 export default function ExamplePapers() {
-  return <PaperList api={'papers/example_papers/'} setTotalPage={() => {}} />;
+  return (
+    <div className='flex w-full flex-row items-center justify-center'>
+      <PaperList api={'papers/example_papers/'} showPagination={false} />
+    </div>
+  );
 }

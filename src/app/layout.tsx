@@ -8,6 +8,7 @@ import type { PropsWithChildren } from 'react';
 
 import config from '_config';
 
+import { CircularProgressBar } from '@/components/common/circular-progress-bar';
 import Footer from '@/components/footer';
 import Navbar from '@/components/navbar';
 import RootProvider from '@/components/providers/root';
@@ -36,7 +37,10 @@ export default function RootLayout({ children }: TRootLayout) {
             className={`max-w-screen relative grid min-h-[100dvh] grid-rows-[auto_1fr_auto] overflow-hidden`}
           >
             <Navbar />
-            {children}
+            <div>
+              {children}
+              <CircularProgressBar className='md:text-md h-[60px] w-[60px] text-sm md:h-[100px] md:w-[100px]' />
+            </div>
             <Toaster />
             <Footer />
           </div>

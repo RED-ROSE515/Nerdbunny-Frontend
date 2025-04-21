@@ -20,7 +20,7 @@ const fetcher = (url: string) => {
   });
 };
 export default function useGetItem(paperId: string) {
-  return useSWR(paperId && ` ${API_BASE_URL}/post/${paperId}`, fetcher, {
+  return useSWR(paperId && ` ${API_BASE_URL}/papers/${paperId}`, fetcher, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false

@@ -18,13 +18,15 @@ interface AnalyzeContextType {
   isChecking: boolean;
   processType: string;
   postId: string;
+  paperOwner: any;
   setPostId: (postId: string) => void;
   setProcessType: (processType: string) => void;
+  setPaperOwner: (owner: any) => void;
   handleAnalyze: (
     s3_url: string,
     shower_type: string,
     shower_ids: Option[],
-    analyzeOption?: string[],
+    analyzeOption: string[],
     summaryOption?: string,
     advancedMethods?: string[],
     citation?: string
@@ -47,12 +49,14 @@ const AnalyzeContext = createContext<AnalyzeContextType>({
   analysisResult: '',
   summary: '',
   totalSummary: '',
+  paperOwner: {},
   summaryLoading: false,
   checkLoading: false,
   isChecking: false,
   processType: '',
   postId: '',
   setPostId: () => {},
+  setPaperOwner: () => {},
   setProcessType: () => {},
   handleAnalyze: async () => {},
   resetState: () => {}
@@ -63,6 +67,7 @@ export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve
 export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => {
   const [analysisResult, setAnalysisResult] = useState('');
   const [summary, setSummary] = useState('');
+  const [paperOwner, setPaperOwner] = useState({});
   const [summaryLoading, setSummaryLoading] = useState(false);
   const [checkLoading, setCheckLoading] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
@@ -83,10 +88,10 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
   };
 
   const handleAnalyze = async (
-    s3_url: string,
+    paper_id: string,
     shower_type: string,
     shower_ids: Option[],
-    analyzeOption?: string[],
+    analyzeOption: string[],
     summaryOption?: string,
     advancedMethods?: string[],
     citation?: string
@@ -107,110 +112,80 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
       });
       await sleep(2000);
 
-      setSummary('');
-      setAnalysisResult('');
-      setIsChecking(true);
-      setSummaryLoading(true);
-      const new_shower_ids = shower_ids.map((id) => id.value);
-      const response = await api.post(`post/create`, {
-        post_type: 6,
-        attached_links: [s3_url],
-        process_type: analyzeOption,
-        summary_type: summaryOption,
-        advanced_methods: advancedMethods,
-        citation_format: citation,
-        shower_type:
-          shower_type === 'specific_users'
-            ? 0
-            : shower_type === 'followers'
-              ? 1
-              : shower_type === 'everyone'
-                ? 2
-                : 3,
-        shower_ids: shower_type === 'specific_users' ? new_shower_ids : []
-      });
+      if (analyzeOption[0] === 'ResearchCheck') {
+        setSummary('');
+        setAnalysisResult('');
+        setIsChecking(true);
+        setSummaryLoading(true);
 
-      let currentProgress = 0;
-      const checkStatus = async () => {
-        const pendingResponse = await api.get('post/pending');
-        const isPending = pendingResponse.data && pendingResponse.data.length > 0;
+        let totalDuration = 200000;
+        let interval = 200;
+        let currentProgress = 0;
 
-        if (!isPending) {
-          clearInterval(progressInterval);
-          clearInterval(statusInterval);
-          setProgress(100);
-          setIsChecking(false);
-          setSummaryLoading(false);
-          setCheckLoading(false);
-          setPostId(response.data.id);
-          await toast({
-            title: 'Processing Complete',
-            description: 'Analysis complete for uploaded paper! Click here to view results.',
-            action: (
-              <ToastAction
-                altText='View Result'
-                onClick={() =>
-                  window.open(
-                    processType.includes('ResearchCheck')
-                      ? '/results/discrepancies/' + response.data.id
-                      : '/results/articles/' + response.data.id,
-                    '_blank'
-                  )
-                }
-              >
-                View
-              </ToastAction>
-            ),
-            duration: 5000
-          });
-        }
-      };
+        const intervalId = setInterval(() => {
+          currentProgress += (interval / totalDuration) * 100;
+          setProgress(Math.min(currentProgress, 99));
 
-      // Progress update interval
-      const progressInterval = setInterval(() => {
-        currentProgress += 0.1;
-        setProgress(Math.min(currentProgress, 99));
+          if (currentProgress.toFixed(1) === '25.0') {
+            toast({
+              title: 'Processing at 25%',
+              description: 'Analyzing text and structure of paper.',
+              duration: 5000
+            });
+          }
+          if (currentProgress.toFixed(1) === '50.0') {
+            toast({
+              title: 'Processing at 50%',
+              description: 'Checking for inconsistencies and potential errors in paper.',
+              duration: 5000
+            });
+          }
+          if (currentProgress.toFixed(1) === '75.0') {
+            toast({
+              title: 'Processing at 75%',
+              description: 'Verifying results and generating final report for paper.',
+              duration: 5000
+            });
+          }
+        }, interval);
 
-        if (currentProgress.toFixed(1) === '25.0') {
-          toast({
-            title: 'Processing at 25%',
-            description: 'Analyzing text and structure of paper.',
-            duration: 5000
-          });
-        }
-        if (currentProgress.toFixed(1) === '50.0') {
-          toast({
-            title: 'Processing at 50%',
-            description: 'Checking for inconsistencies and potential errors in paper.',
-            duration: 5000
-          });
-        }
-        if (currentProgress.toFixed(1) === '75.0') {
-          toast({
-            title: 'Processing at 75%',
-            description: 'Verifying results and generating final report for paper.',
-            duration: 5000
-          });
-        }
-      }, 500); // Update progress every 3 seconds
+        const summary_response = await api.get(`/papers/summaries/${paper_id}/get_summary/`);
+        totalDuration = (currentProgress / 40) * totalDuration;
 
-      // Status check interval
-      const statusInterval = setInterval(checkStatus, 10000); // Check status every 10 seconds
-
-      // Cleanup intervals after 10 minutes (600000ms) if not completed
-      setTimeout(() => {
-        clearInterval(progressInterval);
-        clearInterval(statusInterval);
-        resetState();
-        if (currentProgress < 100) {
-          toast({
-            variant: 'destructive',
-            title: 'Error',
-            description: 'Processing timeout. Please try again later.',
-            duration: 5000
-          });
-        }
-      }, 600000);
+        setSummaryLoading(false);
+        setSummary(summary_response.data.summary);
+        setCheckLoading(true);
+        setPaperOwner(summary_response.data.paper_owner);
+        setPostId(summary_response.data.metadata.paper_id);
+        const analysis_response = await api.get(`/papers/${paper_id}/get_analysis/`);
+        const error_summary_response = await api.get(`/papers/${paper_id}/get_error_summary/`);
+        clearInterval(intervalId);
+        setProgress(100);
+        setCheckLoading(false);
+        setSummary(error_summary_response.data.summary);
+        setAnalysisResult(analysis_response.data.analysis);
+        setTotalSummary(analysis_response.data.summary);
+        setIsChecking(false);
+        await toast({
+          title: 'Processing Complete',
+          description: 'Analysis complete for uploaded paper! Click here to view results.',
+          action: (
+            <ToastAction
+              altText='View Paper'
+              onClick={() =>
+                window.open(
+                  '/results/descrepancies/' + error_summary_response.data.metadata.paper_id,
+                  '_blank'
+                )
+              }
+            >
+              View
+            </ToastAction>
+          ),
+          duration: 5000
+        });
+        await sleep(5000);
+      }
     } catch (err) {
       if (axios.isAxiosError(err)) {
         toast({
@@ -220,8 +195,6 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
           duration: 1000
         });
       }
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -230,6 +203,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
       value={{
         analysisResult,
         summary,
+        paperOwner,
         totalSummary,
         summaryLoading,
         checkLoading,
@@ -237,6 +211,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
         isChecking,
         processType,
         setPostId,
+        setPaperOwner,
         setProcessType,
         handleAnalyze,
         resetState
