@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { Spinner } from '@heroui/react';
-import { useTheme } from 'next-themes';
 import { useRouter } from 'next/navigation';
 import { GiArchiveResearch } from 'react-icons/gi';
 import { GrArticle } from 'react-icons/gr';
@@ -23,7 +22,6 @@ type TriggerRefType = {
 };
 
 export default function App() {
-  const { theme } = useTheme();
   const {
     isChecking,
     paperOwner,
@@ -56,9 +54,7 @@ export default function App() {
     {
       id: 'GenerateArticle',
       label: 'Summarise Manuscript',
-      icon: (
-        <GrArticle className={`h-8 w-8 ${theme === 'dark' ? 'text-white' : 'text-slate-400'}`} />
-      ),
+      icon: <GrArticle className={`h-8 w-8 text-slate-400 dark:text-white`} />,
       title: 'Summary and Articles',
       content:
         'Our AI agent creates summaries and articles from academic papers, making complex research accessible to everyone.',
@@ -123,11 +119,9 @@ export default function App() {
         <>
           {showDisclaimer && isAuthenticated && (
             <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4'>
-              <Card
-                className={`max-w-3xl rounded-lg p-6 pt-8 ${theme === 'dark' ? 'bg-[#1C243E]' : 'bg-[#fff]'}`}
-              >
+              <Card className={`max-w-3xl rounded-lg bg-[#fff] p-6 pt-8 dark:bg-[#1C243E]`}>
                 <div
-                  className={`${theme === 'dark' ? 'bg-[#0B1022]' : 'bg-[#ddd]'} max-h-[80vh] overflow-y-auto rounded-lg p-3`}
+                  className={`max-h-[80vh] overflow-y-auto rounded-lg bg-[#ddd] p-3 dark:bg-[#0B1022]`}
                 >
                   <h2 className='mb-4 text-2xl font-bold'>
                     Disclaimer & Upload Guidelines for AI Discrepancies Detection

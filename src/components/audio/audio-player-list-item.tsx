@@ -63,7 +63,7 @@ export default function AudioPlayerListItem({
               setSpeechId(speech_id);
               setShowIndex(index === showIndex ? -1 : index);
             }}
-            className={`${showIndex === index ? 'h-full' : 'h-[115px]'} ${theme === 'dark' ? 'border-1 border-slate-700 bg-[#050506]' : 'bg-[#F6F6F6]'} w-full`}
+            className={`${showIndex === index ? 'h-full' : 'h-[115px]'} w-full bg-[#F6F6F6] dark:border-1 dark:border-slate-700 dark:bg-[#050506]`}
             shadow='lg'
           >
             <CardHeader>

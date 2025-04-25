@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Accordion, AccordionItem, Tooltip } from '@heroui/react';
-import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { FaPlayCircle } from 'react-icons/fa';
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
@@ -29,8 +28,6 @@ const SummaryAccordion = ({
   onPlayVoice,
   link
 }: SummaryAccordionProps) => {
-  const { theme } = useTheme();
-
   return (
     <div className='w-full'>
       <Accordion
@@ -90,7 +87,7 @@ const SummaryAccordion = ({
               />
             }
             indicator={({ isOpen }) => (isOpen ? <IoIosArrowForward /> : <IoIosArrowDown />)}
-            className={`w-full ${theme === 'dark' ? 'bg-[#2E3E4E]' : 'bg-[#FFF]'} items-center md:min-h-[68px]`}
+            className={`w-full items-center bg-[#FFF] dark:bg-[#2E3E4E] md:min-h-[68px]`}
             title={
               <div className='flex w-full flex-row items-center justify-between'>
                 <span className='text-lg' style={{ fontWeight: '500' }}>
@@ -143,9 +140,7 @@ const SummaryAccordion = ({
               </div>
             ) : (
               <div>
-                <p
-                  className={`text-md font-semibold ${theme === 'dark' ? 'text-gray-200' : 'text-slate-800'}`}
-                >
+                <p className={`text-md font-semibold text-slate-800 dark:text-gray-200`}>
                   {level.content}
                 </p>
               </div>

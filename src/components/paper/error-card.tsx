@@ -51,7 +51,7 @@ const ErrorCard: React.FC<ErrorCardProps> = ({ error, className }) => {
     <div>
       <div className='my-4 flex flex-row items-center justify-between'>
         <h2
-          className={`text-md text-start font-bold capitalize sm:text-3xl ${theme === 'dark' ? 'text-gray-200' : 'text-slate-800'}`}
+          className={`text-md text-start font-bold capitalize text-slate-800 dark:text-gray-200 sm:text-3xl`}
         >
           {error.type} Errors
         </h2>
@@ -67,7 +67,7 @@ const ErrorCard: React.FC<ErrorCardProps> = ({ error, className }) => {
         {findingsList.map((finding, index) => (
           <div
             key={index}
-            className={`relative flex w-full items-start justify-between gap-2 overflow-hidden rounded border-1 p-2 ${theme === 'dark' ? 'text-gray-300' : 'text-slate-700'} ${getBorderColorClass(
+            className={`relative flex w-full items-start justify-between gap-2 overflow-hidden rounded border-1 p-2 text-slate-700 dark:text-gray-300 ${getBorderColorClass(
               finding.severity
             )} ${getBackgroundColorClass(finding.severity)}`}
           >

@@ -42,9 +42,7 @@ const TechnicalAssessmentSection = ({ technicalAssessment }: TechnicalAssessment
 
   return (
     <div>
-      <span
-        className={`text-md w-full md:w-auto md:text-lg ${theme === 'dark' ? 'text-[#AAB5C7]' : 'text-[#828489]'}`}
-      >
+      <span className={`text-md w-full text-[#828489] dark:text-[#AAB5C7] md:w-auto md:text-lg`}>
         Technical Assessment:
       </span>
       <div className='mt-2 flex flex-wrap gap-2'>

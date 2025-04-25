@@ -223,12 +223,10 @@ const UserCard = ({
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent
-                    className={`min-w-[150px] border-2 ${theme === 'dark' ? 'border-[#4B5C6E] bg-[#2E3E4E]' : 'border-[#A4A4A4] bg-[#F7F7F7]'}`}
+                    className={`min-w-[150px] border-2 border-[#A4A4A4] bg-[#F7F7F7] dark:border-[#4B5C6E] dark:bg-[#2E3E4E]`}
                   >
                     {() => (
-                      <div
-                        className={`flex w-full flex-col gap-2 ${theme === 'dark' ? 'bg-[#2E3E4E]' : 'bg-[#F7F7F7]'}`}
-                      >
+                      <div className={`flex w-full flex-col gap-2 bg-[#F7F7F7] dark:bg-[#2E3E4E]`}>
                         <Button
                           startContent={<MdOutlineContentCopy size={24} />}
                           className='hover:[#3E5061] w-full'
@@ -253,7 +251,7 @@ const UserCard = ({
                         </Button>
                         {input_tokens && output_tokens ? (
                           <Card
-                            className={`md:text-md flex w-full flex-row items-center justify-center space-x-4 p-2 text-sm md:p-4 ${theme === 'dark' ? 'bg-[#242F3C]' : 'bg-gray-200'}`}
+                            className={`md:text-md flex w-full flex-row items-center justify-center space-x-4 bg-gray-200 p-2 text-sm dark:bg-[#242F3C] md:p-4`}
                           >
                             <p>{`IN: ${commify(input_tokens)}`}</p>
                             <p>|</p>

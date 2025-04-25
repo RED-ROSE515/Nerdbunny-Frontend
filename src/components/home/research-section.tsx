@@ -76,7 +76,7 @@ const ResearchSection = () => {
           }
         >
           <strong
-            className={`flex flex-row items-center justify-center whitespace-pre-wrap text-center text-[16px] font-medium leading-none tracking-tight ${theme === 'dark' ? 'text-white' : 'text-white'}`}
+            className={`flex flex-row items-center justify-center whitespace-pre-wrap text-center text-[16px] font-medium leading-none tracking-tight text-white`}
           >
             {'Start Your Free Trial'}
             <FaArrowRight className='ml-2' />

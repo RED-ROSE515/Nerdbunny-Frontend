@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 
 import { Button, Card, CardBody, CardHeader } from '@heroui/react';
-import { useTheme } from 'next-themes';
 
 import { useSpeech } from '@/contexts/SpeechContext';
 import api from '@/lib/utils/api';
@@ -12,7 +11,6 @@ import Loader from '../common/loader';
 import AudioPlayerListItem from './audio-player-list-item';
 
 export default function AudioPlayerList({ className, setCurrentSummary, togglePlay, onOpen }: any) {
-  const { theme } = useTheme();
   const { speechPapers, currentPaperId, setSpeechPapers, showIndex, setShowIndex } = useSpeech();
   const [canLoad, setCanLoad] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -54,7 +52,7 @@ export default function AudioPlayerList({ className, setCurrentSummary, togglePl
   return (
     <Card
       isBlurred
-      className={`h-full ${theme === 'dark' ? 'border-1 border-[#3C6B99] bg-[#050506]' : 'bg-[#F6F6F6]'} h-full w-full ${className}`}
+      className={`h-full w-full bg-[#F6F6F6] dark:border-1 dark:border-[#3C6B99] dark:bg-[#050506] ${className}`}
       shadow='lg'
     >
       <CardHeader>

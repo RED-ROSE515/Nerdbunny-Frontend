@@ -115,7 +115,7 @@ export default function AudioPlayerDetail({
   return (
     <Card
       isBlurred
-      className={`h-full ${theme === 'dark' ? 'bg-[#050506]' : 'bg-[#F6F6F6]'} h-full w-full`}
+      className={`h-full w-full bg-[#F6F6F6] dark:bg-[#050506]`}
       classNames={{
         base: 'overflow-hidden border-none p-0',
         body: 'p-1'
@@ -306,9 +306,7 @@ export default function AudioPlayerDetail({
                     </div>
                   ) : (
                     <div>
-                      <p
-                        className={`text-sm font-semibold ${theme === 'dark' ? 'text-gray-200' : 'text-slate-800'}`}
-                      >
+                      <p className={`text-sm font-semibold text-slate-800 dark:text-gray-200`}>
                         {summaryType.content}
                       </p>
                     </div>
