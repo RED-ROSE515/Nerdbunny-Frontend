@@ -49,7 +49,7 @@ export default function RootLayout({ children }: TRootLayout) {
                 <Footer />
               </div>
             </SidebarInset>
-            <AppSidebar side='right' />
+            {/* <AppSidebar side='right' /> */}
           </SidebarProvider>
         </RootProvider>
       </body>

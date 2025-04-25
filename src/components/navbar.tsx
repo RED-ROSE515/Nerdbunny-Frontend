@@ -15,7 +15,8 @@ import { useAuth } from '@/contexts/AuthContext';
 
 import UserMenu from './auth/user-menu';
 import ThemeToggle from './theme-toggle';
-import { SidebarTrigger } from './ui/sidebar';
+
+// import { SidebarTrigger } from './ui/sidebar';
 
 export default function Navbar() {
   const { isAuthenticated } = useAuth();
@@ -116,7 +117,7 @@ export default function Navbar() {
           </React.Fragment>
         )}
       </div>
-      <SidebarTrigger />
+      {/* <SidebarTrigger /> */}
       <Button variant='ghost' size='icon' className='text-foreground md:hidden'>
         <Menu className='h-6 w-6' />
       </Button>
