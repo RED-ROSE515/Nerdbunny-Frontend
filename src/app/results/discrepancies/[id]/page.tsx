@@ -7,6 +7,19 @@ import AnalysisResultWrapper from '@/components/paper/analysis-result-wrapper';
 import SummaryWrapper from '@/components/paper/summary-wrapper';
 import useGetData from '@/lib/service/get-data';
 
+/**
+ * Renders a page displaying detailed information about a paper,
+ * including its summary and analysis results.
+ *
+ * @param {{params: {id: string}}} props - The properties object containing
+ * the route parameters, specifically the paper ID.
+ *
+ * @returns {JSX.Element} A React component that fetches and displays the
+ * paper's summary and analysis results. If the data is still loading,
+ * a Loader component is displayed. Once loaded, it displays the SummaryWrapper
+ * and AnalysisResultWrapper components with the relevant data.
+ */
+
 export default function App({ params }: any) {
   const resolvedParams = use(params);
   const { id } = resolvedParams as any;

@@ -76,7 +76,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
   const [processType, setProcessType] = useState('ResearchCheck');
   const { setLoading, setProgress } = useLoading();
   const { toast } = useToast();
-
+  const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
   const resetState = () => {
     setAnalysisResult('');
     setSummary('');
@@ -88,7 +88,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
   };
 
   const handleAnalyze = async (
-    paper_id: string,
+    paper_url: string,
     shower_type: string,
     shower_ids: Option[],
     analyzeOption: string[],
@@ -99,6 +99,9 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
     try {
       setLoading(true);
       setProgress(0);
+      const paper_response = await api.post(`/papers/`, { paper_url: paper_url });
+      const paper_id = paper_response.data.id;
+
       await toast({
         title: 'Queued for Processing',
         description: 'Your file has been uploaded and is now in the queue for AI analysis.',
@@ -150,15 +153,15 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
         }, interval);
 
         const summary_response = await api.get(`/papers/summaries/${paper_id}/get_summary/`);
-        totalDuration = (currentProgress / 40) * totalDuration;
+        totalDuration = (currentProgress / 35) * totalDuration;
 
-        setSummaryLoading(false);
         setSummary(summary_response.data.summary);
-        setCheckLoading(true);
         setPaperOwner(summary_response.data.paper_owner);
-        setPostId(summary_response.data.metadata.paper_id);
+        // setPostId(summary_response.data.metadata.paper_id);
+
         const analysis_response = await api.get(`/papers/${paper_id}/get_analysis/`);
         const error_summary_response = await api.get(`/papers/${paper_id}/get_error_summary/`);
+
         clearInterval(intervalId);
         setProgress(100);
         setCheckLoading(false);
@@ -185,6 +188,66 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
           duration: 5000
         });
         await sleep(5000);
+        window.location.href =
+          DOMAIN + '/results/descrepancies/' + error_summary_response.data.metadata.paper_id;
+      } else if (analyzeOption[0] === 'GenerateArticle') {
+        setIsChecking(true);
+
+        let totalDuration = 200000;
+        let interval = 200;
+        let currentProgress = 0;
+
+        const intervalId = setInterval(() => {
+          currentProgress += (interval / totalDuration) * 100;
+          setProgress(Math.min(currentProgress, 99));
+
+          if (currentProgress.toFixed(1) === '25.0') {
+            toast({
+              title: 'Processing at 25%',
+              description: 'Analyzing text and structure of paper.',
+              duration: 5000
+            });
+          }
+          if (currentProgress.toFixed(1) === '50.0') {
+            toast({
+              title: 'Processing at 50%',
+              description: 'Checking for inconsistencies and potential errors in paper.',
+              duration: 5000
+            });
+          }
+          if (currentProgress.toFixed(1) === '75.0') {
+            toast({
+              title: 'Processing at 75%',
+              description: 'Verifying results and generating final report for paper.',
+              duration: 5000
+            });
+          }
+        }, interval);
+
+        const article_response = await api.post(`/papers/articles/${paper_id}/get_article/`, {
+          summary_type: summaryOption,
+          advanced_methods: advancedMethods,
+          citation_format: citation
+        });
+
+        clearInterval(intervalId);
+        setProgress(100);
+        setIsChecking(false);
+        await toast({
+          title: 'Processing Complete',
+          description: 'Analysis complete for uploaded paper! Click here to view results.',
+          action: (
+            <ToastAction
+              altText='View Paper'
+              onClick={() => window.open('/results/articles/' + article_response.data.id, '_blank')}
+            >
+              View
+            </ToastAction>
+          ),
+          duration: 5000
+        });
+        await sleep(5000);
+        window.location.href = DOMAIN + '/results/articles/' + article_response.data.id;
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {

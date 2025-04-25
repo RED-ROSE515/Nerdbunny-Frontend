@@ -49,6 +49,16 @@ const VoiceGenerationDrawer = ({
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
+  /**
+   * Generate speech for the given paper id and summary type.
+   *
+   * 1. Make a POST request to the server to generate speech.
+   * 2. On success, update the speech URL, ID, and title.
+   * 3. Show a toast notification with the cost of the speech.
+   * 4. Close the drawer.
+   * 5. If the user is not authenticated, show a toast notification to sign in.
+   * 6. If an error occurs, show a toast notification with an error message.
+   */
   const generateSpeech = async () => {
     try {
       setLoading(true);

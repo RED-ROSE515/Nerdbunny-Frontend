@@ -10,6 +10,9 @@ const nextConfig = {
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true
+  },
+  images: {
+    domains: ['s3.ap-southeast-1.amazonaws.com']
   }
 } satisfies NextConfig;
 

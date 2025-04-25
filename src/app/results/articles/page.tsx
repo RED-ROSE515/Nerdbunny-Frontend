@@ -1,20 +1,18 @@
 'use client';
 
 import Loader from '@/components/common/loader';
-import Statistics from '@/components/home/statistics';
-import PaperSummaryList from '@/components/paper/paper-summary-list';
+import PaperArticleList from '@/components/paper/paper-article-list';
 import SpeechBar from '@/components/speech/speech-bar';
 import { useAuth } from '@/contexts/AuthContext';
 
 /**
- * Page displaying the user's papers and statistics.
+ * Page displaying the list of articles for the current user.
  *
- * If the user is authenticated, it displays statistics and a list of paper summaries
+ * If the user is authenticated, it displays a list of articles
  * with pagination. Otherwise, it displays a loader.
  *
  * @returns {JSX.Element} The component
  */
-
 export default function MyPapers() {
   const { isAuthenticated } = useAuth();
 
@@ -22,8 +20,7 @@ export default function MyPapers() {
     <div className='mt-2 flex w-full flex-row items-center justify-center md:mt-12'>
       {isAuthenticated ? (
         <div className='flex flex-col justify-start gap-12'>
-          <Statistics />
-          <PaperSummaryList api={`papers/`} showPagination={true} />
+          <PaperArticleList api={`papers/articles/get_results/`} showPagination={true} />
         </div>
       ) : (
         <div>

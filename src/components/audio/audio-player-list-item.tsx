@@ -35,18 +35,18 @@ export default function AudioPlayerListItem({
   useEffect(() => {
     if (data) {
       console.log(data);
-      setPaperOwner(data.paper.paper_owner);
+      setPaperOwner(data.paper_owner);
       setResult(data.paper);
       const summaryData = {
-        ...data.paper.paper_summary.summary_data,
-        paper_id: data.paper.id,
-        paper_title: data.paper.title
+        ...data.paper_summary.summary_data,
+        paper_id: data.id,
+        paper_title: data.title
         // attached_links: data.attached_links
       };
-      setPaperSpeeches(data.paper.paper_speeches);
+      setPaperSpeeches(data.paper_speeches);
       setSummary(summaryData);
-      setPostDate(data.paper.updated_at);
-      setTitle(data.paper.title);
+      setPostDate(data.updated_at);
+      setTitle(data.title);
     }
   }, [data]);
 

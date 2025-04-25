@@ -250,7 +250,7 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
             omission: '...'
           })} Please wait.`
         });
-        const response = await api.post('/papers/', formData, {
+        const response = await api.post('/papers/upload_paper/', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           },
@@ -282,7 +282,6 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
         });
         await sleep(3000);
         setS3Link(response.data.file_url);
-        setPaperId(response.data.id);
         setLoading(false);
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -599,10 +598,10 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
                   color='primary'
                   onPress={() => {
                     if (processType === 'ResearchCheck') {
-                      handleAnalyze(paper_id, visibility[0] || '', users, ['ResearchCheck']);
+                      handleAnalyze(s3_link, visibility[0] || '', users, ['ResearchCheck']);
                     } else {
                       handleAnalyze(
-                        researchPaperUrl ?? '',
+                        s3_link,
                         visibility[0] || '',
                         users,
                         ['GenerateArticle'],

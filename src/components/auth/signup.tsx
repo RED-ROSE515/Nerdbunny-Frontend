@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
@@ -15,6 +16,7 @@ export default function SignUp() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isEmail, setIsEmail] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,16 +34,50 @@ export default function SignUp() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className='flex flex-col justify-center gap-4'>
+            <div className={`flex-col justify-center gap-4 ${isEmail ? 'hidden' : 'flex'}`}>
               <Social />
+              <div className='space-y-2'>
+                <Label htmlFor='email' className='text-sm font-medium'>
+                  Email
+                </Label>
+                <div className='group'>
+                  <Input
+                    id='email'
+                    name='email'
+                    type='email'
+                    placeholder='you@example.com'
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={`w-full rounded-lg border border-gray-200 bg-gray-200 px-4 py-2 placeholder-gray-100 transition-all duration-300 focus:border-transparent focus:bg-gradient-to-r focus:from-blue-500/20 focus:to-purple-600/20 focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:placeholder-gray-500`}
+                    required
+                  />
+                </div>
+              </div>
+
+              <Button
+                type='submit'
+                onClick={() => setIsEmail(true)}
+                className='w-full rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900'
+              >
+                Create Account
+              </Button>
+            </div>
+            <div className={`flex-col justify-center gap-4 ${isEmail ? 'flex' : 'hidden'}`}>
               <form onSubmit={handleSubmit} className='space-y-6'>
                 <div className='space-y-2'>
+                  <button
+                    onClick={() => setIsEmail(false)}
+                    className='my-2 flex cursor-pointer flex-row items-center justify-start gap-1 self-start text-sm text-[#0A0A0A] opacity-50 transition ease-in-out hover:opacity-100 dark:text-white'
+                  >
+                    <ChevronLeft size={16} /> Back
+                  </button>
                   <Label htmlFor='name' className='text-sm font-medium'>
                     Full Name
                   </Label>
                   <div className='group'>
                     <Input
                       id='name'
+                      name='name'
                       type='text'
                       placeholder='John Doe'
                       value={name}
@@ -58,6 +94,7 @@ export default function SignUp() {
                   <div className='group'>
                     <Input
                       id='email'
+                      name='email'
                       type='email'
                       placeholder='you@example.com'
                       value={email}
@@ -74,6 +111,7 @@ export default function SignUp() {
                   <div className='group'>
                     <Input
                       id='password'
+                      name='password'
                       type='password'
                       placeholder='••••••••'
                       value={password}

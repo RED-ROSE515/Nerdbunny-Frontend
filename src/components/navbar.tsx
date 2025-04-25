@@ -3,7 +3,7 @@
 import React, { useTransition } from 'react'; // Added import for React
 
 import { motion } from 'framer-motion';
-import { Loader2, Menu } from 'lucide-react';
+import { FileAudio, FileChartColumn, Loader2, Menu, ScanLine, TextCursorInput } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -15,6 +15,7 @@ import { useAuth } from '@/contexts/AuthContext';
 
 import UserMenu from './auth/user-menu';
 import ThemeToggle from './theme-toggle';
+import { SidebarTrigger } from './ui/sidebar';
 
 export default function Navbar() {
   const { isAuthenticated } = useAuth();
@@ -48,11 +49,22 @@ export default function Navbar() {
         </div>
       </Link>
 
-      <div className='hidden items-center space-x-8 md:flex'>
-        {/* <NavLink href='/features'>Features</NavLink>
-        <NavLink href='/how-it-works'>How it Works</NavLink>
-        <NavLink href='/examples'>Examples</NavLink>
-        <NavLink href='/pricing'>Pricing</NavLink> */}
+      <div className='hidden items-center space-x-4 md:flex'>
+        <NavLink href='/ai-editor'>
+          <TextCursorInput className='mr-2' />
+          AI Editor
+        </NavLink>
+        <NavLink href='/speeches'>
+          <FileAudio className='mr-2' /> Past Recordings
+        </NavLink>
+        <NavLink href='/check'>
+          <ScanLine className='mr-2' />
+          Analyze
+        </NavLink>
+        <NavLink href='/results/eddii'>
+          <FileChartColumn className='mr-2' />
+          EDDII
+        </NavLink>
       </div>
 
       <div className='hidden items-center space-x-4 md:flex'>
@@ -104,7 +116,7 @@ export default function Navbar() {
           </React.Fragment>
         )}
       </div>
-
+      <SidebarTrigger />
       <Button variant='ghost' size='icon' className='text-foreground md:hidden'>
         <Menu className='h-6 w-6' />
       </Button>
@@ -112,11 +124,19 @@ export default function Navbar() {
   );
 }
 
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+function NavLink({
+  href,
+  children,
+  className
+}: {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
     <Link
       href={href}
-      className='group relative text-muted-foreground transition-colors hover:text-foreground'
+      className={`group relative flex flex-row justify-between text-muted-foreground transition-colors hover:text-foreground ${className}`}
     >
       {children}
       <span className='absolute -bottom-1 left-0 h-0.5 w-0 bg-primary transition-all group-hover:w-full' />

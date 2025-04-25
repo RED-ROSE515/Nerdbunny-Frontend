@@ -13,7 +13,7 @@ export default function Social() {
   const { toast } = useToast();
 
   const [loadingGoogle, setLoadingGoogle] = useState(false);
-  const [loadingFacebook, setLoadingFacebook] = useState(false);
+  const [loadingApple, setLoadingApple] = useState(false);
   const [loadingTwitter, setLoadingTwitter] = useState(false);
 
   const handleSocialSignIn = async (provider: string) => {
@@ -34,7 +34,27 @@ export default function Social() {
 
   return (
     <div className='flex w-full flex-col justify-center space-y-4'>
-      <div className='grid grid-cols-3 gap-2'>
+      <div className='grid grid-cols-1 gap-2'>
+        <Button
+          variant='outline'
+          className='w-full'
+          onClick={() => {
+            setLoadingTwitter(true);
+            handleSocialSignIn('twitter');
+          }}
+        >
+          {loadingTwitter && <Loader2 className='mr-2 animate-spin' size={18} />}
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            fill='currentColor'
+            viewBox='0 0 24 24'
+            aria-hidden='true'
+            focusable='false'
+          >
+            <path d='M8 2H1l8.26 11.015L1.45 22H4.1l6.388-7.349L16 22h7l-8.608-11.478L21.8 2h-2.65l-5.986 6.886zm9 18L5 4h2l12 16z'></path>
+          </svg>
+          Continue with Twitter
+        </Button>
         <Button
           variant='outline'
           className='w-full'
@@ -64,45 +84,29 @@ export default function Social() {
               fill='#EA4335'
             />
           </svg>
-          Google
+          Continue with Google
         </Button>
         <Button
           variant='outline'
           className='w-full'
           onClick={() => {
-            setLoadingFacebook(true);
-            handleSocialSignIn('facebook');
+            setLoadingApple(true);
+            handleSocialSignIn('apple');
           }}
         >
-          {loadingFacebook && <Loader2 className='mr-2 animate-spin' size={18} />}
+          {loadingApple && <Loader2 className='mr-2 animate-spin' size={18} />}
           <svg
             xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 24 24'
-            className='mr-2 h-5 w-5'
-            fill='#1877F2'
+            width='200'
+            height='200'
+            viewBox='0 0 22.773 22.773'
+            aria-hidden='true'
+            className='fill-black dark:fill-white'
+            focusable='false'
           >
-            <path d='M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z' />
+            <path d='M15.769 0h.162c.13 1.606-.483 2.806-1.228 3.675-.731.863-1.732 1.7-3.351 1.573-.108-1.583.506-2.694 1.25-3.561C13.292.879 14.557.16 15.769 0M20.67 16.716v.045c-.455 1.378-1.104 2.559-1.896 3.655-.723.995-1.609 2.334-3.191 2.334-1.367 0-2.275-.879-3.676-.903-1.482-.024-2.297.735-3.652.926h-.462c-.995-.144-1.798-.932-2.383-1.642-1.725-2.098-3.058-4.808-3.306-8.276v-1.019c.105-2.482 1.311-4.5 2.914-5.478.846-.52 2.009-.963 3.304-.765.555.086 1.122.276 1.619.464.471.181 1.06.502 1.618.485.378-.011.754-.208 1.135-.347 1.116-.403 2.21-.865 3.652-.648 1.733.262 2.963 1.032 3.723 2.22-1.466.933-2.625 2.339-2.427 4.74.176 2.181 1.444 3.457 3.028 4.209'></path>
           </svg>
-          Facebook
-        </Button>
-        <Button
-          variant='outline'
-          className='w-full'
-          onClick={() => {
-            setLoadingTwitter(true);
-            handleSocialSignIn('twitter');
-          }}
-        >
-          {loadingTwitter && <Loader2 className='mr-2 animate-spin' size={18} />}
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 24 24'
-            className='mr-2 h-5 w-5'
-            fill='#1DA1F2'
-          >
-            <path d='M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z' />
-          </svg>
-          Twitter
+          Continue with Apple
         </Button>
       </div>
 

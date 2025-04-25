@@ -11,6 +11,7 @@ import { MdPlagiarism } from 'react-icons/md';
 
 import SignInDialog from '@/components/auth/signin-dialog';
 import Loader from '@/components/common/loader';
+import AnalysisResultWrapper from '@/components/paper/analysis-result-wrapper';
 import PaperInputWrapper from '@/components/paper/paper-input-wrapper';
 import SummaryWrapper from '@/components/paper/summary-wrapper';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -23,7 +24,16 @@ type TriggerRefType = {
 
 export default function App() {
   const { theme } = useTheme();
-  const { isChecking, paperOwner, postId, processType, setProcessType, summary } = useAnalyze();
+  const {
+    isChecking,
+    paperOwner,
+    postId,
+    processType,
+    setProcessType,
+    summary,
+    analysisResult,
+    totalSummary
+  } = useAnalyze();
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const [showSignIn, setShowSignIn] = useState(false);
@@ -236,13 +246,13 @@ export default function App() {
             <div className='h-full w-full items-start'>
               {hasAccepted ? (
                 isChecking ? (
-                  <div className='flex w-full flex-row items-center justify-center'>
+                  <div className='flex w-full flex-col items-center justify-center'>
                     <Loader />
                     {summary && (
-                      <div>
+                      <div className='my-8 w-[1100px]'>
                         <SummaryWrapper
                           summary={summary}
-                          reportPost={() => alert(`report ${summary.metadata.id}`)}
+                          reportPost={() => alert(`report ${summary.metadata.paper_id}`)}
                           totalData={summary}
                           postDate={summary.post_date}
                           speechData={[]}
@@ -251,6 +261,12 @@ export default function App() {
                           userData={paperOwner}
                         />
                       </div>
+                    )}
+                    {analysisResult && (
+                      <AnalysisResultWrapper
+                        results={analysisResult}
+                        total_summary={totalSummary}
+                      />
                     )}
                   </div>
                 ) : (

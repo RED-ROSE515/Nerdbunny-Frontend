@@ -50,7 +50,7 @@ import SpeechPlayer from '../speech/speech-player';
 import AdPlayer from './ad-player';
 import AudioPlayerList from './audio-player-list';
 
-export default function AudioPlayer({ id }: any) {
+export default function AudioPlayer({ id, autoplay }: any) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { isMobile } = useDeviceCheck();
   const [time, setTime] = useState('0:00');
@@ -88,7 +88,6 @@ export default function AudioPlayer({ id }: any) {
   const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
 
   const [showSignIn, setShowSignIn] = useState(false);
-  const NOBLEBLOCKS_DOMAIN = process.env.NEXT_PUBLIC_NOBLEBLOCKS_DOMAIN;
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -149,12 +148,15 @@ export default function AudioPlayer({ id }: any) {
   }, [resolvedTheme]);
 
   useEffect(() => {
+    setIsPlaying(autoplay);
+  }, [autoplay]);
+
+  useEffect(() => {
     const index = speechPapers.findIndex((speechPaper) => speechPaper.paper_id === currentPaperId);
     setPaperIndex(index);
   }, [currentPaperId]);
   useEffect(() => {
     if (speechData) {
-      console.log(speechData);
       const initialSpeech = speechData.data.speeches[0];
       setSpeechType(initialSpeech.speech_type);
       setSpeechUrl(initialSpeech.audio_url);
@@ -290,8 +292,8 @@ export default function AudioPlayer({ id }: any) {
   }, []);
 
   return (
-    <div className='flex h-full w-full flex-col-reverse justify-start gap-4 p-0 md:flex-row md:justify-center md:p-4'>
-      <div className='flex h-full w-full flex-row items-center justify-center overflow-hidden md:w-[50%]'>
+    <div className='flex h-full w-full flex-col-reverse justify-start gap-4 p-0 md:flex-row md:justify-center'>
+      <div className='flex h-full w-full flex-row items-center justify-center overflow-hidden md:w-[65%]'>
         <SignInDialog isOpen={showSignIn} onClose={() => setShowSignIn(false)} />
         <Card
           isBlurred
