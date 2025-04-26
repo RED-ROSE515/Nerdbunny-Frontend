@@ -15,12 +15,13 @@ export default function Social() {
   const [loadingGoogle, setLoadingGoogle] = useState(false);
   const [loadingApple, setLoadingApple] = useState(false);
   const [loadingTwitter, setLoadingTwitter] = useState(false);
+  const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
 
   const handleSocialSignIn = async (provider: string) => {
     try {
       // Use direct URL navigation instead of the signIn function
       signIn(provider, {
-        callbackUrl: 'http://localhost:3000/auth/callback/' + provider
+        callbackUrl: DOMAIN + '/auth/callback/' + provider
       });
     } catch (error) {
       console.error(`${error}`);
