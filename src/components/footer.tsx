@@ -13,6 +13,7 @@ import { MdLogin } from 'react-icons/md';
 import { useAuth } from '@/contexts/AuthContext';
 
 import { MusicIcon, TelegramSvg, TiktokSvg, TwitterSvg } from './common/svgs';
+import { NavLink } from './navbar';
 
 export default function Footer() {
   const { isAuthenticated, user } = useAuth();
@@ -121,16 +122,24 @@ export default function Footer() {
             className={`flex w-full flex-row items-center justify-center gap-1 text-[14px] text-slate-800 dark:text-[#697078] md:gap-[16px] md:text-sm`}
           >
             <div className='flex flex-row items-center justify-center gap-10'>
-              <a href='https://nerdbunny.gitbook.io/nerdbunny'>Whitepaper</a>
-              <a href='https://nerdbunny.gitbook.io/nerdbunny/about-nerdbunny'>About Us</a>
-              <a href='https://nerdbunny.gitbook.io/nerdbunny/our-team'>Our Team</a>
-              <a href='https://nerdbunny.gitbook.io/nerdbunny/tokenomics'>Tokenomics</a>
-              <a href='https://nerdbunny.gitbook.io/nerdbunny/roadmap'>Roadmap</a>
-              <a href='https://nerdbunny.gitbook.io/nerdbunny/faq'>FAQ</a>
-              <a href='https://nerdbunny.gitbook.io/nerdbunny/disclaimer'>Disclaimer</a>
-              <a href='https://nerdbunny.gitbook.io/nerdbunny/cookie-policy'>Cookie Policy</a>
-              <a href='https://nerdbunny.gitbook.io/nerdbunny/terms'>Terms of Service</a>
-              <a href='https://nerdbunny.gitbook.io/nerdbunny/privacy-policy'>Privacy Policy</a>
+              <NavLink href='https://nerdbunny.gitbook.io/nerdbunny'>Whitepaper</NavLink>
+              <NavLink href='https://nerdbunny.gitbook.io/nerdbunny/about-nerdbunny'>
+                About Us
+              </NavLink>
+              <NavLink href='https://nerdbunny.gitbook.io/nerdbunny/our-team'>Our Team</NavLink>
+              <NavLink href='https://nerdbunny.gitbook.io/nerdbunny/tokenomics'>Tokenomics</NavLink>
+              <NavLink href='https://nerdbunny.gitbook.io/nerdbunny/roadmap'>Roadmap</NavLink>
+              <NavLink href='https://nerdbunny.gitbook.io/nerdbunny/faq'>FAQ</NavLink>
+              <NavLink href='https://nerdbunny.gitbook.io/nerdbunny/disclaimer'>Disclaimer</NavLink>
+              <NavLink href='https://nerdbunny.gitbook.io/nerdbunny/cookie-policy'>
+                Cookie Policy
+              </NavLink>
+              <NavLink href='https://nerdbunny.gitbook.io/nerdbunny/terms'>
+                Terms of Service
+              </NavLink>
+              <NavLink href='https://nerdbunny.gitbook.io/nerdbunny/privacy-policy'>
+                Privacy Policy
+              </NavLink>
             </div>
           </div>
 

@@ -2,22 +2,38 @@
 
 import { useState } from 'react';
 
+import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useAuth } from '@/contexts/AuthContext';
+import api from '@/lib/utils/api';
 
+import { useToast } from '../hooks/use-toast';
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
 import Social from './social';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const { toast } = useToast();
+  const { login } = useAuth();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
-    console.log('Form submitted:', { email, password });
+    try {
+      await login(email, password);
+      toast({ title: 'Sign In', description: 'Successfully signed in to Nerdbunny.' });
+      router.push('/');
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
   };
 
   return (
@@ -70,7 +86,14 @@ export default function SignIn() {
                   type='submit'
                   className='w-full rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900'
                 >
-                  Sign In
+                  {loading ? (
+                    <>
+                      <Loader2 className='mr-2 h-5 w-5 animate-spin' />
+                      Please wait
+                    </>
+                  ) : (
+                    <span>Sign In</span>
+                  )}
                 </Button>
               </form>
             </div>

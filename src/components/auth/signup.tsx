@@ -2,25 +2,43 @@
 
 import { useState } from 'react';
 
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import api from '@/lib/utils/api';
 
+import { useToast } from '../hooks/use-toast';
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
 import Social from './social';
 
 export default function SignUp() {
+  const { toast } = useToast();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isEmail, setIsEmail] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
-    console.log('Form submitted:', { name, email, password });
+    try {
+      const response = await api.post('/auth/signup/', {
+        first_name: name,
+        user_name: name,
+        email,
+        password
+      });
+      toast({ title: 'Sign Up', description: 'Successfully created an account.' });
+      router.push('/auth/signin');
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
   };
 
   return (
@@ -125,7 +143,14 @@ export default function SignUp() {
                   type='submit'
                   className='w-full rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900'
                 >
-                  Create Account
+                  {loading ? (
+                    <>
+                      <Loader2 className='mr-2 h-5 w-5 animate-spin' />
+                      Please wait
+                    </>
+                  ) : (
+                    <span>Create Account</span>
+                  )}
                 </Button>
               </form>
             </div>

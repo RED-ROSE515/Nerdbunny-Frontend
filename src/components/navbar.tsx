@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 
 import UserMenu from './auth/user-menu';
+import { MenuBar } from './home/menu-bar';
 import ThemeToggle from './theme-toggle';
 
 // import { SidebarTrigger } from './ui/sidebar';
@@ -50,8 +51,8 @@ export default function Navbar() {
         </div>
       </Link>
 
-      <div className='hidden items-center space-x-4 md:flex'>
-        <NavLink href='/ai-editor'>
+      <div className='hidden items-center md:flex'>
+        {/* <NavLink href='/ai-editor'>
           <TextCursorInput className='mr-2' />
           AI Editor
         </NavLink>
@@ -65,7 +66,8 @@ export default function Navbar() {
         <NavLink href='/results/eddii'>
           <FileChartColumn className='mr-2' />
           EDDII
-        </NavLink>
+        </NavLink> */}
+        <MenuBar />
       </div>
 
       <div className='hidden items-center space-x-4 md:flex'>
@@ -125,7 +127,7 @@ export default function Navbar() {
   );
 }
 
-function NavLink({
+export function NavLink({
   href,
   children,
   className

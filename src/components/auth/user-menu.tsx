@@ -44,13 +44,14 @@ export default function UserMenu() {
           isBlurred
           isZoomed
           alt='User Avatar'
-          className='cursor-pointer rounded-[50%] object-cover'
+          className='cursor-pointer rounded-md object-cover'
           width={36}
           shadow='lg'
           style={{ height: '36px', width: '36px' }}
           src={
             isAuthenticated
-              ? user?.detail.avatar_url
+              ? (user?.detail.avatar_url ??
+                'https://avatars.githubusercontent.com/u/146516559?s=400&u=8a2fcef9b9079ab60f01db2868d1b1893856a2c3&v=4')
               : 'https://avatars.githubusercontent.com/u/146516559?s=400&u=8a2fcef9b9079ab60f01db2868d1b1893856a2c3&v=4'
           }
         />
@@ -76,18 +77,26 @@ export default function UserMenu() {
                   }
                   src={
                     isAuthenticated
-                      ? user?.detail.avatar_url
+                      ? (user?.detail.avatar_url ??
+                        'https://avatars.githubusercontent.com/u/146516559?s=400&u=8a2fcef9b9079ab60f01db2868d1b1893856a2c3&v=4')
                       : 'https://avatars.githubusercontent.com/u/146516559?s=400&u=8a2fcef9b9079ab60f01db2868d1b1893856a2c3&v=4'
                   }
                 />
                 <div className='flex flex-col items-start justify-center'>
-                  <h4 className='text-large font-bold leading-none text-default-600'>
-                    {_.truncate(user?.detail.first_name, {
-                      length: 15,
-                      omission: '...'
-                    })}
-                  </h4>
                   <Link
+                    isExternal
+                    href={`${NOBLEBLOCKS_DOMAIN}/@${user?.detail.user_name}`}
+                    size='sm'
+                    isDisabled={!isAuthenticated}
+                  >
+                    <h4 className='text-large font-bold leading-none text-default-600'>
+                      {_.truncate(user?.detail.first_name, {
+                        length: 15,
+                        omission: '...'
+                      })}
+                    </h4>
+                  </Link>
+                  {/* <Link
                     isExternal
                     href={`${NOBLEBLOCKS_DOMAIN}/@${user?.detail.user_name}`}
                     size='sm'
@@ -96,7 +105,7 @@ export default function UserMenu() {
                     <h5 className={`text-medium tracking-tight text-[#828489] dark:text-[#798FA6]`}>
                       @{isAuthenticated ? user?.detail.user_name : 'guest'}
                     </h5>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
               {isAuthenticated && (
@@ -132,7 +141,7 @@ export default function UserMenu() {
               navigateTo('/check');
             }}
           >
-            <span className='font-semibold'>Research Audit</span>
+            <span className=''>Research Audit</span>
           </DropdownItem>
           <DropdownItem
             key='speeches'

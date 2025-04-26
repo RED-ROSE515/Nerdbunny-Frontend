@@ -10,6 +10,7 @@ import { MdPlagiarism } from 'react-icons/md';
 
 import SignInDialog from '@/components/auth/signin-dialog';
 import Loader from '@/components/common/loader';
+import { PaperGlobe } from '@/components/home/hero-globe';
 import AnalysisResultWrapper from '@/components/paper/analysis-result-wrapper';
 import PaperInputWrapper from '@/components/paper/paper-input-wrapper';
 import SummaryWrapper from '@/components/paper/summary-wrapper';
@@ -264,62 +265,67 @@ export default function App() {
                     )}
                   </div>
                 ) : (
-                  <Card className='z-10 mx-auto mb-4 w-full overflow-hidden rounded-xl bg-wrapper shadow-2xl'>
-                    <CardHeader>
-                      <div className='border-b-2 p-6'>
-                        <h2 className={`text-center text-2xl font-bold text-muted-foreground`}>
-                          Analyze a Research Paper
-                        </h2>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div
-                        className={`grid grid-cols-3 border-b border-gray-100 dark:border-[#090E16] dark:bg-slate-800`}
-                      >
-                        {tabs.map((tab) => (
-                          <button
-                            key={tab.id}
-                            onClick={() => {
-                              setCurrentTab(tab.id);
-                              setProcessType(tab.id);
-                              if (tab.id !== 'PlagiarismCheck') console.log('Plagiarism check');
-                            }}
-                            className={`z-10 flex flex-col items-center justify-center p-4 transition-colors ${
-                              currentTab === tab.id
-                                ? `border-b-3 border-pink-500 bg-white dark:border-[#C8E600] dark:bg-transparent`
-                                : `bg-gray-50 hover:bg-gray-100 dark:bg-[#090E16] dark:hover:bg-gray-700`
-                            }`}
-                          >
-                            <div className='mb-2'>
-                              {React.cloneElement(tab.icon, {
-                                className: `h-8 w-8 ${currentTab === tab.id ? 'dark:text-[#C8E600] text-pink-500' : 'text-slate-400'}`
-                              })}
-                            </div>
-                            <span
-                              className={`text-sm ${currentTab === tab.id ? 'text-pink-500 dark:text-[#C8E600]' : 'text-slate-400'}`}
+                  <>
+                    <div className='flex flex-row items-center justify-center'>
+                      <PaperGlobe />
+                    </div>
+                    <Card className='z-10 mx-auto mb-4 w-full overflow-hidden rounded-xl bg-wrapper shadow-2xl'>
+                      <CardHeader>
+                        <div className='border-b-2 p-6'>
+                          <h2 className={`text-center text-2xl font-bold text-muted-foreground`}>
+                            Analyze a Research Paper
+                          </h2>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <div
+                          className={`grid grid-cols-3 border-b border-gray-100 dark:border-[#090E16] dark:bg-slate-800`}
+                        >
+                          {tabs.map((tab) => (
+                            <button
+                              key={tab.id}
+                              onClick={() => {
+                                setCurrentTab(tab.id);
+                                setProcessType(tab.id);
+                                if (tab.id !== 'PlagiarismCheck') console.log('Plagiarism check');
+                              }}
+                              className={`z-10 flex flex-col items-center justify-center p-4 transition-colors ${
+                                currentTab === tab.id
+                                  ? `border-b-3 border-pink-500 bg-white dark:border-[#C8E600] dark:bg-transparent`
+                                  : `bg-gray-50 hover:bg-gray-100 dark:bg-[#090E16] dark:hover:bg-gray-700`
+                              }`}
                             >
-                              {tab.label}
-                            </span>
-                          </button>
-                        ))}
-                      </div>
-                      {/* Content */}
-                      {(currentTab === 'ResearchCheck' || currentTab === 'GenerateArticle') && (
-                        <div className={`p-8`}>
-                          <div className='flex w-full flex-col items-center gap-8 md:flex-row'>
-                            <PaperInputWrapper getPdfList={() => {}} paperType={currentTab} />
-                          </div>
+                              <div className='mb-2'>
+                                {React.cloneElement(tab.icon, {
+                                  className: `h-8 w-8 ${currentTab === tab.id ? 'dark:text-[#C8E600] text-pink-500' : 'text-slate-400'}`
+                                })}
+                              </div>
+                              <span
+                                className={`text-sm ${currentTab === tab.id ? 'text-pink-500 dark:text-[#C8E600]' : 'text-slate-400'}`}
+                              >
+                                {tab.label}
+                              </span>
+                            </button>
+                          ))}
                         </div>
-                      )}
-                      {currentTab === 'PlagiarismCheck' && (
-                        <div className={`p-8`}>
-                          <div className='flex w-full flex-col items-center justify-center gap-8 md:flex-row'>
-                            <p className='p-16 text-center text-2xl font-bold'>Comming Soon...</p>
+                        {/* Content */}
+                        {(currentTab === 'ResearchCheck' || currentTab === 'GenerateArticle') && (
+                          <div className={`p-8`}>
+                            <div className='flex w-full flex-col items-center gap-8 md:flex-row'>
+                              <PaperInputWrapper getPdfList={() => {}} paperType={currentTab} />
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
+                        )}
+                        {currentTab === 'PlagiarismCheck' && (
+                          <div className={`p-8`}>
+                            <div className='flex w-full flex-col items-center justify-center gap-8 md:flex-row'>
+                              <p className='p-16 text-center text-2xl font-bold'>Comming Soon...</p>
+                            </div>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </>
                 )
               ) : (
                 !showDisclaimer && (

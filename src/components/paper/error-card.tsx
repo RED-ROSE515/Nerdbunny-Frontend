@@ -1,7 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 import { Chip } from '@heroui/react';
-import { useTheme } from 'next-themes';
 
 interface ErrorDetails {
   type: string;
@@ -25,7 +24,6 @@ interface ErrorCardProps {
 const ErrorCard: React.FC<ErrorCardProps> = ({ error, className }) => {
   // Convert findings string to array by splitting on numbered items
   const findingsList = error.findings;
-  const { theme } = useTheme();
   const getBorderColorClass = (severity: string) => {
     switch (severity.toLowerCase()) {
       case 'low':
@@ -39,11 +37,11 @@ const ErrorCard: React.FC<ErrorCardProps> = ({ error, className }) => {
   const getBackgroundColorClass = (severity: string) => {
     switch (severity.toLowerCase()) {
       case 'low':
-        return theme === 'dark' ? 'bg-[#152D25]' : 'bg-[#F0F6F0]';
+        return 'dark:bg-[#152D25] bg-[#F0F6F0]';
       case 'medium':
-        return theme === 'dark' ? 'bg-[#2D2D25]' : 'bg-[#F9F6F0]';
+        return 'dark:bg-[#2D2D25] bg-[#F9F6F0]';
       case 'high':
-        return theme === 'dark' ? 'bg-[#28252D]' : 'bg-[#F9F0F0]'; // Default border color
+        return 'dark:bg-[#28252D] bg-[#F9F0F0]'; // Default border color
     }
   };
 

@@ -11,7 +11,7 @@ export default function MyPapers() {
   return (
     <div className='mt-2 flex w-full flex-row items-center justify-center md:mt-12'>
       {isAuthenticated ? (
-        <div className='flex flex-col justify-start gap-12'>
+        <div className='flex w-[75vw] flex-col justify-start gap-12'>
           <PaperImagesTable data={paperData?.papers} />
         </div>
       ) : (

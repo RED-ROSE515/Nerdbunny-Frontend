@@ -30,8 +30,12 @@ export default function App({ params }: any) {
                 <h1 className='mt-4 text-center text-3xl font-bold'>{paperData.paper.title}</h1>
               </CardHeader>
               <CardContent className='flex flex-row gap-4'>
+                <div className='w-1/2'>
+                  <PDFViewer pdf_url={paperData?.paper?.file_name} />
+                </div>
                 <div className='h-[80vh] w-1/2 overflow-hidden'>
                   <ScrollArea className='h-full w-full'>
+                    <h2 className='my-2 text-center text-2xl font-bold'>Extraction Results</h2>
                     <div className='flex h-full w-full flex-col gap-4'>
                       {paperData?.paper?.images?.map((image: any, index: number) => (
                         <Card key={index}>
@@ -52,9 +56,6 @@ export default function App({ params }: any) {
                       ))}
                     </div>
                   </ScrollArea>
-                </div>
-                <div className='w-1/2'>
-                  <PDFViewer pdf_url={paperData?.paper?.file_name} />
                 </div>
               </CardContent>
             </Card>
