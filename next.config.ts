@@ -12,7 +12,14 @@ const nextConfig = {
     ignoreDuringBuilds: true
   },
   images: {
-    domains: ['s3.ap-southeast-1.amazonaws.com']
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 's3.ap-southeast-1.amazonaws.com',
+        port: '',
+        pathname: '/**'
+      }
+    ]
   }
 } satisfies NextConfig;
 
