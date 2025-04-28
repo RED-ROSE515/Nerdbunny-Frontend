@@ -22,7 +22,6 @@ export default function PaperImagesTable({ data }: any) {
           <TableRow>
             <TableHead className='text-center'>Paper</TableHead>
             <TableHead className='text-center'>Title</TableHead>
-            <TableHead>Image Counts</TableHead>
             <TableHead className='text-right'>Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -34,7 +33,6 @@ export default function PaperImagesTable({ data }: any) {
                   <FileText size={24} />
                 </TableCell>
                 <TableCell className='font-medium'>{paper.title}</TableCell>
-                <TableCell align='center'>{paper.count}</TableCell>
                 <TableCell className='text-right'>
                   <Button
                     variant='ghost'

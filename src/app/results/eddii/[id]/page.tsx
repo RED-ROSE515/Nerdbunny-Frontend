@@ -2,21 +2,18 @@
 
 import React, { use } from 'react';
 
-import Image from 'next/image';
-
 import Loader from '@/components/common/loader';
 import PDFViewer from '@/components/common/pdf-viewer';
 import ErrorContent from '@/components/paper/error-content';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import useGetData from '@/lib/service/get-data';
 
 export default function App({ params }: any) {
   const resolvedParams = use(params);
   const { id } = resolvedParams as any;
   const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
-  const { data: paperData, isLoading: paperLoading } = useGetData(`papers/${id}/get_paper_images`);
+  const { data: paperData, isLoading: paperLoading } = useGetData(`papers/${id}/get_eddii_data`);
 
   return (
     <div>
@@ -24,37 +21,28 @@ export default function App({ params }: any) {
         <Loader />
       ) : (
         <React.Fragment>
-          <div className='my-8 flex w-full gap-8 md:max-w-[90vw]'>
-            <Card>
+          <div className='my-8 flex w-full max-w-[100vw] gap-8 md:max-w-[90vw]'>
+            <Card className='w-full'>
               <CardHeader>
-                <h1 className='mt-4 text-center text-3xl font-bold'>{paperData.paper.title}</h1>
+                <h1 className='mt-4 text-center text-lg font-bold md:text-3xl'>
+                  {paperData.paper.title}
+                </h1>
               </CardHeader>
-              <CardContent className='flex flex-row gap-4'>
-                <div className='w-1/2'>
+              <CardContent className='flex flex-col gap-4 p-1 md:p-6'>
+                <div className='w-full'>
                   <PDFViewer pdf_url={paperData?.paper?.file_name} />
                 </div>
-                <div className='h-[80vh] w-1/2 overflow-hidden'>
+                <div className='h-[80vh] w-full'>
                   <ScrollArea className='h-full w-full'>
-                    <h2 className='my-2 text-center text-2xl font-bold'>Extraction Results</h2>
-                    <div className='flex h-full w-full flex-col gap-4'>
-                      {paperData?.paper?.images?.map((image: any, index: number) => (
-                        <Card key={index}>
-                          <CardContent>
-                            <div className='flex flex-col justify-start gap-4'>
-                              <AspectRatio ratio={16 / 9} className='my-4 bg-muted'>
-                                <Image
-                                  src={image.path}
-                                  alt='Photo by Drew Beamer'
-                                  fill
-                                  className='w-full rounded-md object-contain'
-                                />
-                              </AspectRatio>
-                              <ErrorContent content={image.data} />
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
+                    <Card className='w-full'>
+                      <CardContent className='p-1 md:p-6'>
+                        <h2 className='my-2 text-center text-2xl font-bold'>Extraction Results</h2>
+                        <div className='flex h-full w-full flex-col gap-4'>
+                          <ErrorContent content={paperData.paper.data} />
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <ScrollBar orientation='horizontal' />
                   </ScrollArea>
                 </div>
               </CardContent>
