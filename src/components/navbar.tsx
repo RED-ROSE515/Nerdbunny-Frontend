@@ -51,24 +51,11 @@ export default function Navbar() {
         </div>
       </Link>
 
-      <div className='hidden items-center md:flex'>
-        {/* <NavLink href='/ai-editor'>
-          <TextCursorInput className='mr-2' />
-          AI Editor
-        </NavLink>
-        <NavLink href='/speeches'>
-          <FileAudio className='mr-2' /> Past Recordings
-        </NavLink>
-        <NavLink href='/check'>
-          <ScanLine className='mr-2' />
-          Analyze
-        </NavLink>
-        <NavLink href='/results/eddii'>
-          <FileChartColumn className='mr-2' />
-          EDDII
-        </NavLink> */}
-        <MenuBar />
-      </div>
+      {isAuthenticated && (
+        <div className='hidden items-center md:flex'>
+          <MenuBar />
+        </div>
+      )}
 
       <div className='hidden items-center space-x-4 md:flex'>
         <ThemeToggle />
