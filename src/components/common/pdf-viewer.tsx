@@ -8,6 +8,7 @@ import { localeSwitcherPlugin } from '@react-pdf-viewer/locale-switcher';
 import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
 import { searchPlugin } from '@react-pdf-viewer/search';
 import { thumbnailPlugin } from '@react-pdf-viewer/thumbnail';
+import { useTheme } from 'next-themes';
 
 import { Card } from '../ui/card';
 
@@ -18,9 +19,6 @@ import '@react-pdf-viewer/search/lib/styles/index.css';
 import '@react-pdf-viewer/full-screen/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
-import { useTheme } from 'next-themes';
-
-// Your render function
 const PDFViewer = ({ pdf_url }: { pdf_url: string }) => {
   const { resolvedTheme } = useTheme();
   const pageNavigationPluginInstance = pageNavigationPlugin();
@@ -33,7 +31,7 @@ const PDFViewer = ({ pdf_url }: { pdf_url: string }) => {
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
   return (
-    <Worker workerUrl={require('@/assets/pdf.worker.min.js')}>
+    <Worker workerUrl='/pdf.worker.min.js'>
       <Card className='shadow-xl'>
         <div
           className='h-[80vh] rounded-lg'
