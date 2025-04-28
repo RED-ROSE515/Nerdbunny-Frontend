@@ -34,7 +34,7 @@ const PDFViewer = ({ pdf_url }: { pdf_url: string }) => {
     <Worker workerUrl='/pdf.worker.min.js'>
       <Card className='shadow-xl'>
         <div
-          className='h-[80vh] rounded-lg'
+          className='h-[80vh] rounded-lg p-0 md:my-6 md:px-3'
           style={{
             flex: 1,
             overflow: 'hidden'

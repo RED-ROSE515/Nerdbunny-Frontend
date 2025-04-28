@@ -1,6 +1,8 @@
 import ReactMarkdown from 'react-markdown';
+import rehypeFormat from 'rehype-format';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeKatex from 'rehype-katex';
+import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
@@ -38,9 +40,9 @@ const ErrorContent = ({ content }: { content?: string }) => {
         hr: () => <hr className='my-6 border-gray-200' />
       }}
       remarkPlugins={[remarkGfm, remarkMath]}
-      rehypePlugins={[rehypeHighlight, rehypeKatex]}
+      rehypePlugins={[rehypeHighlight, rehypeKatex, rehypeFormat, rehypeRaw]}
     >
-      {content}
+      {content?.replaceAll('–', '-').replaceAll('—', '-')}
     </ReactMarkdown>
   );
 };
