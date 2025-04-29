@@ -23,7 +23,7 @@ export default function MyPapers() {
       {isAuthenticated ? (
         <div className='flex flex-col justify-start gap-12'>
           <Statistics />
-          <PaperSummaryList api={`papers/`} showPagination={true} />
+          <PaperSummaryList api={`papers/analyses/get_list/`} showPagination={true} />
         </div>
       ) : (
         <div>

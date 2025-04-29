@@ -11,7 +11,7 @@ const AuthorSection = ({ authors }: AuthorSectionProps) => {
   const [expand, setExpand] = useState(false);
 
   return (
-    <div className='w-full md:w-2/3'>
+    <div className='w-full'>
       <span className={`text-md w-full text-[#828489] dark:text-[#AAB5C7] md:w-auto md:text-lg`}>
         Authors:
       </span>

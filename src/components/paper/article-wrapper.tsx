@@ -134,8 +134,12 @@ const ArticleWrapper = ({
 
       <div className='flex flex-col justify-between md:flex-row'>
         <div className='flex w-full flex-col items-start justify-center gap-10 md:flex-row'>
-          <AuthorSection authors={metadata.authors} />
-          <PaperLinkSection paperLink={metadata.paper_link} />
+          <div className='w-full md:w-2/3'>
+            <AuthorSection authors={metadata.authors} />
+          </div>
+          <div className='w-full md:w-1/3'>
+            <PaperLinkSection paperLink={metadata.paper_link} />
+          </div>
         </div>
       </div>
 

@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 
 import { Divider, Link, useDisclosure } from '@heroui/react';
+import { Loader2 } from 'lucide-react';
 import { StaticImageData } from 'next/image';
+import { useRouter } from 'next/navigation';
 import childImage from 'public/NerdBunnyUI/child.png';
 import collegeImage from 'public/NerdBunnyUI/college.png';
 import errorImage from 'public/NerdBunnyUI/Error.png';
@@ -11,6 +13,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useSpeech } from '@/contexts/SpeechContext';
 
 import UserCard from '../auth/user-card';
+import { Button } from '../ui/button';
 import AuthorSection from './author-section';
 import KeywordsSection from './keywords-section';
 import PaperLinkSection from './papaer-link-section';
@@ -76,7 +79,8 @@ const SummaryWrapper = ({
   const { setSpeechUrl, setShowSpeech, setSpeechId, setSpeechTitle } = useSpeech();
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const { isAuthenticated } = useAuth();
-
+  const [pending, startTransition] = useTransition();
+  const router = useRouter();
   const summaryLevels = [
     {
       key: 'child',
@@ -162,8 +166,12 @@ const SummaryWrapper = ({
 
       <div className='flex flex-col justify-between md:flex-row'>
         <div className='flex w-full flex-col items-start justify-center gap-10 md:flex-row'>
-          <AuthorSection authors={summary.metadata.authors} />
-          <PaperLinkSection paperLink={summary.metadata.paper_link} />
+          <div className='w-full md:w-2/3'>
+            <AuthorSection authors={summary.metadata.authors} />
+          </div>
+          <div className='w-full md:w-1/3'>
+            <PaperLinkSection paperLink={summary.metadata.paper_link} />
+          </div>
         </div>
       </div>
 
@@ -189,7 +197,28 @@ const SummaryWrapper = ({
           summary?.technical_assessment || summary?.summary?.technical_assessment
         }
       />
-
+      {!isResult && (
+        <div className='flex w-full flex-row justify-center'>
+          <Button
+            variant='outline'
+            onClick={() =>
+              startTransition(() => {
+                router.push(link);
+              })
+            }
+            className='dark:bg-[#2E3E4E]'
+          >
+            {pending ? (
+              <>
+                <Loader2 className='mr-2 h-5 w-5 animate-spin' />
+                Please wait
+              </>
+            ) : (
+              <p>Read Full Report</p>
+            )}
+          </Button>
+        </div>
+      )}
       <VoiceGenerationDrawer
         isOpen={isOpen}
         onOpenChange={onOpenChange}

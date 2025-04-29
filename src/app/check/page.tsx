@@ -60,16 +60,16 @@ export default function App() {
       content:
         'Our AI agent creates summaries and articles from academic papers, making complex research accessible to everyone.',
       image: '/placeholder.svg?height=200&width=200'
-    },
-    {
-      id: 'PlagiarismCheck',
-      label: 'Plagiarism Check',
-      icon: <MdPlagiarism className={`h-8 w-8 text-slate-400 dark:text-white`} />,
-      title: 'Plagiarism Check',
-      content:
-        'We check for plagiarism in the research paper and provide a report with the percentage of plagiarism.',
-      image: '/placeholder.svg?height=200&width=200'
     }
+    // {
+    //   id: 'PlagiarismCheck',
+    //   label: 'Plagiarism Check',
+    //   icon: <MdPlagiarism className={`h-8 w-8 text-slate-400 dark:text-white`} />,
+    //   title: 'Plagiarism Check',
+    //   content:
+    //     'We check for plagiarism in the research paper and provide a report with the percentage of plagiarism.',
+    //   image: '/placeholder.svg?height=200&width=200'
+    // }
   ];
   useEffect(() => {
     if (handleProtectedAction()) {

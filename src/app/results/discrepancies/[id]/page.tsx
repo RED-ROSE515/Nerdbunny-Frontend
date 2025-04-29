@@ -24,7 +24,9 @@ export default function App({ params }: any) {
   const resolvedParams = use(params);
   const { id } = resolvedParams as any;
   const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
-  const { data: paperData, isLoading: paperLoading } = useGetData(`papers/${id}/`);
+  const { data: paperData, isLoading: paperLoading } = useGetData(
+    `papers/analyses/${id}/get_data/`
+  );
 
   return (
     <div>
@@ -37,6 +39,7 @@ export default function App({ params }: any) {
             reportPost={() => alert(`report ${paperData?.id}`)}
             totalData={paperData}
             postDate={paperData?.updated_at}
+            isResult={true}
             speechData={paperData?.paper_speeches}
             showSignInModal={() => {}}
             link={

@@ -1,0 +1,24 @@
+/* Container for the marquee */
+.marquee {
+  width: 100%;
+  overflow: hidden; /* Hides the content outside the container */
+  white-space: nowrap; /* Prevents the content from wrapping to the next line */
+  position: relative;
+}
+
+/* Content inside the marquee */
+.marqueeContent {
+  display: inline-block;
+  white-space: nowrap; /* Prevents wrapping */
+  animation: marquee 35s linear infinite; /* Adds the scrolling animation */
+}
+
+/* Keyframes for the scrolling effect */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%); /* Start off-screen on the right */
+  }
+  100% {
+    transform: translateX(-100%); /* Move off-screen to the left */
+  }
+}

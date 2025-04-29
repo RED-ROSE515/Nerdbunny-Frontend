@@ -15,7 +15,9 @@ export default function App({ params }: any) {
   const resolvedParams = use(params);
   const { id } = resolvedParams as any;
   const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
-  const { data: articleData, isLoading: articleLoading } = useGetData(`papers/articles/${id}/`);
+  const { data: articleData, isLoading: articleLoading } = useGetData(
+    `papers/articles/${id}/get_data/`
+  );
 
   return (
     <div>

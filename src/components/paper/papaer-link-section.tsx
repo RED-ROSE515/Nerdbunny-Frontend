@@ -12,7 +12,7 @@ const PaperLinkSection = ({ paperLink }: PaperLinkSectionProps) => {
   const router = useRouter();
 
   return (
-    <div className='w-full md:w-1/3'>
+    <div className='w-full'>
       <span className={`text-md w-full text-[#828489] dark:text-[#AAB5C7] md:w-auto md:text-lg`}>
         Paper Link :
       </span>

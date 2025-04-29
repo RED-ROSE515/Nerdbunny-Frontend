@@ -33,7 +33,7 @@ const KeywordsSection = ({ keywords }: KeywordsSectionProps) => {
                         setSortBy('');
                       }}
                       startContent={<SiSharp className='ml-1' />}
-                      className={`cursor-pointer hover:scale-105 hover:bg-gray-300 dark:hover:bg-gray-600 ${label === keyword ? `bg-[#EE43DE] text-white dark:bg-[#C8E600] dark:text-black` : ''}`}
+                      className={`cursor-pointer bg-[#FFF] hover:scale-105 hover:bg-gray-300 dark:bg-[#2E3E4E] dark:hover:bg-gray-600 ${label === keyword ? `bg-[#EE43DE] text-white dark:bg-[#C8E600] dark:text-black` : ''}`}
                     >
                       {label}
                     </Chip>

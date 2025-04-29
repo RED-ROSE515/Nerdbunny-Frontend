@@ -23,20 +23,20 @@ const menuItems: MenuItem[] = [
     iconColor: 'text-green-500'
   },
   {
+    icon: <FileChartColumn className='h-5 w-5' />,
+    label: 'Papers',
+    href: '/results/papers',
+    gradient:
+      'radial-gradient(circle, rgba(239,68,68,0.15) 0%, rgba(220,38,38,0.06) 50%, rgba(185,28,28,0) 100%)',
+    iconColor: 'text-red-500'
+  },
+  {
     icon: <FileAudio className='h-5 w-5' />,
     label: 'Past Recordings',
     href: '/speeches',
     gradient:
       'radial-gradient(circle, rgba(249,115,22,0.15) 0%, rgba(234,88,12,0.06) 50%, rgba(194,65,12,0) 100%)',
     iconColor: 'text-orange-500'
-  },
-  {
-    icon: <FileChartColumn className='h-5 w-5' />,
-    label: 'EDDII',
-    href: '/results/eddii',
-    gradient:
-      'radial-gradient(circle, rgba(239,68,68,0.15) 0%, rgba(220,38,38,0.06) 50%, rgba(185,28,28,0) 100%)',
-    iconColor: 'text-red-500'
   },
   {
     icon: <TextCursorInput className='h-5 w-5' />,

@@ -13,7 +13,9 @@ export default function App({ params }: any) {
   const resolvedParams = use(params);
   const { id } = resolvedParams as any;
   const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
-  const { data: paperData, isLoading: paperLoading } = useGetData(`papers/${id}/get_eddii_data`);
+  const { data: paperData, isLoading: paperLoading } = useGetData(
+    `papers/eddii/${id}/get_eddii_data`
+  );
 
   return (
     <div>

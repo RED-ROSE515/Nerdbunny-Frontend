@@ -21,7 +21,7 @@ const CheckSection = () => {
       content:
         'Our AI agent analyzes the research paper and provides a report with the percentage of errors and discrepancies.',
       image: '/placeholder.svg?height=200&width=200'
-    },
+    }
     // {
     //   id: "GenerateArticle",
     //   label: "Summarise Manuscript",
@@ -35,15 +35,15 @@ const CheckSection = () => {
     //     "Our AI agent creates summaries and articles from academic papers, making complex research accessible to everyone.",
     //   image: "/placeholder.svg?height=200&width=200",
     // },
-    {
-      id: 'PlagiarismCheck',
-      label: 'Plagiarism Check',
-      icon: <MdPlagiarism className={`h-8 w-8 text-slate-400 dark:text-white`} />,
-      title: 'Plagiarism Check',
-      content:
-        'We check for plagiarism in the research paper and provide a report with the percentage of plagiarism.',
-      image: '/placeholder.svg?height=200&width=200'
-    }
+    // {
+    //   id: 'PlagiarismCheck',
+    //   label: 'Plagiarism Check',
+    //   icon: <MdPlagiarism className={`h-8 w-8 text-slate-400 dark:text-white`} />,
+    //   title: 'Plagiarism Check',
+    //   content:
+    //     'We check for plagiarism in the research paper and provide a report with the percentage of plagiarism.',
+    //   image: '/placeholder.svg?height=200&width=200'
+    // }
   ];
 
   return (
