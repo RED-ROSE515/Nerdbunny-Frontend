@@ -99,9 +99,11 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
     try {
       setLoading(true);
       setProgress(0);
-      // if(paper_url.)
-      const paper_response = await api.post(`/papers/`, { paper_url: paper_url });
-      const paper_id = paper_response.data.id;
+      let paper_id;
+      if (paper_url.startsWith('https://') || paper_url.startsWith('http://')) {
+        const paper_response = await api.post(`/papers/`, { paper_url: paper_url });
+        paper_id = paper_response.data.id;
+      } else paper_id = paper_url;
 
       await toast({
         title: 'Queued for Processing',
