@@ -5,20 +5,26 @@ import type { LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
 
+import { Button } from '@/components/ui/button';
+
 interface AppCardProps {
   Icon: LucideIcon;
   title: string;
+  subActionTitle: string;
   isDisabled: boolean;
   description: string;
   onClick: () => void;
+  subAction: () => void;
 }
 
 export const AppCard: React.FC<AppCardProps> = ({
   Icon,
   title,
+  subActionTitle,
   isDisabled,
   description,
-  onClick
+  onClick,
+  subAction
 }) => {
   const [pending, startTransition] = useTransition();
   return (
@@ -27,7 +33,7 @@ export const AppCard: React.FC<AppCardProps> = ({
       whileTap={!isDisabled ? { scale: 0.95 } : {}}
       className={`flex h-72 w-64 flex-col justify-between rounded-xl border bg-white p-6 shadow-md transition-colors duration-300 ${
         isDisabled
-          ? 'cursor-not-allowed opacity-50'
+          ? 'cursor-not-allowed'
           : 'cursor-pointer hover:bg-gray-50 dark:hover:bg-slate-950'
       } dark:bg-slate-900`}
       onClick={() => {
@@ -38,7 +44,9 @@ export const AppCard: React.FC<AppCardProps> = ({
         }
       }}
     >
-      <div className='flex h-full flex-col items-center text-center'>
+      <div
+        className={`${isDisabled && 'opacity-50'} flex h-full flex-col items-center text-center`}
+      >
         {pending ? (
           <>
             <div className='flex h-full w-full flex-row items-center justify-center'>
@@ -55,6 +63,17 @@ export const AppCard: React.FC<AppCardProps> = ({
           </>
         )}
       </div>
+      {isDisabled && (
+        <div className='flex w-full flex-row items-center justify-center opacity-100'>
+          <Button
+            variant='outline'
+            onClick={subAction}
+            className='w-full rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:from-blue-600 hover:to-purple-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900'
+          >
+            {subActionTitle}
+          </Button>
+        </div>
+      )}
     </motion.div>
   );
 };

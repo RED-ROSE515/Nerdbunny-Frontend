@@ -19,9 +19,9 @@ export default function Hero() {
   return (
     <div className='relative flex min-h-[calc(100vh-76px)] items-center'>
       {/* Floating papers background */}
-      <div className='absolute inset-0 overflow-hidden'>
+      {/* <div className='absolute inset-0 overflow-hidden'>
         <FloatingPaper count={6} />
-      </div>
+      </div> */}
 
       <div className='container relative z-10 mx-auto px-6'>
         <div className='mx-auto max-w-5xl text-center'>
@@ -128,9 +128,9 @@ export default function Hero() {
       </div>
 
       {/* Animated robot */}
-      <div className='absolute bottom-0 right-0 hidden h-96 w-96 md:block'>
+      {/* <div className='absolute bottom-0 right-0 hidden h-96 w-96 md:block'>
         <RoboAnimation />
-      </div>
+      </div> */}
     </div>
   );
 }

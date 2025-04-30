@@ -23,9 +23,11 @@ interface CarouselProps {
   items: Array<{
     Icon: LucideIcon;
     title: string;
+    subActionTitle: string;
     isDisabled: boolean;
     description: string;
     action: () => void;
+    subAction: () => void;
   }>;
 }
 
@@ -74,9 +76,11 @@ export const Carousel: React.FC<CarouselProps> = ({ items }) => {
               <AppCard
                 Icon={item.Icon}
                 title={item.title}
+                subActionTitle={item.subActionTitle}
                 isDisabled={item.isDisabled}
                 description={item.description}
                 onClick={item.action}
+                subAction={item.subAction}
               />
             </motion.div>
           ))}

@@ -6,13 +6,14 @@ import { Pagination } from '@heroui/react';
 
 import Loader from '@/components/common/loader';
 import ResearchPaperPoster from '@/components/paper/paper-poster';
+import { useAuth } from '@/contexts/AuthContext';
 import useGetData from '@/lib/service/get-data';
 
 export default function Papers() {
   const [page, setPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>(0);
   const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
-
+  const { isAuthenticated } = useAuth();
   const { data: paperData, isLoading: paperDataLoading } = useGetData<any>(
     `papers/?page=${page}&pageSize=3`
   );
@@ -25,12 +26,12 @@ export default function Papers() {
 
   return (
     <div className='flex w-full flex-col items-center justify-center'>
-      {paperData ? (
+      {isAuthenticated && paperData ? (
         <>
-          <div className='mt-2 flex w-[95vw] flex-wrap items-stretch justify-center md:mt-12'>
+          <div className='mt-2 flex w-full flex-wrap items-stretch justify-center md:mt-12 md:w-[95vw]'>
             {paperData?.data.map((paper: any) => {
               return (
-                <div key={paper.id} className='flex w-1/3 items-stretch'>
+                <div key={paper.id} className='flex w-full items-stretch md:w-1/3'>
                   <ResearchPaperPoster paper={paper?.metadata} paper_id={paper.id} />
                 </div>
               );

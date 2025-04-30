@@ -99,6 +99,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
     try {
       setLoading(true);
       setProgress(0);
+      // if(paper_url.)
       const paper_response = await api.post(`/papers/`, { paper_url: paper_url });
       const paper_id = paper_response.data.id;
 
@@ -188,8 +189,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
           duration: 5000
         });
         await sleep(5000);
-        window.location.href =
-          DOMAIN + '/results/descrepancies/' + error_summary_response.data.metadata.paper_id;
+        window.location.href = DOMAIN + '/results/descrepancies/' + paper_id;
       } else if (analyzeOption[0] === 'GenerateArticle') {
         setIsChecking(true);
 
@@ -247,7 +247,60 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
           duration: 5000
         });
         await sleep(5000);
-        window.location.href = DOMAIN + '/results/articles/' + article_response.data.id;
+        window.location.href = DOMAIN + '/results/articles/' + paper_id;
+      } else if (analyzeOption[0] === 'ExtractFigures') {
+        setIsChecking(true);
+        let totalDuration = 200000;
+        let interval = 200;
+        let currentProgress = 0;
+
+        const intervalId = setInterval(() => {
+          currentProgress += (interval / totalDuration) * 100;
+          setProgress(Math.min(currentProgress, 99));
+
+          if (currentProgress.toFixed(1) === '25.0') {
+            toast({
+              title: 'Processing at 25%',
+              description: 'Analyzing text and structure of paper.',
+              duration: 5000
+            });
+          }
+          if (currentProgress.toFixed(1) === '50.0') {
+            toast({
+              title: 'Processing at 50%',
+              description: 'Extracting figures from paper.',
+              duration: 5000
+            });
+          }
+          if (currentProgress.toFixed(1) === '75.0') {
+            toast({
+              title: 'Processing at 75%',
+              description: 'Generating final report for paper.',
+              duration: 5000
+            });
+          }
+        }, interval);
+
+        const response = await api.get(`/papers/eddii/${paper_id}/extract_all_figures/`);
+
+        clearInterval(intervalId);
+        setProgress(100);
+        setIsChecking(false);
+        await toast({
+          title: 'Processing Complete',
+          description: 'Extraction complete for uploaded paper! Click here to view results.',
+          action: (
+            <ToastAction
+              altText='View Paper'
+              onClick={() => window.open('/results/eddii/' + paper_id, '_blank')}
+            >
+              View
+            </ToastAction>
+          ),
+          duration: 5000
+        });
+        await sleep(5000);
+        window.location.href = DOMAIN + '/results/eddii/' + paper_id;
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {

@@ -63,14 +63,14 @@ const CheckSection = () => {
       </CardHeader>
       <CardContent>
         <div
-          className={`grid grid-cols-2 border-b border-gray-100 dark:border-[#090E16] dark:bg-slate-800`}
+          className={`grid grid-cols-1 border-b border-gray-100 dark:border-[#090E16] dark:bg-slate-800`}
         >
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => {
                 setProcessType(tab.id);
-                if (tab.id !== 'PlagiarismCheck') getTotalResults(tab.id);
+                // if (tab.id !== 'PlagiarismCheck') getTotalResults(tab.id);
               }}
               className={`z-10 flex flex-col items-center justify-center p-4 transition-colors ${
                 processType === tab.id

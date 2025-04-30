@@ -17,11 +17,11 @@ export default function Home() {
     <main className='h-full w-full bg-background'>
       <div
         className={cn(
-          `[mask-image:radial-gradient(1500px_circle_at_center,white,transparent)]`,
+          // `[mask-image:radial-gradient(1500px_circle_at_center,white,transparent)]`,
           'bg-grid-white/[0.02]'
         )}
       >
-        <div className='absolute inset-0 z-0 hidden h-full w-full md:block'>
+        {/* <div className='absolute inset-0 z-0 hidden h-full w-full md:block'>
           <SparklesCore
             id='tsparticlesfullpage'
             background='transparent'
@@ -30,7 +30,7 @@ export default function Home() {
             particleDensity={100}
             className='h-full w-full'
           />
-        </div>
+        </div> */}
 
         <div className='relative z-10'>
           <Hero />

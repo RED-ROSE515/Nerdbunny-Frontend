@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { GiArchiveResearch } from 'react-icons/gi';
 import { GrArticle } from 'react-icons/gr';
 import { MdPlagiarism } from 'react-icons/md';
+import { RiBarChartBoxAiFill } from 'react-icons/ri';
 
 import SignInDialog from '@/components/auth/signin-dialog';
 import Loader from '@/components/common/loader';
@@ -57,6 +58,15 @@ export default function App() {
       label: 'Summarise Manuscript',
       icon: <GrArticle className={`h-8 w-8 text-slate-400 dark:text-white`} />,
       title: 'Summary and Articles',
+      content:
+        'Our AI agent creates summaries and articles from academic papers, making complex research accessible to everyone.',
+      image: '/placeholder.svg?height=200&width=200'
+    },
+    {
+      id: 'ExtractFigures',
+      label: 'EDDII',
+      icon: <RiBarChartBoxAiFill className={`h-8 w-8 text-slate-400 dark:text-white`} />,
+      title: 'Extract Figures',
       content:
         'Our AI agent creates summaries and articles from academic papers, making complex research accessible to everyone.',
       image: '/placeholder.svg?height=200&width=200'
@@ -266,9 +276,9 @@ export default function App() {
                   </div>
                 ) : (
                   <>
-                    <div className='flex flex-row items-center justify-center'>
+                    {/* <div className='flex flex-row items-center justify-center'>
                       <PaperGlobe />
-                    </div>
+                    </div> */}
                     <Card className='z-10 mx-auto mb-4 w-full overflow-hidden rounded-xl bg-wrapper shadow-2xl'>
                       <CardHeader>
                         <div className='border-b-2 p-6'>
@@ -309,7 +319,9 @@ export default function App() {
                           ))}
                         </div>
                         {/* Content */}
-                        {(currentTab === 'ResearchCheck' || currentTab === 'GenerateArticle') && (
+                        {(currentTab === 'ResearchCheck' ||
+                          currentTab === 'GenerateArticle' ||
+                          currentTab === 'ExtractFigures') && (
                           <div className={`p-8`}>
                             <div className='flex w-full flex-col items-center gap-8 md:flex-row'>
                               <PaperInputWrapper getPdfList={() => {}} paperType={currentTab} />

@@ -489,7 +489,11 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
           {(onClose) => (
             <>
               <ModalHeader className='flex flex-col gap-1'>
-                {processType === 'ResearchCheck' ? 'Analyse Manuscript' : 'Summarise Manuscript'}
+                {processType === 'ResearchCheck'
+                  ? 'Analyse Manuscript'
+                  : processType === 'GenerateArticle'
+                    ? 'Summarise Manuscript'
+                    : 'Extract All Figures'}
               </ModalHeader>
               <ModalBody className='flex flex-col items-center justify-center'>
                 {processType === 'ResearchCheck' ? (
@@ -499,7 +503,7 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
                       issues.
                     </span>
                   </div>
-                ) : (
+                ) : processType === 'GenerateArticle' ? (
                   <div className='flex min-h-[250px] flex-col items-center justify-center'>
                     <Tabs
                       aria-label='Options'
@@ -588,6 +592,12 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
                       </Tab>
                     </Tabs>
                   </div>
+                ) : (
+                  <div className='min-h-[150px]'>
+                    <span>
+                      Extract all figures from the paper and create a report for each figure.
+                    </span>
+                  </div>
                 )}
               </ModalBody>
               <ModalFooter>
@@ -599,7 +609,7 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
                   onPress={() => {
                     if (processType === 'ResearchCheck') {
                       handleAnalyze(s3_link, visibility[0] || '', users, ['ResearchCheck']);
-                    } else {
+                    } else if (processType === 'GenerateArticle') {
                       handleAnalyze(
                         s3_link,
                         visibility[0] || '',
@@ -609,6 +619,8 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
                         advancedMethods,
                         citation
                       );
+                    } else if (processType === 'ExtractFigures') {
+                      handleAnalyze(s3_link, visibility[0] || '', users, ['ExtractFigures']);
                     }
                     onClose();
                   }}

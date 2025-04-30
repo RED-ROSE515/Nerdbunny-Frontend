@@ -21,7 +21,7 @@ export default function ResearchPaperPoster({ paper, paper_id }: any) {
   const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
   const [pending, startTransition] = useTransition();
   return (
-    <div className='mx-auto flex max-w-4xl items-stretch p-4'>
+    <div className='flex w-[100vw] max-w-4xl items-stretch p-4 md:mx-auto md:w-full'>
       <Card className='flex items-stretch overflow-hidden border-2'>
         {/* Poster Image */}
         {/* <div className='relative aspect-[4/3] w-full'>
