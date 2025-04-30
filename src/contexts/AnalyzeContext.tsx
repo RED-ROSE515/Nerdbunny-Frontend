@@ -98,6 +98,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
   ) => {
     try {
       setLoading(true);
+      setCheckLoading(true);
       setProgress(0);
       let paper_id;
       if (paper_url.startsWith('https://') || paper_url.startsWith('http://')) {
@@ -117,7 +118,8 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
         duration: 2000
       });
       await sleep(2000);
-
+      setLoading(false);
+      setCheckLoading(false);
       if (analyzeOption[0] === 'ResearchCheck') {
         setSummary('');
         setAnalysisResult('');
@@ -167,7 +169,6 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
 
         clearInterval(intervalId);
         setProgress(100);
-        setCheckLoading(false);
         setSummary(error_summary_response.data.summary);
         setAnalysisResult(analysis_response.data.analysis);
         setTotalSummary(analysis_response.data.summary);
@@ -190,7 +191,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
           ),
           duration: 5000
         });
-        await sleep(5000);
+        await sleep(1500);
         window.location.href = DOMAIN + '/results/descrepancies/' + paper_id;
       } else if (analyzeOption[0] === 'GenerateArticle') {
         setIsChecking(true);
@@ -248,7 +249,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
           ),
           duration: 5000
         });
-        await sleep(5000);
+        await sleep(1500);
         window.location.href = DOMAIN + '/results/articles/' + paper_id;
       } else if (analyzeOption[0] === 'ExtractFigures') {
         setIsChecking(true);
@@ -301,7 +302,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
           ),
           duration: 5000
         });
-        await sleep(5000);
+        await sleep(1500);
         window.location.href = DOMAIN + '/results/eddii/' + paper_id;
       }
     } catch (err) {

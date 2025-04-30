@@ -146,8 +146,8 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
   const [paper_id, setPaperId] = useState('');
   const [paper_url, setPaperUrl] = useState('');
   const [paper_value, setPaperValue] = useState('');
-  const [loading, setLoading] = useState(false);
-  const { handleAnalyze, processType, postId, isChecking } = useAnalyze();
+  const [fileUploadLoading, setFileUploadLoading] = useState(false);
+  const { handleAnalyze, processType, postId, isChecking, checkLoading } = useAnalyze();
   const { toast } = useToast();
   const { theme } = useTheme();
   const { isAuthenticated } = useAuth();
@@ -242,7 +242,7 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
       const formData = new FormData();
 
       formData.append('file', file);
-      setLoading(true);
+      setFileUploadLoading(true);
       try {
         toast({
           description: `Uploading file: ${_.truncate(file.name, {
@@ -282,7 +282,7 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
         });
         await sleep(3000);
         setS3Link(response.data.file_url);
-        setLoading(false);
+        setFileUploadLoading(false);
       } catch (error) {
         if (axios.isCancel(error)) {
           toast({
@@ -472,7 +472,7 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
           </div> */}
           <div className='flex flex-row justify-center gap-4'>
             <AnalyzeForm
-              loading={loading || isChecking}
+              loading={fileUploadLoading || isChecking || checkLoading}
               theme={theme!}
               paper_link={paper_url || paper_value || s3_link}
               setResearchPaperLink={setResearchPaperUrl}
