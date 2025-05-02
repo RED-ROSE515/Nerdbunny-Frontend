@@ -4,6 +4,7 @@ import React, { use } from 'react';
 
 import Loader from '@/components/common/loader';
 import PDFViewer from '@/components/common/pdf-viewer';
+import ChatGPT from '@/components/home/chatgpt';
 import ErrorContent from '@/components/paper/error-content';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
@@ -30,28 +31,33 @@ export default function App({ params }: any) {
                   {paperData.paper.title}
                 </h1>
               </CardHeader>
-              <CardContent className='flex flex-col gap-4 p-1 md:flex-row md:p-6'>
-                <div className='w-full md:w-1/2'>
-                  <PDFViewer pdf_url={paperData?.paper?.file_name} />
+              <CardContent className='flex flex-col gap-4 p-1 md:p-6'>
+                <div className='flex w-full flex-row gap-4'>
+                  <div className='w-full md:w-1/2'>
+                    <PDFViewer pdf_url={paperData?.paper?.file_name} />
+                  </div>
+                  <div className='w-full md:w-1/2'>
+                    <Card className='w-full'>
+                      <CardContent className='p-1 md:px-3 md:py-6'>
+                        <div className='h-[80vh]'>
+                          <ScrollArea className='h-full w-full'>
+                            <React.Fragment>
+                              <h2 className='my-2 text-center text-2xl font-bold'>
+                                Extraction Results
+                              </h2>
+                              <div className='flex h-full w-full flex-col gap-4'>
+                                <ErrorContent content={paperData.paper.data} />
+                              </div>
+                            </React.Fragment>
+                            <ScrollBar orientation='horizontal' />
+                          </ScrollArea>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
-                <div className='w-full md:w-1/2'>
-                  <Card className='w-full'>
-                    <CardContent className='p-1 md:px-3 md:py-6'>
-                      <div className='h-[80vh]'>
-                        <ScrollArea className='h-full w-full'>
-                          <React.Fragment>
-                            <h2 className='my-2 text-center text-2xl font-bold'>
-                              Extraction Results
-                            </h2>
-                            <div className='flex h-full w-full flex-col gap-4'>
-                              <ErrorContent content={paperData.paper.data} />
-                            </div>
-                          </React.Fragment>
-                          <ScrollBar orientation='horizontal' />
-                        </ScrollArea>
-                      </div>
-                    </CardContent>
-                  </Card>
+                <div>
+                  <ChatGPT paper_id={id} />
                 </div>
               </CardContent>
             </Card>

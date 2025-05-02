@@ -8,6 +8,7 @@ import { SessionProvider } from 'next-auth/react';
 
 import { AnalyzeProvider } from '@/contexts/AnalyzeContext';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { OpenAIProvider } from '@/contexts/OpenAIContext';
 import { PaginationProvider } from '@/contexts/PaginationContext';
 import { ProgressProvider } from '@/contexts/ProgressContext';
 import { SearchProvider } from '@/contexts/SearchContext';
@@ -25,17 +26,19 @@ export default function RootProvider({ children }: TRootProvider) {
       <HeroUiProvider>
         <ThemeProvider>
           <ProgressProvider>
-            <SpeechProvider>
-              <AnalyzeProvider>
-                <PaginationProvider>
-                  <AuthProvider>
-                    <SearchProvider>
-                      <TanstackQueryProvider>{children}</TanstackQueryProvider>
-                    </SearchProvider>
-                  </AuthProvider>
-                </PaginationProvider>
-              </AnalyzeProvider>
-            </SpeechProvider>
+            <OpenAIProvider>
+              <SpeechProvider>
+                <AnalyzeProvider>
+                  <PaginationProvider>
+                    <AuthProvider>
+                      <SearchProvider>
+                        <TanstackQueryProvider>{children}</TanstackQueryProvider>
+                      </SearchProvider>
+                    </AuthProvider>
+                  </PaginationProvider>
+                </AnalyzeProvider>
+              </SpeechProvider>
+            </OpenAIProvider>
           </ProgressProvider>
         </ThemeProvider>
       </HeroUiProvider>

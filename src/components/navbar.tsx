@@ -3,7 +3,7 @@
 import React, { useTransition } from 'react'; // Added import for React
 
 import { motion } from 'framer-motion';
-import { FileAudio, FileChartColumn, Loader2, Menu, ScanLine, TextCursorInput } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -15,10 +15,16 @@ import { useAuth } from '@/contexts/AuthContext';
 
 import UserMenu from './auth/user-menu';
 import { MenuBar } from './home/menu-bar';
+import { NavMenuBar } from './home/nav-menu';
+import { NavUser } from './home/nav-user';
 import ThemeToggle from './theme-toggle';
 
 // import { SidebarTrigger } from './ui/sidebar';
-
+const user = {
+  name: 'shadcn',
+  email: 'm@example.com',
+  avatar: '/avatars/shadcn.jpg'
+};
 export default function Navbar() {
   const { isAuthenticated } = useAuth();
   const [signInPending, startSignInTransition] = useTransition();
@@ -51,13 +57,12 @@ export default function Navbar() {
         </div>
       </Link>
 
-      {isAuthenticated && (
-        <div className='hidden items-center md:flex'>
-          <MenuBar />
-        </div>
-      )}
-
       <div className='hidden items-center space-x-4 md:flex'>
+        {isAuthenticated && (
+          <div className='hidden items-center md:flex'>
+            <NavMenuBar />
+          </div>
+        )}
         <ThemeToggle />
 
         {isAuthenticated ? (
@@ -107,9 +112,9 @@ export default function Navbar() {
         )}
       </div>
       {/* <SidebarTrigger /> */}
-      <Button variant='ghost' size='icon' className='text-foreground md:hidden'>
-        <Menu className='h-6 w-6' />
-      </Button>
+      <div className='text-foreground md:hidden'>
+        <NavUser />
+      </div>
     </motion.nav>
   );
 }

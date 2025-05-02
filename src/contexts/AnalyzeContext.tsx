@@ -181,7 +181,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
               altText='View Paper'
               onClick={() =>
                 window.open(
-                  '/results/descrepancies/' + error_summary_response.data.metadata.paper_id,
+                  '/results/discrepancies/' + error_summary_response.data.metadata.paper_id,
                   '_blank'
                 )
               }
@@ -192,7 +192,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
           duration: 5000
         });
         await sleep(1500);
-        window.location.href = DOMAIN + '/results/descrepancies/' + paper_id;
+        window.location.href = DOMAIN + '/results/discrepancies/' + paper_id;
       } else if (analyzeOption[0] === 'GenerateArticle') {
         setIsChecking(true);
 

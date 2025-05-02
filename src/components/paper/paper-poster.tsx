@@ -42,7 +42,7 @@ export default function ResearchPaperPoster({ paper, paper_id }: any) {
           </div> */}
 
         {/* Paper Details */}
-        <div className='flex h-auto flex-col items-stretch justify-between space-y-4 p-6'>
+        <div className='flex h-auto w-full flex-col items-stretch justify-between space-y-4 p-6'>
           <div>
             <h2 className='mb-4 text-xl font-bold text-slate-700 dark:text-slate-200'>
               {paper.title}
@@ -65,10 +65,11 @@ export default function ResearchPaperPoster({ paper, paper_id }: any) {
           <PaperLinkSection paperLink={paper.paper_link} />
 
           <div className='flex items-center justify-end border-t pt-4'>
-            <div className='flex gap-2'>
+            <div className='flex w-full justify-center gap-2'>
               <Button size='sm' variant='outline'>
                 <Download className='mr-2 h-4 w-4' />
-                Download PDF
+                <span className='hidden md:inline'>Download PDF</span>
+                <span className='md:hidden'>Download</span>
               </Button>
               <Button
                 size='sm'
@@ -86,7 +87,8 @@ export default function ResearchPaperPoster({ paper, paper_id }: any) {
                 ) : (
                   <>
                     <ExternalLink className='mr-2 h-4 w-4' />
-                    View Full Paper Result
+                    <span className='hidden md:inline'>View Full Paper Result</span>
+                    <span className='md:hidden'>View Paper</span>
                   </>
                 )}
               </Button>

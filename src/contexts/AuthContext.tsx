@@ -17,6 +17,7 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<any>(() => {
     // Check localStorage during initialization
