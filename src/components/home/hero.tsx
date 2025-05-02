@@ -11,6 +11,8 @@ import { RoboAnimation } from '@/components/home/robo-animation';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 
+import Statistics from './statistics';
+
 export default function Hero() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -123,6 +125,15 @@ export default function Hero() {
                 )}
               </Button>
             )}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className='mt-4 w-full sm:flex-row md:mt-12 md:items-center'
+          >
+            <Statistics />
           </motion.div>
         </div>
       </div>

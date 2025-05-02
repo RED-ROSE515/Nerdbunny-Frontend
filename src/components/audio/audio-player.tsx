@@ -347,8 +347,8 @@ export default function AudioPlayer({ id, autoplay }: any) {
             </div>
 
             <div className='flex h-full min-h-[200px] w-full flex-col items-start justify-end overflow-hidden'>
-              <span className='ml-6 text-lg font-bold'>Sponsored by</span>
-              <AdPlayer />
+              {/* <span className='ml-6 text-lg font-bold'>Sponsored by</span> */}
+              {/* <AdPlayer /> */}
               <Particles
                 className='absolute inset-0 z-0'
                 quantity={100}

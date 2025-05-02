@@ -12,6 +12,8 @@ import WorkFlow from '@/components/home/workflow';
 import CheckSection from '@/components/paper/check-section';
 import { cn } from '@/lib/utils';
 
+import CheckPageApp from './check/page';
+
 export default function Home() {
   return (
     <main className='h-full w-full bg-background'>
@@ -38,7 +40,8 @@ export default function Home() {
       </div>
       <div className={`flex w-full flex-row justify-center p-0 md:p-4 md:px-10`}>
         <div className='md:w-[1200px]'>
-          <CheckSection />
+          {/* <CheckSection /> */}
+          <CheckPageApp />
           {/* <div className={`mt-4 flex h-[80vh] w-full flex-row justify-center md:mt-16`}>
             <AudioPlayer id={null} autoplay={false} />
           </div> */}

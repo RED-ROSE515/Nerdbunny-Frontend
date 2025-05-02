@@ -129,10 +129,10 @@ const Statistics = () => {
                       isHoverable
                       isPressable
                       radius='lg'
-                      onPress={() => {
-                        setSortBy(card.type || '');
-                        setKeyword('');
-                      }}
+                      // onPress={() => {
+                      //   setSortBy(card.type || '');
+                      //   setKeyword('');
+                      // }}
                       className={`w-full rounded-full`}
                     >
                       <CardBody

@@ -11,7 +11,6 @@ import { RiBarChartBoxAiFill } from 'react-icons/ri';
 
 import SignInDialog from '@/components/auth/signin-dialog';
 import Loader from '@/components/common/loader';
-import { PaperGlobe } from '@/components/home/hero-globe';
 import AnalysisResultWrapper from '@/components/paper/analysis-result-wrapper';
 import PaperInputWrapper from '@/components/paper/paper-input-wrapper';
 import SummaryWrapper from '@/components/paper/summary-wrapper';
@@ -23,7 +22,7 @@ type TriggerRefType = {
   current: (() => void) | null;
 };
 
-export default function App() {
+export default function CheckPageApp() {
   const {
     isChecking,
     paperOwner,
