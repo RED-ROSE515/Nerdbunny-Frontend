@@ -2,6 +2,7 @@ import React, { useTransition } from 'react';
 
 import { Button } from '@heroui/react';
 import { useRouter } from 'next/navigation';
+import { FaArrowRight } from 'react-icons/fa6';
 
 import { RightArrow } from '../common/svgs';
 
@@ -64,10 +65,10 @@ const NerdbunnyReason = () => {
               }
             >
               <strong
-                className={`flex flex-row items-center justify-center whitespace-pre-wrap text-center text-[16px] font-medium leading-none tracking-tight text-white`}
+                className={`flex flex-row items-center justify-center whitespace-pre-wrap text-center text-[16px] font-medium leading-none tracking-tight text-primary-foreground`}
               >
                 {"Try it Now - It's Free"}
-                <RightArrow />
+                <FaArrowRight className='ml-2 text-primary-foreground' />
               </strong>
             </Button>
           </div>

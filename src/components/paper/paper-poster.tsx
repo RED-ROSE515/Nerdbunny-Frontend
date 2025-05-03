@@ -81,14 +81,16 @@ export default function ResearchPaperPoster({ paper, paper_id }: any) {
               >
                 {pending ? (
                   <>
-                    <Loader2 className='mr-2 h-5 w-5 animate-spin' />
-                    Please wait
+                    <Loader2 className='mr-2 h-5 w-5 animate-spin text-primary-foreground' />
+                    <span className='text-primary-foreground'>Please wait</span>
                   </>
                 ) : (
                   <>
-                    <ExternalLink className='mr-2 h-4 w-4' />
-                    <span className='hidden md:inline'>View Full Paper Result</span>
-                    <span className='md:hidden'>View Paper</span>
+                    <ExternalLink className='mr-2 h-4 w-4 text-primary-foreground' />
+                    <span className='hidden text-primary-foreground md:inline'>
+                      View Full Paper Result
+                    </span>
+                    <span className='text-primary-foreground md:hidden'>View Paper</span>
                   </>
                 )}
               </Button>

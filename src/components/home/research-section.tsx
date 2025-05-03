@@ -76,10 +76,10 @@ const ResearchSection = () => {
           }
         >
           <strong
-            className={`flex flex-row items-center justify-center whitespace-pre-wrap text-center text-[16px] font-medium leading-none tracking-tight text-white`}
+            className={`flex flex-row items-center justify-center whitespace-pre-wrap text-center text-[16px] font-medium leading-none tracking-tight text-primary-foreground`}
           >
             {'Start Your Free Trial'}
-            <FaArrowRight className='ml-2' />
+            <FaArrowRight className='ml-2 text-primary-foreground' />
           </strong>
         </Button>
       </div>

@@ -44,7 +44,7 @@ const UserCard = ({
   showSignInModal,
   totalData,
   reportPost,
-  showFollow = true,
+  showFollow = false,
   input_tokens,
   output_tokens
 }: any) => {
@@ -197,8 +197,8 @@ const UserCard = ({
                 {formattedDate}
               </span>
             </div>
-            {showFollow && (
-              <div className='flex flex-row items-center justify-center'>
+            <div className='flex flex-row items-center justify-center'>
+              {showFollow && (
                 <AnimatedSubscribeButton
                   subscribeStatus={userDetail?.is_following}
                   disabled={!isAuthenticated || userDetail?.id === user.detail.id}
@@ -210,62 +210,61 @@ const UserCard = ({
                     Followed
                   </span>
                 </AnimatedSubscribeButton>
-
-                <Popover offset={10} placement='bottom-end' backdrop='transparent'>
-                  <PopoverTrigger>
-                    <Button
-                      isIconOnly
-                      className='text-default-900/60 data-[hover]:bg-foreground/10'
-                      radius='full'
-                      variant='light'
-                    >
-                      <PiDotsThreeOutlineVerticalFill size={17} />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent
-                    className={`min-w-[150px] border-2 border-[#A4A4A4] bg-[#F7F7F7] dark:border-[#4B5C6E] dark:bg-[#2E3E4E]`}
+              )}
+              <Popover offset={10} placement='bottom-end' backdrop='transparent'>
+                <PopoverTrigger>
+                  <Button
+                    isIconOnly
+                    className='text-default-900/60 data-[hover]:bg-foreground/10'
+                    radius='full'
+                    variant='light'
                   >
-                    {() => (
-                      <div className={`flex w-full flex-col gap-2 bg-[#F7F7F7] dark:bg-[#2E3E4E]`}>
-                        <Button
-                          startContent={<MdOutlineContentCopy size={24} />}
-                          className='hover:[#3E5061] w-full'
-                          variant='light'
-                          onPress={() => {
-                            navigator.clipboard.writeText(link);
-                            toast({
-                              title: 'Success',
-                              description: 'Successfully Copied the link!'
-                            });
-                          }}
+                    <PiDotsThreeOutlineVerticalFill size={17} />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent
+                  className={`min-w-[150px] border-2 border-[#A4A4A4] bg-[#F7F7F7] dark:border-[#4B5C6E] dark:bg-[#2E3E4E]`}
+                >
+                  {() => (
+                    <div className={`flex w-full flex-col gap-2 bg-[#F7F7F7] dark:bg-[#2E3E4E]`}>
+                      <Button
+                        startContent={<MdOutlineContentCopy size={24} />}
+                        className='hover:[#3E5061] w-full'
+                        variant='light'
+                        onPress={() => {
+                          navigator.clipboard.writeText(link);
+                          toast({
+                            title: 'Success',
+                            description: 'Successfully Copied the link!'
+                          });
+                        }}
+                      >
+                        Share
+                      </Button>
+                      <Button
+                        variant='light'
+                        className='w-full'
+                        startContent={<MdReport size={24} />}
+                        onPress={reportPost}
+                      >
+                        {totalData.reported_me ? 'UnReport' : 'Report'}
+                      </Button>
+                      {input_tokens && output_tokens ? (
+                        <Card
+                          className={`md:text-md flex w-full flex-row items-center justify-center space-x-4 bg-gray-200 p-2 text-sm dark:bg-[#242F3C] md:p-4`}
                         >
-                          Share
-                        </Button>
-                        <Button
-                          variant='light'
-                          className='w-full'
-                          startContent={<MdReport size={24} />}
-                          onPress={reportPost}
-                        >
-                          {totalData.reported_me ? 'UnReport' : 'Report'}
-                        </Button>
-                        {input_tokens && output_tokens ? (
-                          <Card
-                            className={`md:text-md flex w-full flex-row items-center justify-center space-x-4 bg-gray-200 p-2 text-sm dark:bg-[#242F3C] md:p-4`}
-                          >
-                            <p>{`IN: ${commify(input_tokens)}`}</p>
-                            <p>|</p>
-                            <p>{`OUT: ${commify(output_tokens)}`}</p>
-                          </Card>
-                        ) : (
-                          <div />
-                        )}
-                      </div>
-                    )}
-                  </PopoverContent>
-                </Popover>
-              </div>
-            )}
+                          <p>{`IN: ${commify(input_tokens)}`}</p>
+                          <p>|</p>
+                          <p>{`OUT: ${commify(output_tokens)}`}</p>
+                        </Card>
+                      ) : (
+                        <div />
+                      )}
+                    </div>
+                  )}
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
         </div>
       </CardBody>

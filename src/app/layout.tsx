@@ -10,7 +10,6 @@ import config from '_config';
 
 import { CircularProgressBar } from '@/components/common/circular-progress-bar';
 import Footer from '@/components/footer';
-import { AppSidebar } from '@/components/home/app-sidebar';
 import Navbar from '@/components/navbar';
 import RootProvider from '@/components/providers/root';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
@@ -40,7 +39,7 @@ export default function RootLayout({ children }: TRootLayout) {
               <div
                 className={`max-w-screen relative grid min-h-[100dvh] grid-rows-[auto_1fr_auto] overflow-hidden`}
               >
-                <Navbar />
+                <Navbar isHome={true} />
                 <div>
                   {children}
                   <CircularProgressBar className='md:text-md h-[60px] w-[60px] text-sm md:h-[100px] md:w-[100px]' />

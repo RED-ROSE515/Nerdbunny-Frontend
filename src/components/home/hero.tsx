@@ -6,25 +6,20 @@ import { motion } from 'framer-motion';
 import { FileText, Loader2, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-import { FloatingPaper } from '@/components/home/floating-paper';
-import { RoboAnimation } from '@/components/home/robo-animation';
+import { DotPattern } from '@/components/magicui/dot-pattern';
+// import { FloatingPaper } from '@/components/home/floating-paper';
+// import { RoboAnimation } from '@/components/home/robo-animation';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-
-import Statistics from './statistics';
+import { cn } from '@/lib/utils';
 
 export default function Hero() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isUploadPending, startUploadTransition] = useTransition();
-  const { isAuthenticated } = useAuth();
+
   return (
     <div className='relative flex min-h-[calc(100vh-76px)] items-center'>
-      {/* Floating papers background */}
-      {/* <div className='absolute inset-0 overflow-hidden'>
-        <FloatingPaper count={6} />
-      </div> */}
-
       <div className='container relative z-10 mx-auto px-6'>
         <div className='mx-auto max-w-5xl text-center'>
           <motion.div
@@ -34,7 +29,7 @@ export default function Hero() {
           >
             <h1 className='mb-6 text-3xl font-bold text-foreground md:text-4xl lg:text-6xl'>
               Find inconsistencies in Research Papers Effortlessly with
-              <span className='bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text font-bold text-transparent'>
+              <span className='bg-black bg-clip-text font-bold text-transparent dark:bg-white'>
                 {' '}
                 NERDBUNNY
               </span>
@@ -59,7 +54,7 @@ export default function Hero() {
           >
             <Button
               size='lg'
-              className='bg-primary px-8 text-primary-foreground hover:bg-primary/90'
+              className='rounded-full bg-primary px-8 text-primary-foreground hover:bg-primary/90'
               onClick={() =>
                 startUploadTransition(() => {
                   router.push('/check');
@@ -68,72 +63,17 @@ export default function Hero() {
             >
               {isUploadPending ? (
                 <>
-                  <Loader2 className='mr-2 h-5 w-5 animate-spin' />
-                  Please wait
+                  <Loader2 className='mr-2 h-5 w-5 animate-spin text-primary-foreground' />
+                  <span className='text-primary-foreground'>Please wait</span>
                 </>
               ) : (
                 <>
-                  <FileText className='mr-2 h-5 w-5' />
-                  Upload Paper
+                  <span className='text-lg font-semibold text-primary-foreground'>
+                    Try for FREE!
+                  </span>
                 </>
               )}
             </Button>
-            {isAuthenticated ? (
-              <Button
-                size='lg'
-                variant='outline'
-                className='border-primary bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary'
-                onClick={() =>
-                  startTransition(() => {
-                    router.push('/results/discrepancies');
-                  })
-                }
-              >
-                {isPending ? (
-                  <>
-                    <Loader2 className='mr-2 h-5 w-5 animate-spin' />
-                    Please wait
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className='mr-2 h-5 w-5' />
-                    My Uploaded Papers
-                  </>
-                )}
-              </Button>
-            ) : (
-              <Button
-                size='lg'
-                variant='outline'
-                className='border-primary bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary'
-                onClick={() =>
-                  startTransition(() => {
-                    router.push('/samples');
-                  })
-                }
-              >
-                {isPending ? (
-                  <>
-                    <Loader2 className='mr-2 h-5 w-5 animate-spin' />
-                    Please wait
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className='mr-2 h-5 w-5' />
-                    See Examples
-                  </>
-                )}
-              </Button>
-            )}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className='mt-4 w-full sm:flex-row md:mt-12 md:items-center'
-          >
-            <Statistics />
           </motion.div>
         </div>
       </div>
@@ -142,6 +82,10 @@ export default function Hero() {
       {/* <div className='absolute bottom-0 right-0 hidden h-96 w-96 md:block'>
         <RoboAnimation />
       </div> */}
+      <DotPattern
+        glow={false}
+        className={cn('[mask-image:radial-gradient(750px_circle_at_center,white,transparent)]')}
+      />
     </div>
   );
 }

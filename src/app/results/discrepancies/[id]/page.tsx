@@ -3,6 +3,7 @@
 import React, { use } from 'react';
 
 import Loader from '@/components/common/loader';
+import AdvancedSummaryWrapper from '@/components/paper/advanced-summary-wrapper';
 import AnalysisResultWrapper from '@/components/paper/analysis-result-wrapper';
 import SummaryWrapper from '@/components/paper/summary-wrapper';
 import useGetData from '@/lib/service/get-data';
@@ -51,7 +52,7 @@ export default function App({ params }: any) {
             }
             userData={paperData.paper_owner}
           />
-
+          <AdvancedSummaryWrapper summary={paperData?.paper_analysis?.analysis_data?.summary} />
           <AnalysisResultWrapper
             results={paperData?.paper_analysis?.analysis_data?.analysis}
             total_summary={paperData?.paper_analysis?.analysis_data?.summary}

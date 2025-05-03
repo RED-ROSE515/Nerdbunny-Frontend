@@ -119,6 +119,7 @@ export const AnalyzeForm = ({
   paper_link: string;
   setResearchPaperLink: (link: string) => void;
 }) => {
+  const { processType } = useAnalyze();
   return (
     <Button
       isLoading={loading}
@@ -130,8 +131,16 @@ export const AnalyzeForm = ({
       }}
       isDisabled={disabled}
     >
-      <FileScan className='mr-2 h-5 w-5 text-white' />
-      <span className={`mx-2 w-max text-white`}>Analyze</span>
+      <FileScan className='mr-2 h-5 w-5 text-primary-foreground' />
+      <span className={`mx-2 w-max text-primary-foreground`}>
+        {processType === 'ResearchCheck'
+          ? 'Error Detection'
+          : processType === 'GenerateArticle'
+            ? 'Generate Article'
+            : processType === 'PlagiarismCheck'
+              ? 'Check Plagiarism'
+              : 'Extract Figures'}
+      </span>
     </Button>
   );
 };

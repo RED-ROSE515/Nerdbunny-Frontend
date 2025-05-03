@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import DarkLogo from 'public/LogoLime.png';
 import LightLogo from 'public/LogoPurple.png';
 
@@ -25,16 +25,17 @@ const user = {
   email: 'm@example.com',
   avatar: '/avatars/shadcn.jpg'
 };
-export default function Navbar() {
+export default function Navbar({ className, isHome }: { className?: string; isHome?: boolean }) {
   const { isAuthenticated } = useAuth();
   const [signInPending, startSignInTransition] = useTransition();
   const [signUpPending, startSingUpTransition] = useTransition();
+  const pathname = usePathname();
   const router = useRouter();
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className='z-10 flex items-center justify-between border-b border-border/10 bg-transparent px-6 py-4 backdrop-blur-sm'
+      className={`z-10 flex items-center justify-between border-b border-border/10 bg-transparent px-6 py-4 backdrop-blur-sm ${isHome && pathname === '/' ? 'hidden' : 'sticky top-0'} ${className}`}
     >
       <Link href='/' className='flex h-12 items-center space-x-2 overflow-hidden'>
         <div className='hidden w-[50%] dark:block md:w-full'>

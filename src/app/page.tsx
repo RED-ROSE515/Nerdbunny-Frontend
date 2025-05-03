@@ -2,19 +2,20 @@
 
 import React from 'react';
 
-import AudioPlayer from '@/components/audio/audio-player';
+import { useTheme } from 'next-themes';
+
 import Hero from '@/components/home/hero';
-import LastSection from '@/components/home/last-section';
 import NerdbunnyReason from '@/components/home/nerdbunny-reason';
 import ResearchSection from '@/components/home/research-section';
-import { SparklesCore } from '@/components/home/sparkles';
 import WorkFlow from '@/components/home/workflow';
-import CheckSection from '@/components/paper/check-section';
+import Navbar from '@/components/navbar';
 import { cn } from '@/lib/utils';
 
 import CheckPageApp from './check/page';
 
 export default function Home() {
+  const { resolvedTheme: theme } = useTheme();
+
   return (
     <main className='h-full w-full bg-background'>
       <div
@@ -34,7 +35,13 @@ export default function Home() {
           />
         </div> */}
 
-        <div className='relative z-10'>
+        <div
+          className='relative z-10'
+          style={{
+            background: `${theme === 'dark' ? 'linear-gradient(0deg, #020815 0%, #1E293B 100%)' : 'linear-gradient(0deg, #FFFFFF 0%, #F7F7F7 100%)'}`
+          }}
+        >
+          <Navbar />
           <Hero />
         </div>
       </div>
@@ -49,7 +56,6 @@ export default function Home() {
             <NerdbunnyReason />
             <WorkFlow />
             <ResearchSection />
-            <LastSection />
           </div>
         </div>
       </div>

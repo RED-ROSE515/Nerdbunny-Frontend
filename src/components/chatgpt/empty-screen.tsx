@@ -14,7 +14,9 @@ export function EmptyScreen({ onExampleClick }: EmptyScreenProps) {
       <div className='rounded-full bg-muted p-6'>
         <MessageSquare className='h-10 w-10 text-muted-foreground' />
       </div>
-      <h1 className='text-3xl font-bold'>What can I help with?</h1>
+      <h1 className='text-3xl font-bold'>
+        Ask our AI questions about the the document or results?
+      </h1>
     </div>
   );
 }

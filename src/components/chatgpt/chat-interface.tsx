@@ -138,7 +138,7 @@ export function ChatInterface({ paper_id }: { paper_id?: string }) {
             <Input
               value={input}
               onChange={handleInputChange}
-              placeholder='Message AI Chat...'
+              placeholder='Chat with the results'
               className='pr-10'
               disabled={isLoading}
             />
