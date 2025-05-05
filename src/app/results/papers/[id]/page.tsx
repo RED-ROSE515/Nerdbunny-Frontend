@@ -1,11 +1,12 @@
 'use client';
 
-import React, { use, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 
 import {
   Button,
   Checkbox,
   CheckboxGroup,
+  Chip,
   Image,
   Modal,
   ModalBody,
@@ -18,14 +19,16 @@ import {
   SelectItem,
   Tab,
   Tabs,
+  Tooltip,
   useDisclosure
 } from '@heroui/react';
-import { FileChartColumn, Newspaper, OctagonX } from 'lucide-react';
+import { BookCopy, Eye, FileChartColumn, Newspaper, OctagonX } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { SiRoamresearch } from 'react-icons/si';
 
 import Loader from '@/components/common/loader';
+import UserSearchBar from '@/components/common/user-search';
 import AuthorSection from '@/components/paper/author-section';
 import { Carousel } from '@/components/paper/carousel/carousel';
 import KeywordsSection from '@/components/paper/keywords-section';
@@ -34,6 +37,7 @@ import { citations, Option } from '@/components/paper/paper-input-wrapper';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useAnalyze } from '@/contexts/AnalyzeContext';
 import useGetData from '@/lib/service/get-data';
+import { postApis } from '@/lib/utils/apis';
 
 export default function App({ params }: any) {
   const router = useRouter();
@@ -41,8 +45,10 @@ export default function App({ params }: any) {
   const { id } = resolvedParams as any;
   const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
   const { data: paperData, isLoading: paperLoading } = useGetData(`papers/${id}/`);
-  const { handleAnalyze, isChecking } = useAnalyze();
-  const [visibility, setVisibility] = useState(['nobody']);
+  const { handleAnalyze, postId, isChecking } = useAnalyze();
+  const [visibility, setVisibility] = useState([paperData?.visibility]);
+
+  const [showVisibilityModal, setShowVisibilityModal] = useState(false);
   const [users, setUsers] = useState<Option[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [processType, setProcessType] = useState('');
@@ -70,7 +76,7 @@ export default function App({ params }: any) {
     {
       Icon: Newspaper,
       title: 'Article',
-      subActionTitle: 'Generate Article',
+      subActionTitle: 'Summarise Research Paper',
       isDisabled: !paperData?.has_article,
       description: 'Article Generation Results',
       action: () => router.push(DOMAIN + '/results/articles/' + id),
@@ -90,9 +96,26 @@ export default function App({ params }: any) {
         setProcessType('ExtractFigures');
         onOpen();
       }
+    },
+    {
+      Icon: BookCopy,
+      title: 'Plagiarism',
+      subActionTitle: 'Plagiarism Check',
+      isDisabled: !paperData?.has_plagiarism,
+      description: 'Check Research Paper for Plagiarism',
+      action: () => router.push(DOMAIN + '/results/plagiarism/' + id),
+      subAction: () => {
+        setProcessType('PlagiarismCheck');
+        onOpen();
+      }
     }
   ];
-
+  const options = [
+    { key: 'public', label: 'Everyone' },
+    { key: 'followers', label: 'My Followers' },
+    { key: 'specific_users', label: 'Specific Users' },
+    { key: 'private', label: 'Nobody' }
+  ];
   return (
     <div>
       {!paperData ? (
@@ -102,11 +125,31 @@ export default function App({ params }: any) {
           <div className='my-8 flex w-full max-w-[95vw] items-center justify-center gap-8 md:max-w-[90vw]'>
             <Card className='w-full'>
               <CardHeader>
-                <h1 className='mt-4 text-center text-lg font-bold md:text-3xl'>
-                  {paperData.metadata.title}
-                </h1>
+                <div className='flex flex-row items-center justify-around'>
+                  <h1 className='mt-4 text-center text-lg font-bold md:text-3xl'>
+                    {paperData.metadata.title}
+                  </h1>
+                  <Tooltip content='Change Visibility'>
+                    <Button isIconOnly variant='ghost' onPress={() => setShowVisibilityModal(true)}>
+                      <Eye />
+                    </Button>
+                  </Tooltip>
+                </div>
               </CardHeader>
               <CardContent className='flex flex-col gap-4 p-1 md:p-6'>
+                <div className='flex w-full flex-row items-center justify-end gap-2'>
+                  <Chip variant='bordered'>
+                    <span className='font-bold'>
+                      {paperData?.visibility === 'private'
+                        ? 'This post is private.'
+                        : paperData?.visibility === 'followers'
+                          ? 'This post is visible to followers.'
+                          : paperData?.visibility === 'specific_users'
+                            ? 'This post is visible to specific users.'
+                            : 'This post is public.'}
+                    </span>
+                  </Chip>
+                </div>
                 <div className='flex w-full flex-col items-start justify-center gap-10 md:flex-row md:p-2'>
                   <div className='w-full md:w-2/3'>
                     <AuthorSection authors={paperData.metadata.authors} />
@@ -274,6 +317,66 @@ export default function App({ params }: any) {
                       }}
                     >
                       Generate
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
+          <Modal
+            backdrop='opaque'
+            isOpen={showVisibilityModal}
+            onClose={() => setShowVisibilityModal(false)}
+          >
+            <ModalContent>
+              {(onClose) => (
+                <>
+                  <ModalHeader className='flex flex-col gap-1 text-red-500'>
+                    Change Visibility of your post.
+                  </ModalHeader>
+                  <ModalBody>
+                    <div className='mt-4 flex w-full flex-col justify-center gap-5 pb-16'>
+                      <span>
+                        Currently, your post is private. You can change the visibility to public or
+                        specific users.
+                      </span>
+                      <div className='w-full md:w-full'>
+                        <Select
+                          isRequired
+                          variant='faded'
+                          className='max-w-xs'
+                          defaultSelectedKeys={['private']}
+                          placeholder='Select visibility.'
+                          selectedKeys={new Set(visibility)}
+                          onSelectionChange={(keys) => setVisibility([...keys] as string[])}
+                        >
+                          {options.map((option) => (
+                            <SelectItem key={option.key}>{option.label}</SelectItem>
+                          ))}
+                        </Select>
+                      </div>
+                      {visibility[0] === 'specific_users' && (
+                        <UserSearchBar
+                          setUsers={setUsers}
+                          users={users}
+                          disabled={visibility[0] !== 'specific_users'}
+                        />
+                      )}
+                    </div>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button
+                      color='primary'
+                      onPress={async () => {
+                        setShowVisibilityModal(false);
+                        await postApis.changePostVisibility(
+                          id,
+                          visibility[0],
+                          users.map((user) => user.value)
+                        );
+                      }}
+                    >
+                      OK
                     </Button>
                   </ModalFooter>
                 </>

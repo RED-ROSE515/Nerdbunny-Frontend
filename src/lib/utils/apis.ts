@@ -29,13 +29,17 @@ export const userApis = {
 export const postApis = {
   reportPost: async (postId: string, status: boolean) => {
     // TODO: Implement actual report endpoint
-    return await api.post(`/post/report/${postId}`, {
+    return await api.post(`/papers/${postId}/report`, {
       post_id: postId,
       status: !status
     });
   },
-  changePostVisibility: async (postId: string, shower_type: number, shower_ids: string[]) => {
-    return await api.post(`/post/shower_type/${postId}`, {
+  changePostVisibility: async (
+    postId: string,
+    shower_type: string | undefined,
+    shower_ids: string[]
+  ) => {
+    return await api.post(`/papers/${postId}/change_visibility/`, {
       shower_type: shower_type,
       shower_ids: shower_ids
     });

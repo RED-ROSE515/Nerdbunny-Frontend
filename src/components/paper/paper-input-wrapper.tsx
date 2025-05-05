@@ -35,7 +35,6 @@ import { useDropzone } from 'react-dropzone';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { SiRoamresearch } from 'react-icons/si';
 
-import UserSearchBar from '@/components/common/user-search';
 import { ToastAction } from '@/components/ui/toast';
 import { useAnalyze } from '@/contexts/AnalyzeContext';
 import { useAuth } from '@/contexts/AuthContext';
@@ -73,12 +72,6 @@ const PdfColor = {
   fillColor: 'fill-blue-400'
 };
 
-export const options = [
-  { key: 'everyone', label: 'Everyone' },
-  { key: 'followers', label: 'My Followers' },
-  { key: 'specific_users', label: 'Specific Users' },
-  { key: 'nobody', label: 'Nobody' }
-];
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export interface ImageUploadProps {
@@ -136,7 +129,7 @@ export const AnalyzeForm = ({
         {processType === 'ResearchCheck'
           ? 'Error Detection'
           : processType === 'GenerateArticle'
-            ? 'Generate Article'
+            ? 'Summarise Manuscript'
             : processType === 'PlagiarismCheck'
               ? 'Check Plagiarism'
               : 'Extract Figures'}
@@ -149,7 +142,7 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
   const [currentFile, setCurrentFile] = useState<FileUploadProgress | null>(null);
   const [showSignIn, setShowSignIn] = useState(false);
   const [users, setUsers] = useState<Option[]>([]);
-  const [visibility, setVisibility] = useState(['nobody']);
+  const [visibility, setVisibility] = useState(['private']);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [s3_link, setS3Link] = useState('');
   const [paper_id, setPaperId] = useState('');
@@ -168,7 +161,7 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
   const [summaryOption, setSummaryOption] = useState('Basic');
   const [advancedMethods, setAdvancedMethods] = useState<string[]>(['Method']);
   const [showWarningModal, setShowWarningModal] = useState(false);
-  const [showVisibilityModal, setShowVisibilityModal] = useState(false);
+  const [showVisibilityModal, setShowVisibilityModal] = useState(true);
   const router = useRouter();
 
   const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
@@ -641,79 +634,7 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
           )}
         </ModalContent>
       </Modal>
-      <Modal
-        backdrop='opaque'
-        isOpen={showVisibilityModal}
-        onClose={() => setShowVisibilityModal(false)}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className='flex flex-col gap-1 text-red-500'>
-                Change Visibility of your post.
-              </ModalHeader>
-              <ModalBody>
-                <div className='mt-4 flex w-full flex-col justify-center gap-5 pb-16'>
-                  <span>
-                    Currently, your post is private. You can change the visibility to public or
-                    specific users.
-                  </span>
-                  <div className='w-full md:w-full'>
-                    <Select
-                      isRequired
-                      variant='faded'
-                      className='max-w-xs'
-                      defaultSelectedKeys={['everyone']}
-                      placeholder='Select visibility.'
-                      selectedKeys={new Set(visibility)}
-                      onSelectionChange={(keys) => setVisibility([...keys] as string[])}
-                    >
-                      {options.map((option) => (
-                        <SelectItem key={option.key}>{option.label}</SelectItem>
-                      ))}
-                    </Select>
-                  </div>
-                  {visibility[0] === 'specific_users' && (
-                    <UserSearchBar
-                      setUsers={setUsers}
-                      users={users}
-                      disabled={visibility[0] !== 'specific_users'}
-                    />
-                  )}
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button
-                  color='primary'
-                  onPress={async () => {
-                    setShowVisibilityModal(false);
-                    if (visibility[0] !== 'nobody') {
-                      await postApis.changePostVisibility(
-                        postId,
-                        visibility[0] === 'specific_users'
-                          ? 0
-                          : visibility[0] === 'followers'
-                            ? 1
-                            : visibility[0] === 'everyone'
-                              ? 2
-                              : 3,
-                        users.map((user) => user.value)
-                      );
-                    }
-                    if (processType.includes('ResearchCheck')) {
-                      router.push(DOMAIN + '/results/discrepancies/' + postId);
-                    } else {
-                      router.push(DOMAIN + '/results/articles/' + postId);
-                    }
-                  }}
-                >
-                  OK
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+
       <Modal backdrop='opaque' isOpen={showWarningModal} onClose={() => setShowWarningModal(false)}>
         <ModalContent>
           {(onClose) => (

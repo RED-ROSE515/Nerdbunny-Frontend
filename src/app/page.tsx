@@ -9,9 +9,8 @@ import NerdbunnyReason from '@/components/home/nerdbunny-reason';
 import ResearchSection from '@/components/home/research-section';
 import WorkFlow from '@/components/home/workflow';
 import Navbar from '@/components/navbar';
+import CheckSection from '@/components/paper/check-section';
 import { cn } from '@/lib/utils';
-
-import CheckPageApp from './check/page';
 
 export default function Home() {
   const { resolvedTheme: theme } = useTheme();
@@ -47,8 +46,8 @@ export default function Home() {
       </div>
       <div className={`flex w-full flex-row justify-center p-0 md:p-4 md:px-10`}>
         <div className='md:w-[1200px]'>
-          {/* <CheckSection /> */}
-          <CheckPageApp />
+          <CheckSection />
+          {/* <CheckPageApp /> */}
           {/* <div className={`mt-4 flex h-[80vh] w-full flex-row justify-center md:mt-16`}>
             <AudioPlayer id={null} autoplay={false} />
           </div> */}
