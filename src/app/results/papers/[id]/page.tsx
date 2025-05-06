@@ -283,11 +283,15 @@ export default function App({ params }: any) {
                           </Tab>
                         </Tabs>
                       </div>
-                    ) : (
+                    ) : processType === 'PlagiarismCheck' ? (
                       <div className='min-h-[150px]'>
                         <span>
                           Extract all figures from the paper and create a report for each figure.
                         </span>
+                      </div>
+                    ) : (
+                      <div className='min-h-[150px]'>
+                        <span>Check the research paper for plagiarism and create a report.</span>
                       </div>
                     )}
                   </ModalBody>
@@ -312,6 +316,8 @@ export default function App({ params }: any) {
                           );
                         } else if (processType === 'ExtractFigures') {
                           handleAnalyze(id, visibility[0] || '', users, ['ExtractFigures']);
+                        } else if (processType === 'PlagiarismCheck') {
+                          handleAnalyze(id, visibility[0] || '', users, ['PlagiarismCheck']);
                         }
                         onClose();
                       }}
