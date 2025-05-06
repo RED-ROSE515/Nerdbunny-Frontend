@@ -182,7 +182,9 @@ export default function App({ params }: any) {
                       ? 'Analyse Manuscript'
                       : processType === 'GenerateArticle'
                         ? 'Summarise Manuscript'
-                        : 'Extract All Figures'}
+                        : processType === 'ExtractFigures'
+                          ? 'Extract Figures'
+                          : 'Plagiarism Check'}
                   </ModalHeader>
                   <ModalBody className='flex flex-col items-center justify-center'>
                     {processType === 'ResearchCheck' ? (
@@ -283,7 +285,7 @@ export default function App({ params }: any) {
                           </Tab>
                         </Tabs>
                       </div>
-                    ) : processType === 'PlagiarismCheck' ? (
+                    ) : processType === 'ExtractFigures' ? (
                       <div className='min-h-[150px]'>
                         <span>
                           Extract all figures from the paper and create a report for each figure.

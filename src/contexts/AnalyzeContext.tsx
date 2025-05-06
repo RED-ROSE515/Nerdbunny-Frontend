@@ -306,7 +306,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
         window.location.href = DOMAIN + '/results/eddii/' + paper_id;
       } else if (analyzeOption[0] === 'PlagiarismCheck') {
         setIsChecking(true);
-        let totalDuration = 100000;
+        let totalDuration = 200000;
         let interval = 200;
         let currentProgress = 0;
 
@@ -340,7 +340,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
         await api.get(`papers/copyleaks/${paper_id}/check_plagiarism/`);
         const checkStatus = async () => {
           const response = await api.get(`papers/copyleaks/${paper_id}/get_plagiarism_data`);
-          if (response?.data?.paper?.data) {
+          if (response?.data?.paper?.data?.results) {
             clearInterval(intervalId);
             setProgress(100);
             setIsChecking(false);
