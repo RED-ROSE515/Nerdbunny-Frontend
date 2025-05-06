@@ -434,7 +434,7 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
               onClick={() => setShowUrlInput(!showUrlInput)}
               className='text-lg font-semibold transition-colors hover:text-primary'
             >
-              {showUrlInput ? 'Hide URL Input' : 'Show URL Input'}
+              {showUrlInput ? 'Hide URL Input' : 'OR enter URL here'}
             </button>
           </div>
           {showUrlInput && (

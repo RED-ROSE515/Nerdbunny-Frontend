@@ -125,7 +125,7 @@ const CheckSection = () => {
           ))}
         </div>
 
-        <div className='mt-4 font-semibold text-muted-foreground'>
+        <div className='mt-4 text-center text-muted-foreground'>
           {tabs.filter((tab) => tab.id === currentTab)[0]?.content}
         </div>
         <Separator className='my-2' />

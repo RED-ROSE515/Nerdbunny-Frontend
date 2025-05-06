@@ -19,15 +19,15 @@ export default function Hero() {
   const [isUploadPending, startUploadTransition] = useTransition();
 
   return (
-    <div className='relative flex min-h-[calc(100vh-76px)] items-center'>
+    <div className='relative flex min-h-[calc(60vh)] items-center'>
       <div className='container relative z-10 mx-auto px-6'>
-        <div className='mx-auto max-w-5xl text-center'>
+        <div className='mx-auto max-w-4xl text-center'>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className='mb-6 text-3xl font-bold text-foreground md:text-4xl lg:text-6xl'>
+            <h1 className='mb-6 text-3xl font-bold text-foreground md:text-4xl lg:text-7xl'>
               Unlock Insights from Research Papers Instantly
             </h1>
           </motion.div>

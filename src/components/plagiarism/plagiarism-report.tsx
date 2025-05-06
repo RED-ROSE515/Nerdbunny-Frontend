@@ -64,62 +64,91 @@ export function PlagiarismReport({ data }: PlagiarismReportProps) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
-            <div className='flex flex-col items-center justify-center'>
-              <PlagiarismScoreGauge score={score.aggregatedScore} />
-              <div className='mt-2 text-center'>
-                <p className='text-sm text-muted-foreground'>Similarity Score</p>
-                <p className={`text-lg font-bold ${severityColor}`}>
-                  {severityLevel} ({score.aggregatedScore}%)
-                </p>
+          <div>
+            <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
+              <div className='flex flex-col items-center justify-center'>
+                <PlagiarismScoreGauge score={score.aggregatedScore} />
+                <div className='mt-2 text-center'>
+                  <p className='text-sm text-muted-foreground'>Similarity Score</p>
+                  <p className={`text-lg font-bold ${severityColor}`}>
+                    {severityLevel} ({score.aggregatedScore}%)
+                  </p>
+                </div>
+              </div>
+
+              <div className='col-span-2'>
+                <div className='space-y-4'>
+                  <div>
+                    <div className='mb-1 flex justify-between'>
+                      <span className='text-sm font-medium'>Identical Content</span>
+                      <span className='text-sm text-muted-foreground'>
+                        {score.identicalWords} words (
+                        {((score.identicalWords / scannedDocument.totalWords) * 100).toFixed(1)}%)
+                      </span>
+                    </div>
+                    <Progress
+                      value={(score.identicalWords / scannedDocument.totalWords) * 100}
+                      className='h-2 bg-gray-200 [&>.indicator]:bg-red-500'
+                      // Use .indicator class in the component's CSS instead
+                    />
+                  </div>
+
+                  <div>
+                    <div className='mb-1 flex justify-between'>
+                      <span className='text-sm font-medium'>Minor Changes</span>
+                      <span className='text-sm text-muted-foreground'>
+                        {score.minorChangedWords} words (
+                        {((score.minorChangedWords / scannedDocument.totalWords) * 100).toFixed(1)}
+                        %)
+                      </span>
+                    </div>
+                    <Progress
+                      value={(score.minorChangedWords / scannedDocument.totalWords) * 100}
+                      className='h-2 bg-gray-200 [&>.indicator]:bg-orange-400'
+                    />
+                  </div>
+
+                  <div>
+                    <div className='mb-1 flex justify-between'>
+                      <span className='text-sm font-medium'>Related Meaning</span>
+                      <span className='text-sm text-muted-foreground'>
+                        {score.relatedMeaningWords} words (
+                        {((score.relatedMeaningWords / scannedDocument.totalWords) * 100).toFixed(
+                          1
+                        )}
+                        %)
+                      </span>
+                    </div>
+                    <Progress
+                      value={(score.relatedMeaningWords / scannedDocument.totalWords) * 100}
+                      className='h-2 bg-gray-200 [&>.indicator]:bg-yellow-400'
+                    />
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className='col-span-2'>
-              <div className='space-y-4'>
-                <div>
-                  <div className='mb-1 flex justify-between'>
-                    <span className='text-sm font-medium'>Identical Content</span>
-                    <span className='text-sm text-muted-foreground'>
-                      {score.identicalWords} words (
-                      {((score.identicalWords / scannedDocument.totalWords) * 100).toFixed(1)}%)
-                    </span>
-                  </div>
-                  <Progress
-                    value={(score.identicalWords / scannedDocument.totalWords) * 100}
-                    className='h-2 bg-gray-200 [&>.indicator]:bg-red-500'
-                    // Use .indicator class in the component's CSS instead
-                  />
-                </div>
-
-                <div>
-                  <div className='mb-1 flex justify-between'>
-                    <span className='text-sm font-medium'>Minor Changes</span>
-                    <span className='text-sm text-muted-foreground'>
-                      {score.minorChangedWords} words (
-                      {((score.minorChangedWords / scannedDocument.totalWords) * 100).toFixed(1)}%)
-                    </span>
-                  </div>
-                  <Progress
-                    value={(score.minorChangedWords / scannedDocument.totalWords) * 100}
-                    className='h-2 bg-gray-200 [&>.indicator]:bg-orange-400'
-                  />
-                </div>
-
-                <div>
-                  <div className='mb-1 flex justify-between'>
-                    <span className='text-sm font-medium'>Related Meaning</span>
-                    <span className='text-sm text-muted-foreground'>
-                      {score.relatedMeaningWords} words (
-                      {((score.relatedMeaningWords / scannedDocument.totalWords) * 100).toFixed(1)}
-                      %)
-                    </span>
-                  </div>
-                  <Progress
-                    value={(score.relatedMeaningWords / scannedDocument.totalWords) * 100}
-                    className='h-2 bg-gray-200 [&>.indicator]:bg-yellow-400'
-                  />
-                </div>
+            <div className='mt-8'>
+              <span className='text-lg font-bold'>Understanding Your Report</span>
+              <div className='p-4'>
+                <p className='mb-2'>
+                  This report analyzes your document for potential plagiarism by comparing it
+                  against billions of internet sources, publications, and academic databases.
+                </p>
+                <ul className='list-inside list-disc space-y-1'>
+                  <li>
+                    <span className='font-medium text-red-500'>Identical Content:</span> Text that
+                    exactly matches other sources
+                  </li>
+                  <li>
+                    <span className='font-medium text-orange-500'>Minor Changes:</span> Text with
+                    slight modifications from the original
+                  </li>
+                  <li>
+                    <span className='font-medium text-yellow-500'>Related Meaning:</span>{' '}
+                    Paraphrased content with similar meaning
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -271,35 +300,6 @@ export function PlagiarismReport({ data }: PlagiarismReportProps) {
                     <li>Consider running another scan after making changes</li>
                   </ul>
                 </div>
-
-                <Collapsible>
-                  <CollapsibleTrigger asChild>
-                    <Button variant='ghost' className='flex h-auto w-full justify-between p-0'>
-                      <span className='font-medium'>Understanding Your Report</span>
-                      <ChevronDown className='h-4 w-4' />
-                    </Button>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent className='pt-2 text-sm text-muted-foreground'>
-                    <p className='mb-2'>
-                      This report analyzes your document for potential plagiarism by comparing it
-                      against billions of internet sources, publications, and academic databases.
-                    </p>
-                    <ul className='list-inside list-disc space-y-1'>
-                      <li>
-                        <span className='font-medium text-red-500'>Identical Content:</span> Text
-                        that exactly matches other sources
-                      </li>
-                      <li>
-                        <span className='font-medium text-orange-500'>Minor Changes:</span> Text
-                        with slight modifications from the original
-                      </li>
-                      <li>
-                        <span className='font-medium text-yellow-500'>Related Meaning:</span>{' '}
-                        Paraphrased content with similar meaning
-                      </li>
-                    </ul>
-                  </CollapsibleContent>
-                </Collapsible>
               </div>
             </CardContent>
           </Card>

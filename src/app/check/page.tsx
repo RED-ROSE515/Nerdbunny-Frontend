@@ -15,6 +15,7 @@ import AnalysisResultWrapper from '@/components/paper/analysis-result-wrapper';
 import PaperInputWrapper from '@/components/paper/paper-input-wrapper';
 import SummaryWrapper from '@/components/paper/summary-wrapper';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import { useAnalyze } from '@/contexts/AnalyzeContext';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -49,7 +50,7 @@ export default function CheckPageApp() {
       icon: <GiArchiveResearch className={`h-8 w-8 text-pink-500 dark:text-white`} />,
       title: 'Research & Analytics',
       content:
-        'Our AI agent analyzes the research paper and provides a report with the percentage of errors and discrepancies.',
+        'Uncover insights in your research paper. Our tool examines structure, methodology, and findings, identifying inconsistencies and issues to refine your work.',
       image: '/placeholder.svg?height=200&width=200'
     },
     {
@@ -58,7 +59,7 @@ export default function CheckPageApp() {
       icon: <GrArticle className={`h-8 w-8 text-slate-400 dark:text-white`} />,
       title: 'Summary and Articles',
       content:
-        'Our AI agent creates summaries and articles from academic papers, making complex research accessible to everyone.',
+        'Quickly grasp any research paper’s essence. Get a concise summary of objectives, results, and conclusions in seconds.',
       image: '/placeholder.svg?height=200&width=200'
     },
     {
@@ -67,18 +68,18 @@ export default function CheckPageApp() {
       icon: <RiBarChartBoxAiFill className={`h-8 w-8 text-slate-400 dark:text-white`} />,
       title: 'Extract Figures',
       content:
-        'Our AI agent creates summaries and articles from academic papers, making complex research accessible to everyone.',
+        'Interact with your research paper using EDDII. Ask questions, reveal insights, and engage dynamically to spark ideas.',
+      image: '/placeholder.svg?height=200&width=200'
+    },
+    {
+      id: 'PlagiarismCheck',
+      label: 'Plagiarism Check',
+      icon: <MdPlagiarism className={`h-8 w-8 text-slate-400 dark:text-white`} />,
+      title: 'Plagiarism Check',
+      content:
+        'We check for plagiarism in the research paper and provide a report with the percentage of plagiarism.',
       image: '/placeholder.svg?height=200&width=200'
     }
-    // {
-    //   id: 'PlagiarismCheck',
-    //   label: 'Plagiarism Check',
-    //   icon: <MdPlagiarism className={`h-8 w-8 text-slate-400 dark:text-white`} />,
-    //   title: 'Plagiarism Check',
-    //   content:
-    //     'We check for plagiarism in the research paper and provide a report with the percentage of plagiarism.',
-    //   image: '/placeholder.svg?height=200&width=200'
-    // }
   ];
   useEffect(() => {
     if (handleProtectedAction()) {
@@ -288,7 +289,7 @@ export default function CheckPageApp() {
                       </CardHeader>
                       <CardContent>
                         <div
-                          className={`grid grid-cols-3 border-b border-gray-100 dark:border-[#090E16] dark:bg-slate-800`}
+                          className={`grid grid-cols-4 border-b border-gray-100 dark:border-[#090E16] dark:bg-slate-800`}
                         >
                           {tabs.map((tab) => (
                             <button
@@ -317,20 +318,18 @@ export default function CheckPageApp() {
                             </button>
                           ))}
                         </div>
+                        <div className='mt-4 text-center text-muted-foreground'>
+                          {tabs.filter((tab) => tab.id === currentTab)[0]?.content}
+                        </div>
+                        <Separator className='my-2' />
                         {/* Content */}
                         {(currentTab === 'ResearchCheck' ||
                           currentTab === 'GenerateArticle' ||
-                          currentTab === 'ExtractFigures') && (
+                          currentTab === 'ExtractFigures' ||
+                          currentTab === 'PlagiarismCheck') && (
                           <div className={`p-8`}>
                             <div className='flex w-full flex-col items-center gap-8 md:flex-row'>
                               <PaperInputWrapper getPdfList={() => {}} paperType={currentTab} />
-                            </div>
-                          </div>
-                        )}
-                        {currentTab === 'PlagiarismCheck' && (
-                          <div className={`p-8`}>
-                            <div className='flex w-full flex-col items-center justify-center gap-8 md:flex-row'>
-                              <p className='p-16 text-center text-2xl font-bold'>Comming Soon...</p>
                             </div>
                           </div>
                         )}
