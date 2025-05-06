@@ -304,6 +304,65 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
         });
         await sleep(1500);
         window.location.href = DOMAIN + '/results/eddii/' + paper_id;
+      } else if (analyzeOption[0] === 'PlagiarismCheck') {
+        setIsChecking(true);
+        let totalDuration = 100000;
+        let interval = 200;
+        let currentProgress = 0;
+
+        const intervalId = setInterval(() => {
+          currentProgress += (interval / totalDuration) * 100;
+          setProgress(Math.min(currentProgress, 99));
+
+          if (currentProgress.toFixed(1) === '25.0') {
+            toast({
+              title: 'Processing at 25%',
+              description: 'Analyzing text and structure of paper.',
+              duration: 5000
+            });
+          }
+          if (currentProgress.toFixed(1) === '50.0') {
+            toast({
+              title: 'Processing at 50%',
+              description: 'Extracting figures from paper.',
+              duration: 5000
+            });
+          }
+          if (currentProgress.toFixed(1) === '75.0') {
+            toast({
+              title: 'Processing at 75%',
+              description: 'Generating final report for paper.',
+              duration: 5000
+            });
+          }
+        }, interval);
+
+        await api.get(`papers/copyleaks/${paper_id}/check_plagiarism/`);
+        const checkStatus = async () => {
+          const response = await api.get(`papers/copyleaks/${paper_id}/get_plagiarism_data`);
+          if (response?.data?.paper?.data) {
+            clearInterval(intervalId);
+            setProgress(100);
+            setIsChecking(false);
+            await toast({
+              title: 'Processing Complete',
+              description:
+                'Plagiarism check complete for uploaded paper! Click here to view results.',
+              action: (
+                <ToastAction
+                  altText='View Paper'
+                  onClick={() => window.open('/results/plagiarism/' + paper_id, '_blank')}
+                >
+                  View
+                </ToastAction>
+              ),
+              duration: 5000
+            });
+            await sleep(1500);
+            window.location.href = DOMAIN + '/results/plagiarism/' + paper_id;
+          }
+        };
+        const statusInterval = setInterval(checkStatus, 5000); // Check status every 10 seconds
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {

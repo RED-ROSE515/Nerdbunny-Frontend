@@ -162,6 +162,7 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
   const [advancedMethods, setAdvancedMethods] = useState<string[]>(['Method']);
   const [showWarningModal, setShowWarningModal] = useState(false);
   const [showVisibilityModal, setShowVisibilityModal] = useState(true);
+  const [showUrlInput, setShowUrlInput] = useState(false);
   const router = useRouter();
 
   const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
@@ -411,10 +412,10 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
                     Browse files
                   </Button>
                   <p className='text-xs text-gray-500'>
-                    Click to upload a PDF file &#40;file should be under 25 MB&#41;
+                    Click to Upload a PDF: Select a PDF (under 25 MB).
                   </p>
                   <p className='text-xs font-semibold text-red-500'>
-                    Note: Only PDF files are supported
+                    Note: Supports PDF files and URLs from listed sources only.
                   </p>
                   <br />
                 </div>
@@ -429,32 +430,38 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
             />
           </div>
           <div className='flex flex-col items-center justify-center'>
-            <span className='text-lg font-semibold'>OR</span>
+            <button
+              onClick={() => setShowUrlInput(!showUrlInput)}
+              className='text-lg font-semibold transition-colors hover:text-primary'
+            >
+              {showUrlInput ? 'Hide URL Input' : 'Show URL Input'}
+            </button>
           </div>
-          <div className='flex w-full flex-col gap-1'>
-            <p className='text-lg font-semibold'>Enter URL</p>
-            <HeroInput
-              className='w-full'
-              label='Paper URL : '
-              variant='bordered'
-              size='lg'
-              value={paper_url}
-              onValueChange={(val) => {
-                setPaperValue('');
-                setUploadedFile(null);
-                setPaperUrl(val);
-              }}
-              labelPlacement='outside-left'
-              placeholder='https://arxiv.org/abs/...'
-              classNames={{ mainWrapper: 'w-full' }}
-            />
-            <div className='mt-2 flex flex-row justify-between gap-3'>
-              <span className='ml-2 text-xs text-gray-500'>
-                Note: Currently supporting papers from: arXiv, bioRxiv, medRxiv, and OpenAlex. More
-                sources are coming soon.
-              </span>
+          {showUrlInput && (
+            <div className='flex w-full flex-col gap-1'>
+              <HeroInput
+                className='w-full'
+                label='Paper URL : '
+                variant='bordered'
+                size='lg'
+                value={paper_url}
+                onValueChange={(val) => {
+                  setPaperValue('');
+                  setUploadedFile(null);
+                  setPaperUrl(val);
+                }}
+                labelPlacement='outside-left'
+                placeholder='https://arxiv.org/abs/...'
+                classNames={{ mainWrapper: 'w-full' }}
+              />
+              <div className='mt-2 flex flex-row justify-between gap-3'>
+                <span className='ml-2 text-xs text-gray-500'>
+                  Note: Currently supporting papers from: arXiv, bioRxiv, medRxiv, and OpenAlex.
+                  More sources are coming soon.
+                </span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className='flex w-full flex-col justify-center gap-3'>
@@ -495,7 +502,9 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
                   ? 'Analyse Manuscript'
                   : processType === 'GenerateArticle'
                     ? 'Summarise Manuscript'
-                    : 'Extract All Figures'}
+                    : processType === 'ExtractFigures'
+                      ? 'Extract All Figures'
+                      : 'Plagiarism Check'}
               </ModalHeader>
               <ModalBody className='flex flex-col items-center justify-center'>
                 {processType === 'ResearchCheck' ? (
@@ -594,11 +603,15 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
                       </Tab>
                     </Tabs>
                   </div>
-                ) : (
+                ) : processType === 'ExtractFigures' ? (
                   <div className='min-h-[150px]'>
                     <span>
                       Extract all figures from the paper and create a report for each figure.
                     </span>
+                  </div>
+                ) : (
+                  <div className='min-h-[150px]'>
+                    <span>Check the research paper for plagiarism and create a report.</span>
                   </div>
                 )}
               </ModalBody>
@@ -623,6 +636,8 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
                       );
                     } else if (processType === 'ExtractFigures') {
                       handleAnalyze(s3_link, visibility[0] || '', users, ['ExtractFigures']);
+                    } else if (processType === 'PlagiarismCheck') {
+                      handleAnalyze(s3_link, visibility[0] || '', users, ['PlagiarismCheck']);
                     }
                     onClose();
                   }}
