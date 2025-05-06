@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import type { ReportData } from '@/lib/types/plagiarism';
 
-import { ChevronDown, ExternalLink, Info } from 'lucide-react';
+import { ChevronDown, ExternalLink, FileText, Info } from 'lucide-react';
 
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
@@ -161,18 +161,42 @@ export function PlagiarismReport({ data }: PlagiarismReportProps) {
         onValueChange={setActiveTab}
         className='w-full'
       >
-        <TabsList className='mb-4 flex w-full flex-wrap gap-2 sm:mb-6 sm:grid sm:grid-cols-2 md:grid-cols-4'>
-          <TabsTrigger value='overview' className='flex-1'>
-            Overview
+        <TabsList className='flex w-full gap-2 bg-transparent p-1'>
+          <TabsTrigger
+            value='overview'
+            className='flex-1 rounded-t-lg py-3 transition-all data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:bg-slate-300 data-[state=inactive]:bg-muted/40 data-[state=active]:shadow-sm data-[state=inactive]:hover:bg-muted/70 dark:data-[state=active]:bg-slate-700'
+          >
+            <div className='flex items-center justify-center gap-2'>
+              <Info className='h-4 w-4' />
+              <span>Overview</span>
+            </div>
           </TabsTrigger>
-          <TabsTrigger value='sources' className='flex-1'>
-            Sources ({results.internet.length})
+          <TabsTrigger
+            value='sources'
+            className='flex-1 rounded-t-lg py-3 transition-all data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:bg-slate-300 data-[state=inactive]:bg-muted/40 data-[state=active]:shadow-sm data-[state=inactive]:hover:bg-muted/70 dark:data-[state=active]:bg-slate-700'
+          >
+            <div className='flex items-center justify-center gap-2'>
+              <ExternalLink className='h-4 w-4' />
+              <span>Sources ({results.internet.length})</span>
+            </div>
           </TabsTrigger>
-          <TabsTrigger value='matches' className='flex-1'>
-            Matched Passages
+          <TabsTrigger
+            value='matches'
+            className='flex-1 rounded-t-lg py-3 transition-all data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:bg-slate-300 data-[state=inactive]:bg-muted/40 data-[state=active]:shadow-sm data-[state=inactive]:hover:bg-muted/70 dark:data-[state=active]:bg-slate-700'
+          >
+            <div className='flex items-center justify-center gap-2'>
+              <FileText className='h-4 w-4' />
+              <span>Matched Passages</span>
+            </div>
           </TabsTrigger>
-          <TabsTrigger value='document' className='flex-1'>
-            Document Details
+          <TabsTrigger
+            value='document'
+            className='flex-1 rounded-t-lg py-3 transition-all data-[state=active]:border-b-2 data-[state=active]:border-primary data-[state=active]:bg-slate-300 data-[state=inactive]:bg-muted/40 data-[state=active]:shadow-sm data-[state=inactive]:hover:bg-muted/70 dark:data-[state=active]:bg-slate-700'
+          >
+            <div className='flex items-center justify-center gap-2'>
+              <FileText className='h-4 w-4' />
+              <span>Document Details</span>
+            </div>
           </TabsTrigger>
         </TabsList>
 
