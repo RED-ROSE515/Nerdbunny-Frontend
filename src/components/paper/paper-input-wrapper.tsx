@@ -331,35 +331,8 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
   return (
     <div className='w-full'>
       <div className='flex flex-col items-center justify-center gap-4'>
-        <div className='flex w-full flex-col-reverse gap-4 md:flex-row'>
-          <div className='flex w-full flex-col gap-1 md:w-1/2'>
-            <p className='text-lg font-semibold'>Enter URL</p>
-            <HeroInput
-              className='w-full'
-              label='Paper URL : '
-              variant='bordered'
-              size='lg'
-              value={paper_url}
-              onValueChange={(val) => {
-                setPaperValue('');
-                setUploadedFile(null);
-                setPaperUrl(val);
-              }}
-              labelPlacement='outside-left'
-              placeholder='https://arxiv.org/abs/...'
-              classNames={{ mainWrapper: 'w-full' }}
-            />
-            <div className='mt-2 flex flex-row justify-between gap-3'>
-              <span className='ml-2 text-xs text-gray-500'>
-                Note: Currently supporting papers from: arXiv, bioRxiv, medRxiv, and OpenAlex. More
-                sources are coming soon.
-              </span>
-            </div>
-          </div>
-          <div className='flex flex-col items-center justify-center'>
-            <span className='text-lg font-semibold'>OR</span>
-          </div>
-          <div className='w-full md:w-1/2'>
+        <div className='flex w-full flex-col gap-4'>
+          <div className='w-full'>
             <p className='text-lg font-semibold'>Upload a Research Paper</p>
             <label
               {...getRootProps()}
@@ -454,6 +427,33 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
               id='dropzone-file'
               type='file'
             />
+          </div>
+          <div className='flex flex-col items-center justify-center'>
+            <span className='text-lg font-semibold'>OR</span>
+          </div>
+          <div className='flex w-full flex-col gap-1'>
+            <p className='text-lg font-semibold'>Enter URL</p>
+            <HeroInput
+              className='w-full'
+              label='Paper URL : '
+              variant='bordered'
+              size='lg'
+              value={paper_url}
+              onValueChange={(val) => {
+                setPaperValue('');
+                setUploadedFile(null);
+                setPaperUrl(val);
+              }}
+              labelPlacement='outside-left'
+              placeholder='https://arxiv.org/abs/...'
+              classNames={{ mainWrapper: 'w-full' }}
+            />
+            <div className='mt-2 flex flex-row justify-between gap-3'>
+              <span className='ml-2 text-xs text-gray-500'>
+                Note: Currently supporting papers from: arXiv, bioRxiv, medRxiv, and OpenAlex. More
+                sources are coming soon.
+              </span>
+            </div>
           </div>
         </div>
 

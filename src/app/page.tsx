@@ -51,11 +51,11 @@ export default function Home() {
           {/* <div className={`mt-4 flex h-[80vh] w-full flex-row justify-center md:mt-16`}>
             <AudioPlayer id={null} autoplay={false} />
           </div> */}
-          <div className='flex flex-col gap-[96px]'>
+          {/* <div className='flex flex-col gap-[96px]'>
             <NerdbunnyReason />
             <WorkFlow />
             <ResearchSection />
-          </div>
+          </div> */}
         </div>
       </div>
     </main>

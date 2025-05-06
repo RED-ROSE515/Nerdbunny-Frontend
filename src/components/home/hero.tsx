@@ -28,11 +28,7 @@ export default function Hero() {
             transition={{ duration: 0.5 }}
           >
             <h1 className='mb-6 text-3xl font-bold text-foreground md:text-4xl lg:text-6xl'>
-              Find inconsistencies in Research Papers Effortlessly with
-              <span className='bg-black bg-clip-text font-bold text-transparent dark:bg-white'>
-                {' '}
-                NERDBUNNY
-              </span>
+              Unlock Insights from Research Papers Instantly
             </h1>
           </motion.div>
 
@@ -42,8 +38,8 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className='mx-auto mb-8 max-w-2xl text-xl text-muted-foreground'
           >
-            Uncover hidden flaws, discrepancies, and methodological issues with our AI-powered
-            Decentralized Science (DeSci) platform, backed by blockchain.
+            Analyze, summarize, and explore research papers with ease. Upload a PDF or enter a URL
+            to get started—designed for researchers, by researchers.
           </motion.p>
 
           <motion.div
