@@ -26,7 +26,7 @@ export function DocumentDetails({ document, title }: DocumentDetailsProps) {
                 <h3 className='mb-2 text-sm font-medium'>Document Information</h3>
                 <div className='space-y-2'>
                   <div className='flex items-start gap-2'>
-                    <FileText className='mt-0.5 h-8 w-8 text-muted-foreground' />
+                    <FileText className='mt-0.5 h-4 w-4 text-muted-foreground' />
                     <div>
                       <p className='font-medium'>{title}</p>
                       <p className='text-sm text-muted-foreground'>

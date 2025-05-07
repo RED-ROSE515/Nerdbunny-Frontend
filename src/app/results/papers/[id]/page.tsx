@@ -36,6 +36,7 @@ import PaperLinkSection from '@/components/paper/papaer-link-section';
 import { citations, Option } from '@/components/paper/paper-input-wrapper';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useAnalyze } from '@/contexts/AnalyzeContext';
+import { useAuth } from '@/contexts/AuthContext';
 import useGetData from '@/lib/service/get-data';
 import { postApis } from '@/lib/utils/apis';
 
@@ -47,7 +48,7 @@ export default function App({ params }: any) {
   const { data: paperData, isLoading: paperLoading } = useGetData(`papers/${id}/`);
   const { handleAnalyze, postId, isChecking } = useAnalyze();
   const [visibility, setVisibility] = useState([paperData?.visibility]);
-
+  const { user } = useAuth();
   const [showVisibilityModal, setShowVisibilityModal] = useState(false);
   const [users, setUsers] = useState<Option[]>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -125,15 +126,17 @@ export default function App({ params }: any) {
           <div className='my-8 flex w-full max-w-[95vw] items-center justify-center gap-8 md:max-w-[90vw]'>
             <Card className='w-full'>
               <CardHeader>
-                <div className='flex flex-row items-center justify-around'>
+                <div className='flex flex-row items-center justify-around gap-8'>
                   <h1 className='mt-4 text-center text-lg font-bold md:text-3xl'>
                     {paperData.metadata.title}
                   </h1>
-                  <Tooltip content='Change Visibility'>
-                    <Button isIconOnly variant='ghost' onPress={() => setShowVisibilityModal(true)}>
-                      <Eye />
-                    </Button>
-                  </Tooltip>
+                  {paperData.paper_owner?.email === user?.detail?.email && (
+                    <Tooltip content='Change Visibility'>
+                      <Button variant='faded' onPress={() => setShowVisibilityModal(true)}>
+                        <span>Set Privacy</span>
+                      </Button>
+                    </Tooltip>
+                  )}
                 </div>
               </CardHeader>
               <CardContent className='flex flex-col gap-4 p-1 md:p-6'>
