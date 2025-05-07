@@ -19,7 +19,7 @@ export default function Hero() {
   const [isUploadPending, startUploadTransition] = useTransition();
 
   return (
-    <div className='relative flex min-h-[calc(60vh)] items-center'>
+    <div className='relative flex min-h-[calc(50vh)] items-center'>
       <div className='container relative z-10 mx-auto px-6'>
         <div className='mx-auto max-w-4xl text-center'>
           <motion.div

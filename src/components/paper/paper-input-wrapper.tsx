@@ -334,7 +334,7 @@ const PaperInputWrapper = ({ getPdfList, paperType, onTriggerRef }: ImageUploadP
       <div className='flex flex-col items-center justify-center gap-4'>
         <div className='flex w-full flex-col gap-4'>
           <div className='w-full'>
-            <p className='text-lg font-semibold'>Upload a Research Paper</p>
+            <p className='text-center text-lg font-semibold'>Upload a Research Paper</p>
             <label
               {...getRootProps()}
               htmlFor='dropzone-file'

@@ -253,7 +253,7 @@ export const AnalyzeProvider = ({ children }: { children: React.ReactNode }) => 
         window.location.href = DOMAIN + '/results/articles/' + paper_id;
       } else if (analyzeOption[0] === 'ExtractFigures') {
         setIsChecking(true);
-        let totalDuration = 200000;
+        let totalDuration = 100000;
         let interval = 200;
         let currentProgress = 0;
 

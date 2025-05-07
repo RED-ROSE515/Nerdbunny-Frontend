@@ -37,15 +37,15 @@ const menuItems: MenuItem[] = [
     gradient:
       'radial-gradient(circle, rgba(249,115,22,0.15) 0%, rgba(234,88,12,0.06) 50%, rgba(194,65,12,0) 100%)',
     iconColor: 'text-orange-500'
-  },
-  {
-    icon: <TextCursorInput className='h-5 w-5' />,
-    label: 'AI Editor',
-    href: '/ai-editor',
-    gradient:
-      'radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(37,99,235,0.06) 50%, rgba(29,78,216,0) 100%)',
-    iconColor: 'text-blue-500'
   }
+  // {
+  //   icon: <TextCursorInput className='h-5 w-5' />,
+  //   label: 'AI Editor',
+  //   href: '/ai-editor',
+  //   gradient:
+  //     'radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(37,99,235,0.06) 50%, rgba(29,78,216,0) 100%)',
+  //   iconColor: 'text-blue-500'
+  // }
 ];
 const navGlowVariants = {
   initial: { opacity: 0 },
