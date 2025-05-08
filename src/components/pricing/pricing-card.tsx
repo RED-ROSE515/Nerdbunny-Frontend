@@ -36,9 +36,9 @@ interface PricingCardProps {
 export function PricingCard({ plan }: PricingCardProps) {
   return (
     <CardGlow>
-      <Card className='relative overflow-hidden rounded-[12px] border-0 bg-[#0D1117]/80 backdrop-blur-xl backdrop-saturate-200'>
+      <Card className='relative overflow-hidden rounded-[12px] border-0 bg-white/80 backdrop-blur-xl backdrop-saturate-200 dark:bg-[#0D1117]/80'>
         <div className='absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,237,0.05),rgba(37,99,235,0))]' />
-        <div className='absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(13,17,23,0.95),rgba(13,17,23,0.98))]' />
+        <div className='bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.95),rgba(255,255,255,0.98)) absolute inset-0 dark:bg-[radial-gradient(circle_at_top_right,rgba(13,17,23,0.95),rgba(13,17,23,0.98))]' />
 
         <CardContent className='relative z-10 p-6'>
           <div className='space-y-4'>
@@ -65,7 +65,7 @@ export function PricingCard({ plan }: PricingCardProps) {
 
             <div>
               <motion.h3
-                className='text-[24px] font-semibold tracking-tight text-white'
+                className='text-[24px] font-semibold tracking-tight text-gray-900 dark:text-white'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
@@ -73,7 +73,7 @@ export function PricingCard({ plan }: PricingCardProps) {
                 {plan.name}
               </motion.h3>
               <motion.p
-                className='mt-2 text-[14px] leading-relaxed text-gray-400'
+                className='mt-2 text-[14px] leading-relaxed text-gray-600 dark:text-gray-400'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.2 }}
@@ -89,12 +89,12 @@ export function PricingCard({ plan }: PricingCardProps) {
               transition={{ duration: 0.3, delay: 0.3 }}
             >
               <div className='flex items-baseline'>
-                <span className='text-[48px] font-semibold tracking-tight text-white'>
+                <span className='text-[48px] font-semibold tracking-tight text-gray-900 dark:text-white'>
                   ${plan.price}
                 </span>
-                <span className='ml-1 text-[14px] text-gray-400'>USD</span>
+                <span className='ml-1 text-[14px] text-gray-600 dark:text-gray-400'>USD</span>
               </div>
-              <p className='mt-1 text-[14px] text-gray-400'>{plan.period}</p>
+              <p className='mt-1 text-[14px] text-gray-600 dark:text-gray-400'>{plan.period}</p>
             </motion.div>
 
             <motion.ul
@@ -104,9 +104,11 @@ export function PricingCard({ plan }: PricingCardProps) {
               transition={{ duration: 0.3, delay: 0.4 }}
             >
               {plan.features.map((feature, index) => (
-                <li key={index} className='flex items-center'>
-                  <feature.icon className='mr-3 h-5 w-5 text-green-400' />
-                  <span className='text-[14px] text-gray-300'>{feature.name}</span>
+                <li key={index} className='flex w-full items-center'>
+                  <feature.icon className='mr-3 h-5 w-5 text-green-600 dark:text-green-400' />
+                  <span className='w-full text-[14px] text-gray-700 dark:text-gray-300'>
+                    {feature.name}
+                  </span>
                 </li>
               ))}
             </motion.ul>
@@ -120,9 +122,9 @@ export function PricingCard({ plan }: PricingCardProps) {
                 className={cn(
                   'w-full transition-all duration-200',
                   plan.buttonVariant === 'primary' &&
-                    'bg-white text-[#0D1117] hover:bg-gray-100 hover:text-black',
+                    'bg-gray-900 text-white hover:bg-gray-800 dark:bg-white dark:text-[#0D1117] dark:hover:bg-gray-100 dark:hover:text-black',
                   plan.buttonVariant === 'outline' &&
-                    'border-[0.5px] border-gray-800 bg-transparent text-white hover:bg-white hover:text-black'
+                    'border-[0.5px] border-gray-200 bg-transparent text-gray-900 hover:bg-gray-900 hover:text-white dark:border-gray-800 dark:text-white dark:hover:bg-white dark:hover:text-black'
                 )}
                 variant={plan.buttonVariant === 'primary' ? 'default' : 'outline'}
               >

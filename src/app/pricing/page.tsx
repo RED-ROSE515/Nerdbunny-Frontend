@@ -2,7 +2,20 @@
 
 import React from 'react';
 
-import { Award, Camera, Clock, Image, MapPin, Star, Users, Video } from 'lucide-react';
+import {
+  Award,
+  Camera,
+  Clock,
+  FileText,
+  Image,
+  MapPin,
+  Radar,
+  Star,
+  Users,
+  Video
+} from 'lucide-react';
+import { GiLevelFourAdvanced } from 'react-icons/gi';
+import { MdSupport } from 'react-icons/md';
 
 import { PricingCard } from '@/components/pricing/pricing-card';
 import { GradientHeading } from '@/components/ui/graident-heading';
@@ -10,41 +23,76 @@ import { GradientHeading } from '@/components/ui/graident-heading';
 export default function Pricing() {
   const plans = [
     {
-      name: 'Basic',
+      name: 'Try Once',
       badge: {
         text: 'New',
         variant: 'new' as const
       },
-      description: 'Perfect for individuals',
-      price: 19,
-      // period: 'per session',
-      buttonText: 'Get Credits',
+      description: 'Best For: Testing the tools',
+      price: 4.99,
+      period: 'per once',
+      buttonText: 'Try for $4.99',
       buttonVariant: 'outline' as const,
       features: [
-        { name: '2-hour photo session', icon: Camera },
-        { name: '50 edited digital photos', icon: Image },
-        { name: 'Online gallery', icon: Star },
-        { name: '1 location', icon: Users }
+        { name: '100 credits', icon: Award },
+        {
+          name: 'EDDII: Extract values, measurements, units, relations, interactions from graphed data images',
+          icon: Image
+        },
+        {
+          name: 'EDDII Output: Table with labels/units; text with labels, units, relation/interaction descriptions',
+          icon: Image
+        },
+        {
+          name: 'Error Detection: Identify methodological flaws, statistical inaccuracies, logical inconsistencies',
+          icon: Radar
+        },
+        {
+          name: 'Report: Extracted data in table/text, highlighting patterns; detailed breakdown of errors and issues',
+          icon: FileText
+        },
+        {
+          name: 'Standard support',
+          icon: MdSupport
+        }
       ]
       // footer: {
       //   text: 'Additional hours available at $100/hour'
       // }
     },
     {
-      name: 'Premium',
+      name: 'Monthly',
       badge: {
         text: 'Most popular',
         variant: 'popular' as const
       },
-      description: 'Ideal for professionals.',
-      price: 49,
-      buttonText: 'Book Now',
+      description: 'Best For Regular researchers.',
+      price: 20,
+      period: 'per month',
+      buttonText: 'Get Started – Popular',
       buttonVariant: 'outline' as const,
       features: [
-        { name: 'Full-day coverage (up to 8 hours)', icon: Camera },
-        { name: '200 edited digital photos', icon: Image },
-        { name: 'Online gallery with downloads', icon: Star },
-        { name: 'Multiple locations', icon: Users }
+        { name: '1000 credits', icon: Award },
+        {
+          name: 'EDDII: Extract values, measurements, units, relations, interactions from graphed data images',
+          icon: Image
+        },
+        {
+          name: 'EDDII Output: Table with labels/units; text with labels, units, relation/interaction descriptions',
+          icon: Image
+        },
+        {
+          name: 'Error Detection: Identify methodological flaws, statistical inaccuracies, logical inconsistencies',
+          icon: Radar
+        },
+        {
+          name: 'Report: Extracted data in table/text, highlighting patterns; detailed breakdown of errors and issues',
+          icon: FileText
+        },
+        {
+          name: 'Priority support',
+          icon: MdSupport
+        }
       ]
       // footer: {
       //   text: 'Engagement shoot included',
@@ -55,20 +103,42 @@ export default function Pricing() {
       // }
     },
     {
-      name: 'Commercial',
-      badge: {
-        text: 'Advanced',
-        variant: 'new' as const
-      },
-      description: 'For businesses and professional needs.',
-      price: 99,
-      buttonText: 'Get Credits',
+      name: 'Yearly',
+      // badge: {
+      //   text: 'Advanced',
+      //   variant: 'new' as const
+      // },
+      description: 'Best For Power users, institutions',
+      price: 220,
+      period: 'per year',
+      buttonText: 'Save with Yearly',
       buttonVariant: 'outline' as const,
       features: [
-        { name: 'Full-day photo and video shoot', icon: Camera },
-        { name: '100 edited photos', icon: Image },
-        { name: '5-minute promotional video', icon: Video },
-        { name: 'Commercial usage rights', icon: Star }
+        { name: '12000 credits', icon: Award },
+        {
+          name: 'EDDII: Extract values, measurements, units, relations, interactions from graphed data images',
+          icon: Image
+        },
+        {
+          name: 'EDDII Output: Table with labels/units; text with labels, units, relation/interaction descriptions',
+          icon: Image
+        },
+        {
+          name: 'Error Detection: Identify methodological flaws, statistical inaccuracies, logical inconsistencies',
+          icon: Radar
+        },
+        {
+          name: 'Report: Extracted data in table/text, highlighting patterns; detailed breakdown of errors and issues',
+          icon: FileText
+        },
+        {
+          name: 'Priority support',
+          icon: MdSupport
+        },
+        {
+          name: 'Early access to tool upgrades (e.g., enhanced graph extraction, error detection)',
+          icon: GiLevelFourAdvanced
+        }
       ]
       // footer: {
       //   text: 'Customizable to your specific needs'
