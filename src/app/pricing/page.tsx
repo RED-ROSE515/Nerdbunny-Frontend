@@ -104,10 +104,10 @@ export default function Pricing() {
     },
     {
       name: 'Yearly',
-      // badge: {
-      //   text: 'Advanced',
-      //   variant: 'new' as const
-      // },
+      badge: {
+        text: 'Save 8%',
+        variant: 'new' as const
+      },
       description: 'Best For Power users, institutions',
       price: 220,
       period: 'per year',
@@ -152,7 +152,7 @@ export default function Pricing() {
           <GradientHeading className='mb-12 text-center text-3xl font-bold md:text-4xl'>
             Choose Your Perfect Package
           </GradientHeading>
-          <div className='grid items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-3'>
+          <div className='grid items-stretch justify-start gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-3'>
             {plans.map((plan) => (
               <PricingCard key={plan.name} plan={plan} />
             ))}

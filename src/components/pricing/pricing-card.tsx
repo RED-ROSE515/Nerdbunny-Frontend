@@ -35,13 +35,13 @@ interface PricingCardProps {
 
 export function PricingCard({ plan }: PricingCardProps) {
   return (
-    <CardGlow>
-      <Card className='relative overflow-hidden rounded-[12px] border-0 bg-white/80 backdrop-blur-xl backdrop-saturate-200 dark:bg-[#0D1117]/80'>
+    <CardGlow className='h-full'>
+      <Card className='relative flex h-full flex-col overflow-hidden rounded-[12px] border-0 bg-white/80 backdrop-blur-xl backdrop-saturate-200 dark:bg-[#0D1117]/80'>
         <div className='absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,58,237,0.05),rgba(37,99,235,0))]' />
         <div className='bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.95),rgba(255,255,255,0.98)) absolute inset-0 dark:bg-[radial-gradient(circle_at_top_right,rgba(13,17,23,0.95),rgba(13,17,23,0.98))]' />
 
-        <CardContent className='relative z-10 p-6'>
-          <div className='space-y-4'>
+        <CardContent className='relative z-10 flex-1 p-6'>
+          <div className='flex h-full flex-col items-stretch justify-between space-y-4'>
             {plan.badge && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}

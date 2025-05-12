@@ -57,10 +57,9 @@ export default function Home() {
     <main className='h-full w-full bg-background'>
       <div className={cn('bg-grid-white/[0.02]')}>
         <div
-          className='relative z-10'
-          style={{
-            background: `${theme === 'dark' ? 'linear-gradient(0deg, #020815 0%, #1E293B 100%)' : 'linear-gradient(0deg, #FFFFFF 0%, #F7F7F7 100%)'}`
-          }}
+          className={cn(
+            'relative z-10 bg-gradient-to-t from-white to-[#F7F7F7] dark:from-[#020815] dark:to-[#1E293B]'
+          )}
         >
           <Navbar />
           <div id='hero' data-section>

@@ -14,6 +14,7 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 
 import { useToast } from '../hooks/use-toast';
+import AppleInspiredSignin from './apple-inspired-signin';
 
 type SignInDialogProps = {
   isOpen: boolean;
@@ -179,85 +180,82 @@ export default function SignInDialog({ isOpen, onClose, onSuccess }: SignInDialo
     <Modal isOpen={isOpen} placement='top-center' onOpenChange={onClose}>
       <ModalContent>
         {(onClose) => (
-          <>
-            <ModalHeader className='my-4 flex flex-col items-center justify-center gap-1 text-2xl font-bold'>
-              Login to Nerdbunny
-            </ModalHeader>
-            <ModalBody className='my-4 gap-8'>
-              <Input
-                endContent={
-                  <MailIcon className='pointer-events-none flex-shrink-0 text-2xl text-default-400' />
-                }
-                required
-                onChange={(e) => setEmail(e.target.value)}
-                label='Email'
-                size='lg'
-                placeholder='Enter your email'
-                labelPlacement='outside'
-                variant='bordered'
-              />
-              <Input
-                endContent={
-                  <button
-                    aria-label='toggle password visibility'
-                    className='focus:outline-none'
-                    type='button'
-                    onClick={toggleVisibility}
-                  >
-                    {isVisible ? (
-                      <EyeSlashFilledIcon className='pointer-events-none text-2xl text-default-400' />
-                    ) : (
-                      <EyeFilledIcon className='pointer-events-none text-2xl text-default-400' />
-                    )}
-                  </button>
-                }
-                label='Password'
-                type={isVisible ? 'text' : 'password'}
-                required
-                size='lg'
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder='Enter your password'
-                labelPlacement='outside'
-                variant='bordered'
-              />
-              {/* <div className="flex py-2 px-1 justify-between">
-                <Checkbox
-                  classNames={{
-                    label: "text-small",
-                  }}
-                >
-                  Remember me
-                </Checkbox>
-                <Link color="primary" href="#" size="sm">
-                  Forgot password?
-                </Link>
-              </div> */}
-            </ModalBody>
-            <ModalFooter>
-              <div className='flex w-full flex-col items-center justify-center gap-2'>
-                <Button className='w-full' color='primary' onPress={handleSubmit}>
-                  Login with Email and Password
-                </Button>
-                <Button
-                  className='w-full bg-blue-400'
-                  color='secondary'
-                  onPress={handleLoginWithNobleblocks}
-                >
-                  Login with Nobleblocks
-                </Button>
-                <strong>
-                  Don't have an account?
-                  <Link
-                    // href="/signup"
-                    underline='always'
-                    className='ml-2 text-blue-600'
-                  >
-                    <span>Sign up</span>
-                  </Link>
-                </strong>
-              </div>
-            </ModalFooter>
-          </>
+          // <>
+          //   <ModalHeader className='my-4 flex flex-col items-center justify-center gap-1 text-2xl font-bold'>
+          //     Login to Nerdbunny
+          //   </ModalHeader>
+          //   <ModalBody className='my-4 gap-8'>
+          //     <Input
+          //       endContent={
+          //         <MailIcon className='pointer-events-none flex-shrink-0 text-2xl text-default-400' />
+          //       }
+          //       required
+          //       onChange={(e) => setEmail(e.target.value)}
+          //       label='Email'
+          //       size='lg'
+          //       placeholder='Enter your email'
+          //       labelPlacement='outside'
+          //       variant='bordered'
+          //     />
+          //     <Input
+          //       endContent={
+          //         <button
+          //           aria-label='toggle password visibility'
+          //           className='focus:outline-none'
+          //           type='button'
+          //           onClick={toggleVisibility}
+          //         >
+          //           {isVisible ? (
+          //             <EyeSlashFilledIcon className='pointer-events-none text-2xl text-default-400' />
+          //           ) : (
+          //             <EyeFilledIcon className='pointer-events-none text-2xl text-default-400' />
+          //           )}
+          //         </button>
+          //       }
+          //       label='Password'
+          //       type={isVisible ? 'text' : 'password'}
+          //       required
+          //       size='lg'
+          //       onChange={(e) => setPassword(e.target.value)}
+          //       placeholder='Enter your password'
+          //       labelPlacement='outside'
+          //       variant='bordered'
+          //     />
+          //     {/* <div className="flex py-2 px-1 justify-between">
+          //       <Checkbox
+          //         classNames={{
+          //           label: "text-small",
+          //         }}
+          //       >
+          //         Remember me
+          //       </Checkbox>
+          //       <Link color="primary" href="#" size="sm">
+          //         Forgot password?
+          //       </Link>
+          //     </div> */}
+          //   </ModalBody>
+          //   <ModalFooter>
+          //     <div className='flex w-full flex-col items-center justify-center gap-2'>
+          //       <Button className='w-full' color='primary' onPress={handleSubmit}>
+          //         Login with Email and Password
+          //       </Button>
+          //       <Button
+          //         className='w-full bg-blue-400'
+          //         color='secondary'
+          //         onPress={handleLoginWithNobleblocks}
+          //       >
+          //         Login with Nobleblocks
+          //       </Button>
+          //       <strong>
+          //         Don't have an account?
+          //         <Link href='auth/signup' underline='always' className='ml-2 text-blue-600'>
+          //           <span>Sign up</span>
+          //         </Link>
+          //       </strong>
+          //     </div>
+          //   </ModalFooter>
+          // </>
+          <AppleInspiredSignin />
         )}
       </ModalContent>
     </Modal>

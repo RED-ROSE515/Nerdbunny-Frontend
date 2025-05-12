@@ -48,7 +48,11 @@ CardDescription.displayName = 'CardDescription';
 
 const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...properties }, reference) => (
-    <div ref={reference} className={cn('p-6 pt-0', className)} {...properties} />
+    <div
+      ref={reference}
+      className={cn('flex flex-col items-stretch p-6 pt-0', className)}
+      {...properties}
+    />
   )
 );
 CardContent.displayName = 'CardContent';

@@ -7,6 +7,7 @@ import type { Metadata, Viewport } from 'next';
 import type { PropsWithChildren } from 'react';
 
 import config from '_config';
+import { ThemeProvider } from 'next-themes';
 
 import { CircularProgressBar } from '@/components/common/circular-progress-bar';
 import Footer from '@/components/footer';
@@ -33,24 +34,26 @@ export default function RootLayout({ children }: TRootLayout) {
   return (
     <html lang='en' suppressHydrationWarning>
       <body>
-        <RootProvider>
-          <SidebarProvider>
-            <SidebarInset>
-              <div
-                className={`max-w-screen relative grid min-h-[100dvh] grid-rows-[auto_1fr_auto] overflow-hidden`}
-              >
-                <Navbar isHome={true} />
-                <div>
-                  {children}
-                  <CircularProgressBar className='md:text-md h-[60px] w-[60px] text-sm md:h-[100px] md:w-[100px]' />
+        <ThemeProvider attribute='class' defaultTheme='dark' enableSystem>
+          <RootProvider>
+            <SidebarProvider>
+              <SidebarInset>
+                <div
+                  className={`max-w-screen relative grid min-h-[100dvh] grid-rows-[auto_1fr_auto] overflow-hidden`}
+                >
+                  <Navbar isHome={true} />
+                  <div>
+                    {children}
+                    <CircularProgressBar className='md:text-md h-[60px] w-[60px] text-sm md:h-[100px] md:w-[100px]' />
+                  </div>
+                  <Toaster />
+                  <Footer />
                 </div>
-                <Toaster />
-                <Footer />
-              </div>
-            </SidebarInset>
-            {/* <AppSidebar side='right' /> */}
-          </SidebarProvider>
-        </RootProvider>
+              </SidebarInset>
+              {/* <AppSidebar side='right' /> */}
+            </SidebarProvider>
+          </RootProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -116,7 +116,7 @@ export default function Social() {
           <Separator className='w-full' />
         </div>
         <div className='relative flex justify-center text-xs uppercase'>
-          <span className='bg-background px-2 text-foreground'>Or continue with</span>
+          <span className='bg-background px-2 text-foreground'>Or</span>
         </div>
       </div>
     </div>

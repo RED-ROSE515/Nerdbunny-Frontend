@@ -3,19 +3,15 @@
 import { useTransition } from 'react';
 
 import { motion } from 'framer-motion';
-import { FileText, Loader2, Sparkles } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { DotPattern } from '@/components/magicui/dot-pattern';
-// import { FloatingPaper } from '@/components/home/floating-paper';
-// import { RoboAnimation } from '@/components/home/robo-animation';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 
 export default function Hero() {
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
   const [isUploadPending, startUploadTransition] = useTransition();
 
   return (
