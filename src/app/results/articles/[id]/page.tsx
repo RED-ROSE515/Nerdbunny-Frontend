@@ -4,6 +4,7 @@ import React, { use } from 'react';
 
 import Loader from '@/components/common/loader';
 import ArticleWrapper from '@/components/paper/article-wrapper';
+import { Carousel } from '@/components/paper/carousel/carousel';
 import useGetData from '@/lib/service/get-data';
 
 /**
@@ -36,6 +37,9 @@ export default function App({ params }: any) {
             link={DOMAIN + '/results/articles/' + articleData.id}
             userData={articleData.paper_owner}
           />
+          <div className='flex w-full flex-row items-center justify-center'>
+            <Carousel id={id} />
+          </div>
         </div>
       )}
     </div>

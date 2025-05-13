@@ -22,26 +22,26 @@ type TRootProvider = PropsWithChildren;
 
 export default function RootProvider({ children }: TRootProvider) {
   return (
-    <SessionProvider>
-      <HeroUiProvider>
-        <ThemeProvider>
-          <ProgressProvider>
+    <HeroUiProvider>
+      <ThemeProvider>
+        <ProgressProvider>
+          <AnalyzeProvider>
             <OpenAIProvider>
               <SpeechProvider>
-                <AnalyzeProvider>
-                  <PaginationProvider>
-                    <AuthProvider>
-                      <SearchProvider>
+                <PaginationProvider>
+                  <AuthProvider>
+                    <SearchProvider>
+                      <SessionProvider>
                         <TanstackQueryProvider>{children}</TanstackQueryProvider>
-                      </SearchProvider>
-                    </AuthProvider>
-                  </PaginationProvider>
-                </AnalyzeProvider>
+                      </SessionProvider>
+                    </SearchProvider>
+                  </AuthProvider>
+                </PaginationProvider>
               </SpeechProvider>
             </OpenAIProvider>
-          </ProgressProvider>
-        </ThemeProvider>
-      </HeroUiProvider>
-    </SessionProvider>
+          </AnalyzeProvider>
+        </ProgressProvider>
+      </ThemeProvider>
+    </HeroUiProvider>
   );
 }

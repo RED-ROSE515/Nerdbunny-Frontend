@@ -63,7 +63,7 @@ export const AppCard: React.FC<AppCardProps> = ({
           </>
         )}
       </div>
-      {isDisabled && (
+      {isDisabled ? (
         <div className='flex w-full flex-row items-center justify-center opacity-100'>
           <Button
             variant='outline'
@@ -71,6 +71,12 @@ export const AppCard: React.FC<AppCardProps> = ({
             className='w-full rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:from-blue-600 hover:to-purple-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900'
           >
             {subActionTitle}
+          </Button>
+        </div>
+      ) : (
+        <div className='flex w-full flex-row items-center justify-center opacity-100'>
+          <Button variant='outline' className='w-full rounded-lg px-4 py-3 font-semibold'>
+            {'View Result'}
           </Button>
         </div>
       )}

@@ -3,6 +3,7 @@
 import type React from 'react';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -151,12 +152,12 @@ export function PricingCard({ plan }: PricingCardProps) {
             >
               {plan.footer.text}
               {plan.footer.link && (
-                <a
+                <Link
                   href={plan.footer.link.href}
                   className='ml-1 text-blue-400 hover:text-blue-300 hover:underline'
                 >
                   {plan.footer.link.text}
-                </a>
+                </Link>
               )}
             </motion.p>
           </CardFooter>

@@ -67,8 +67,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className={`flex w-full flex-row justify-center p-0 md:p-4 md:px-10`}>
-        <div className='md:w-[1200px]'>
+      <div className={`mt-4 flex w-full flex-row justify-center px-1 py-0 md:mx-0 md:p-4 md:px-10`}>
+        <div className='w-full md:w-[1200px]'>
           <div id='check-section' data-section>
             <CheckSection />
           </div>

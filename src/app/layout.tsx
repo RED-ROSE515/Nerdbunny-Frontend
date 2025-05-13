@@ -42,10 +42,8 @@ export default function RootLayout({ children }: TRootLayout) {
                   className={`max-w-screen relative grid min-h-[100dvh] grid-rows-[auto_1fr_auto] overflow-hidden`}
                 >
                   <Navbar isHome={true} />
-                  <div>
-                    {children}
-                    <CircularProgressBar className='md:text-md h-[60px] w-[60px] text-sm md:h-[100px] md:w-[100px]' />
-                  </div>
+                  <div>{children}</div>
+                  <CircularProgressBar className='md:text-md h-[60px] w-[60px] text-sm md:h-[100px] md:w-[100px]' />
                   <Toaster />
                   <Footer />
                 </div>

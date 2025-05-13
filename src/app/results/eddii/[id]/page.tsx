@@ -5,6 +5,7 @@ import React, { use } from 'react';
 import Loader from '@/components/common/loader';
 import PDFViewer from '@/components/common/pdf-viewer';
 import ChatGPT from '@/components/home/chatgpt';
+import { Carousel } from '@/components/paper/carousel/carousel';
 import ErrorContent from '@/components/paper/error-content';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
@@ -31,7 +32,7 @@ export default function App({ params }: any) {
                   {paperData.paper.title}
                 </h1>
               </CardHeader>
-              <CardContent className='flex flex-col gap-4 p-1 md:p-6'>
+              <CardContent className='flex flex-col items-center gap-4 p-1 md:p-6'>
                 <div className='flex w-full flex-row gap-4'>
                   <div className='w-full md:w-1/2'>
                     <PDFViewer pdf_url={paperData?.paper?.file_name} />
@@ -59,6 +60,7 @@ export default function App({ params }: any) {
                 <div>
                   <ChatGPT paper_id={id} />
                 </div>
+                <Carousel id={id} />
               </CardContent>
             </Card>
           </div>

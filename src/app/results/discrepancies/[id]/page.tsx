@@ -9,8 +9,8 @@ import { Download } from 'lucide-react';
 import Loader from '@/components/common/loader';
 import AdvancedSummaryWrapper from '@/components/paper/advanced-summary-wrapper';
 import AnalysisResultWrapper from '@/components/paper/analysis-result-wrapper';
+import { Carousel } from '@/components/paper/carousel/carousel';
 import SummaryWrapper from '@/components/paper/summary-wrapper';
-import { Button } from '@/components/ui/button';
 import useGetData from '@/lib/service/get-data';
 
 /**
@@ -78,6 +78,9 @@ export default function App({ params }: any) {
               results={paperData?.paper_analysis?.analysis_data?.analysis}
               total_summary={paperData?.paper_analysis?.analysis_data?.summary}
             />
+            <div className='mb-4 flex w-full flex-row items-center justify-center'>
+              <Carousel id={id} />
+            </div>
           </div>
         </div>
       )}

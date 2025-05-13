@@ -52,7 +52,7 @@ export default function ResearchPaperPoster({ paper, paper_id }: any) {
 
           <div>
             <h3 className='text-md w-full text-[#828489] dark:text-[#AAB5C7] md:w-auto md:text-lg'>
-              Abstract
+              Summary
             </h3>
             <div>
               <p className='text-sm font-semibold text-slate-700 dark:text-slate-200'>

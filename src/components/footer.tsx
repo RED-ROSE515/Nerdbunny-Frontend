@@ -24,7 +24,7 @@ export default function Footer() {
   return (
     <footer className='flex w-full items-center justify-center border-t border-border bg-transparent text-sm backdrop-blur-sm'>
       <div className='flex w-full flex-col items-center justify-center md:py-2'>
-        <div className='flex w-full flex-col items-center justify-center p-4 md:hidden'>
+        <div className='flex w-full flex-col items-center justify-center p-4 px-1 md:hidden'>
           <Card className='mb-4 w-full'>
             <CardBody>
               <div

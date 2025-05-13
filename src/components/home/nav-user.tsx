@@ -52,12 +52,8 @@ export function NavUser() {
                   }
                   alt={user?.detail.first_name}
                 />
-                <AvatarFallback className='rounded-lg'>CN</AvatarFallback>
+                <AvatarFallback className='rounded-lg'>GU</AvatarFallback>
               </Avatar>
-              <div className='grid flex-1 text-left text-sm leading-tight'>
-                <span className='truncate font-semibold'>{user?.detail.first_name}</span>
-                <span className='truncate text-xs'>{user?.detail.email}</span>
-              </div>
               <ChevronsUpDown className='ml-auto size-4' />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
@@ -103,10 +99,6 @@ export function NavUser() {
               <DropdownMenuItem onClick={() => router.push('/speeches')}>
                 <Headphones />
                 Past Recordings
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push('/ai-editor')}>
-                <FilePenLine />
-                Ai Editor
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

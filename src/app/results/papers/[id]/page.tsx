@@ -1,31 +1,18 @@
 'use client';
 
-import React, { use, useEffect, useState } from 'react';
+import React, { use, useState } from 'react';
 
 import {
-  Button,
-  Checkbox,
-  CheckboxGroup,
   Chip,
-  Image,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-  Radio,
-  RadioGroup,
   Select,
   SelectItem,
-  Tab,
-  Tabs,
-  Tooltip,
-  useDisclosure
+  Tooltip
 } from '@heroui/react';
-import { BookCopy, Eye, FileChartColumn, Newspaper, OctagonX } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { IoSettingsOutline } from 'react-icons/io5';
-import { SiRoamresearch } from 'react-icons/si';
 
 import Loader from '@/components/common/loader';
 import UserSearchBar from '@/components/common/user-search';
@@ -33,88 +20,26 @@ import AuthorSection from '@/components/paper/author-section';
 import { Carousel } from '@/components/paper/carousel/carousel';
 import KeywordsSection from '@/components/paper/keywords-section';
 import PaperLinkSection from '@/components/paper/papaer-link-section';
-import { citations, Option } from '@/components/paper/paper-input-wrapper';
+import { Option } from '@/components/paper/paper-input-wrapper';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { useAnalyze } from '@/contexts/AnalyzeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import useGetData from '@/lib/service/get-data';
 import { postApis } from '@/lib/utils/apis';
 
 export default function App({ params }: any) {
-  const router = useRouter();
   const resolvedParams = use(params);
   const { id } = resolvedParams as any;
-  const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN;
   const { data: paperData, isLoading: paperLoading } = useGetData(`papers/${id}/`);
-  const { handleAnalyze, postId, isChecking } = useAnalyze();
   const [visibility, setVisibility] = useState([paperData?.visibility]);
   const { user } = useAuth();
   const [showVisibilityModal, setShowVisibilityModal] = useState(false);
   const [users, setUsers] = useState<Option[]>([]);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [processType, setProcessType] = useState('');
-  const [selected, setSelected] = useState('equal');
-  const [citation, setCitation] = useState('APA');
-  const [summaryOption, setSummaryOption] = useState('Basic');
-  const [advancedMethods, setAdvancedMethods] = useState<string[]>(['Method']);
-  const items = [
-    {
-      Icon: OctagonX,
-      title: 'Discrepancies',
-      subActionTitle: 'Analyze Research Paper',
-      isDisabled: !(
-        paperData?.has_analysis &&
-        paperData?.has_summary &&
-        paperData?.has_error_summary
-      ),
-      description: 'Error Detection Results',
-      action: () => router.push(DOMAIN + '/results/discrepancies/' + id),
-      subAction: () => {
-        setProcessType('ResearchCheck');
-        onOpen();
-      }
-    },
-    {
-      Icon: Newspaper,
-      title: 'Article',
-      subActionTitle: 'Summarise Research Paper',
-      isDisabled: !paperData?.has_article,
-      description: 'Article Generation Results',
-      action: () => router.push(DOMAIN + '/results/articles/' + id),
-      subAction: () => {
-        setProcessType('GenerateArticle');
-        onOpen();
-      }
-    },
-    {
-      Icon: FileChartColumn,
-      title: 'EDDII',
-      subActionTitle: 'Extract Data',
-      isDisabled: !paperData?.has_images,
-      description: 'Data Extraction Feature EDDII',
-      action: () => router.push(DOMAIN + '/results/eddii/' + id),
-      subAction: () => {
-        setProcessType('ExtractFigures');
-        onOpen();
-      }
-    },
-    {
-      Icon: BookCopy,
-      title: 'Plagiarism',
-      subActionTitle: 'Plagiarism Check',
-      isDisabled: !paperData?.has_plagiarism,
-      description: 'Check Research Paper for Plagiarism',
-      action: () => router.push(DOMAIN + '/results/plagiarism/' + id),
-      subAction: () => {
-        setProcessType('PlagiarismCheck');
-        onOpen();
-      }
-    }
-  ];
+
   const options = [
     { key: 'public', label: 'Everyone' },
-    { key: 'followers', label: 'My Followers' },
-    { key: 'specific_users', label: 'Specific Users' },
+    // { key: 'followers', label: 'My Followers' },
+    // { key: 'specific_users', label: 'Specific Users' },
     { key: 'private', label: 'Nobody' }
   ];
   return (
@@ -132,8 +57,8 @@ export default function App({ params }: any) {
                   </h1>
                   {paperData.paper_owner?.email === user?.detail?.email && (
                     <Tooltip content='Change Visibility'>
-                      <Button variant='faded' onPress={() => setShowVisibilityModal(true)}>
-                        <span>Set Privacy</span>
+                      <Button onClick={() => setShowVisibilityModal(true)}>
+                        <span className='text-primary-foreground'>Set Privacy</span>
                       </Button>
                     </Tooltip>
                   )}
@@ -166,174 +91,16 @@ export default function App({ params }: any) {
                 </div>
                 <div className='rounded-lg border border-border/20 bg-gradient-to-b from-background/80 to-background/40 p-2 shadow-xl backdrop-blur-lg'>
                   <h2 className='text-md w-full text-[#828489] dark:text-[#AAB5C7] md:mb-2 md:w-auto md:text-xl'>
-                    Abstract :
+                    Summary :
                   </h2>
                   <span>{paperData.metadata.abstract}</span>
                 </div>
                 <div className='flex w-full flex-row items-center justify-center'>
-                  <Carousel items={items} />
+                  <Carousel id={id} />
                 </div>
               </CardContent>
             </Card>
           </div>
-          <Modal backdrop='opaque' isOpen={isOpen} onClose={onClose}>
-            <ModalContent>
-              {(onClose) => (
-                <>
-                  <ModalHeader className='flex flex-col gap-1'>
-                    {processType === 'ResearchCheck'
-                      ? 'Analyse Manuscript'
-                      : processType === 'GenerateArticle'
-                        ? 'Summarise Manuscript'
-                        : processType === 'ExtractFigures'
-                          ? 'Extract Figures'
-                          : 'Plagiarism Check'}
-                  </ModalHeader>
-                  <ModalBody className='flex flex-col items-center justify-center'>
-                    {processType === 'ResearchCheck' ? (
-                      <div className='min-h-[150px]'>
-                        <span>
-                          Analyze the paper for inconsistencies, flawed reasoning, or methodological
-                          issues.
-                        </span>
-                      </div>
-                    ) : processType === 'GenerateArticle' ? (
-                      <div className='flex min-h-[250px] flex-col items-center justify-center'>
-                        <Tabs
-                          aria-label='Options'
-                          color='primary'
-                          variant='bordered'
-                          className='mt-2'
-                          selectedKey={summaryOption}
-                          onSelectionChange={(key) => setSummaryOption(key as string)}
-                        >
-                          <Tab
-                            key='Basic'
-                            title={
-                              <div className='flex items-center space-x-2'>
-                                <IoSettingsOutline />
-                                <span>Basic</span>
-                              </div>
-                            }
-                          >
-                            <div className='min-h-[250px]'>
-                              <span>
-                                Generate the basic concept summary for this research paper.
-                              </span>
-                            </div>
-                          </Tab>
-                          <Tab
-                            key='Advanced'
-                            title={
-                              <div className='flex items-center space-x-2'>
-                                <SiRoamresearch />
-                                <span>Advanced</span>
-                              </div>
-                            }
-                          >
-                            <div className='flex min-h-[250px] flex-col gap-2'>
-                              <RadioGroup
-                                label='Select your favorite city'
-                                value={selected}
-                                onValueChange={setSelected}
-                              >
-                                <Radio value='equal'>Weight all sections equally</Radio>
-                                <Radio value='seperate'>Based on these methods</Radio>
-                              </RadioGroup>
-                              <CheckboxGroup
-                                isDisabled={selected === 'equal'}
-                                defaultValue={['Method']}
-                                value={advancedMethods}
-                                onValueChange={(keys) => {
-                                  setAdvancedMethods(keys as string[]);
-                                  console.log(advancedMethods);
-                                }}
-                                label='Select methods'
-                              >
-                                <Checkbox value='Method'>Focus on methods</Checkbox>
-                                <Checkbox value='Result'>Focus on Result</Checkbox>
-                                <Checkbox value='Limitation'>Highlight limitations</Checkbox>
-                                <Checkbox value='Finding'>
-                                  Highlight main findings/take home messages
-                                </Checkbox>
-                                <Checkbox value='Data'>Data availability</Checkbox>
-                              </CheckboxGroup>
-                              <div className='flex flex-row justify-between'>
-                                <Select
-                                  key={'outside'}
-                                  className='max-w-[200px]'
-                                  defaultSelectedKeys={['APA']}
-                                  label='Citation Format'
-                                  labelPlacement={'outside'}
-                                  selectedKeys={new Set([citation])}
-                                  placeholder='Select Citation Format'
-                                >
-                                  {citations.map((citation) => (
-                                    <SelectItem
-                                      key={citation.key}
-                                      onPress={() => setCitation(citation.key)}
-                                    >
-                                      {citation.label}
-                                    </SelectItem>
-                                  ))}
-                                </Select>
-                                <Image
-                                  alt='HeroUI hero Image with delay'
-                                  height={100}
-                                  src={citations.find((value) => value.key === citation)?.image.src}
-                                  width={100}
-                                />
-                              </div>
-                            </div>
-                          </Tab>
-                        </Tabs>
-                      </div>
-                    ) : processType === 'ExtractFigures' ? (
-                      <div className='min-h-[150px]'>
-                        <span>
-                          Extract all figures from the paper and create a report for each figure.
-                        </span>
-                      </div>
-                    ) : (
-                      <div className='min-h-[150px]'>
-                        <span>Check the research paper for plagiarism and create a report.</span>
-                      </div>
-                    )}
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button color='danger' variant='light' onPress={onClose}>
-                      Close
-                    </Button>
-                    <Button
-                      color='primary'
-                      onPress={() => {
-                        if (processType === 'ResearchCheck') {
-                          handleAnalyze(id, visibility[0] || '', users, ['ResearchCheck']);
-                        } else if (processType === 'GenerateArticle') {
-                          handleAnalyze(
-                            id,
-                            visibility[0] || '',
-                            users,
-                            ['GenerateArticle'],
-                            summaryOption,
-                            advancedMethods,
-                            citation
-                          );
-                        } else if (processType === 'ExtractFigures') {
-                          handleAnalyze(id, visibility[0] || '', users, ['ExtractFigures']);
-                        } else if (processType === 'PlagiarismCheck') {
-                          handleAnalyze(id, visibility[0] || '', users, ['PlagiarismCheck']);
-                        }
-                        onClose();
-                      }}
-                    >
-                      Generate
-                    </Button>
-                  </ModalFooter>
-                </>
-              )}
-            </ModalContent>
-          </Modal>
           <Modal
             backdrop='opaque'
             isOpen={showVisibilityModal}
@@ -378,7 +145,7 @@ export default function App({ params }: any) {
                   <ModalFooter>
                     <Button
                       color='primary'
-                      onPress={async () => {
+                      onClick={async () => {
                         setShowVisibilityModal(false);
                         await postApis.changePostVisibility(
                           id,

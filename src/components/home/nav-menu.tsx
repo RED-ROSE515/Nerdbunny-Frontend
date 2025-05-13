@@ -4,6 +4,7 @@ import type * as React from 'react';
 
 import { motion } from 'framer-motion';
 import { FileAudio, FileChartColumn, ScanLine } from 'lucide-react';
+import Link from 'next/link';
 import { IoIosPricetag } from 'react-icons/io';
 
 interface MenuItem {
@@ -87,13 +88,13 @@ export function NavMenuBar() {
                   borderRadius: '16px'
                 }}
               />
-              <motion.a
+              <Link
                 href={item.href}
                 className='relative z-10 flex items-center gap-2 rounded-xl bg-transparent px-4 py-2 text-muted-foreground transition-colors group-hover:text-foreground'
                 style={{ transformStyle: 'preserve-3d', transformOrigin: 'center bottom' }}
               >
                 <span>{item.label}</span>
-              </motion.a>
+              </Link>
             </motion.div>
           </motion.li>
         ))}

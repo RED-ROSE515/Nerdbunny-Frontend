@@ -38,7 +38,7 @@ export default function Navbar({ className, isHome }: { className?: string; isHo
       className={`z-10 flex items-center justify-between border-b border-border/10 bg-transparent px-6 py-4 backdrop-blur-sm ${isHome && pathname === '/' ? 'hidden' : 'sticky top-0'} ${className}`}
     >
       <Link href='/' className='flex h-12 items-center space-x-2 overflow-hidden'>
-        <div className='hidden w-[50%] dark:block md:w-full'>
+        <div className='hidden w-[70%] dark:block md:w-full'>
           <Image
             src={DarkLogo.src}
             className='object-cover'
@@ -47,7 +47,7 @@ export default function Navbar({ className, isHome }: { className?: string; isHo
             alt='Nerdbunny Logo'
           />
         </div>
-        <div className='block w-[50%] dark:hidden md:w-full'>
+        <div className='block w-[70%] dark:hidden md:w-full'>
           <Image
             src={LightLogo.src}
             className='object-cover'
@@ -113,7 +113,10 @@ export default function Navbar({ className, isHome }: { className?: string; isHo
         )}
       </div>
       {/* <SidebarTrigger /> */}
-      <div className='text-foreground md:hidden'>
+      <div className='flex flex-row items-center justify-center gap-0 text-foreground md:hidden'>
+        <div className='w-full'>
+          <ThemeToggle />
+        </div>
         <NavUser />
       </div>
     </motion.nav>
